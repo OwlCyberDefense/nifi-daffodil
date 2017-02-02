@@ -61,4 +61,17 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>ncsa-release</id>
+            <name>NCSA Sonatype Nexus Releases</name>
+            <url>https://opensource.ncsa.illinois.edu/nexus/content/repositories/releases</url>
+        </repository>
+        <repository>
+            <id>ncsa-snapshot</id>
+            <name>NCSA Sonatype Nexus Snapshots</name>
+            <url>https://opensource.ncsa.illinois.edu/nexus/content/repositories/snapshots</url>
+        </repository>
+    </repositories>
 </project>
