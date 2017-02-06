@@ -43,7 +43,7 @@ import edu.illinois.ncsa.daffodil.japi.ParseResult;
 @SupportsBatching
 @InputRequirement(Requirement.INPUT_REQUIRED)
 @Tags({"xml", "daffodil", "dfdl", "schema", "xsd"})
-@CapabilityDescription("Use Daffodil and a user-specified DFDL schema to parse data to an XML infoset.")
+@CapabilityDescription("Use Daffodil and a user-specified DFDL schema to transform data to an XML representation.")
 public class DaffodilParse extends AbstractDaffodilProcessor {
 
     @Override
