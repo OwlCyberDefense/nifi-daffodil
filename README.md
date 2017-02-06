@@ -1,4 +1,4 @@
-# Daffodil NiFi Processor
+# NiFi Daffodil Processors
 
 ## Overview
 
@@ -22,3 +22,7 @@ in Apache NiFi, run
 This command will create a nar file in `nifi-daffodil-nar/target/`, which can
 be copied to the Apache NiFi lib directory to install into the Apache NiFi
 environment.
+
+## License
+
+NiFi Daffodil Processors is licensed under the Apache Software License v2.
