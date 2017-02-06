@@ -200,7 +200,7 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
             });
             session.transfer(infoset, REL_SUCCESS);
             session.getProvenanceReporter().modifyContent(infoset, stopWatch.getElapsed(TimeUnit.MILLISECONDS));
-            logger.info("Processed {}", new Object[]{original});
+            logger.debug("Processed {}", new Object[]{original});
         } catch (ProcessException e) {
             logger.error("Failed to process {} due to {}", new Object[]{original, e});
             session.transfer(original, REL_FAILURE);
