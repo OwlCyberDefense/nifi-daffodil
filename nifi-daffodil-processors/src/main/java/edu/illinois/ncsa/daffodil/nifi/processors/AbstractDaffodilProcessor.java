@@ -56,7 +56,7 @@ import edu.illinois.ncsa.daffodil.japi.WithDiagnostics;
 
 public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
 
-    abstract protected void processWithDaffodil(final DataProcessor dp, final FlowFile ff, final InputStream rawIn, final OutputStream out) throws IOException;
+    abstract protected void processWithDaffodil(final DataProcessor dp, final FlowFile ff, final InputStream in, final OutputStream out) throws IOException;
 
     public static final PropertyDescriptor DFDL_SCHEMA_FILE = new PropertyDescriptor.Builder()
             .name("dfdl-schema-file")
@@ -191,15 +191,15 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
             .getValue();
 
         try {
-            FlowFile infoset = session.write(original, new StreamCallback() {
+            FlowFile output = session.write(original, new StreamCallback() {
                 @Override
-                public void process(final InputStream rawIn, final OutputStream out) throws IOException {
+                public void process(final InputStream in, final OutputStream out) throws IOException {
                     DataProcessor dp = getDataProcessor(dfdlSchema);
-                    processWithDaffodil(dp, original, rawIn, out);
+                    processWithDaffodil(dp, original, in, out);
                 }
             });
-            session.transfer(infoset, REL_SUCCESS);
-            session.getProvenanceReporter().modifyContent(infoset, stopWatch.getElapsed(TimeUnit.MILLISECONDS));
+            session.transfer(output, REL_SUCCESS);
+            session.getProvenanceReporter().modifyContent(output, stopWatch.getElapsed(TimeUnit.MILLISECONDS));
             logger.debug("Processed {}", new Object[]{original});
         } catch (ProcessException e) {
             logger.error("Failed to process {} due to {}", new Object[]{original, e});

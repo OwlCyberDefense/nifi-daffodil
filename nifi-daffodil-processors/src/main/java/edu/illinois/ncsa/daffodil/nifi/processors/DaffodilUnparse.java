@@ -47,10 +47,10 @@ import edu.illinois.ncsa.daffodil.japi.UnparseResult;
 public class DaffodilUnparse extends AbstractDaffodilProcessor {
 
     @Override
-    protected void processWithDaffodil(final DataProcessor dp, final FlowFile ff, final InputStream rawIn, final OutputStream out) throws IOException {
+    protected void processWithDaffodil(final DataProcessor dp, final FlowFile ff, final InputStream in, final OutputStream out) throws IOException {
         try {
             SAXBuilder sb = new SAXBuilder();
-            Document doc = sb.build(rawIn);
+            Document doc = sb.build(in);
             WritableByteChannel wbc = Channels.newChannel(out);
             UnparseResult ur = dp.unparse(wbc, doc);
             if (ur.isError()) {

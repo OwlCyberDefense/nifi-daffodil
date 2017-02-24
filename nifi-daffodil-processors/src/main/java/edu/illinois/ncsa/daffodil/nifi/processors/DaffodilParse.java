@@ -47,8 +47,8 @@ import edu.illinois.ncsa.daffodil.japi.ParseResult;
 public class DaffodilParse extends AbstractDaffodilProcessor {
 
     @Override
-    protected void processWithDaffodil(final DataProcessor dp, final FlowFile ff, final InputStream rawIn, final OutputStream out) throws IOException {
-        ReadableByteChannel rbc = Channels.newChannel(rawIn);
+    protected void processWithDaffodil(final DataProcessor dp, final FlowFile ff, final InputStream in, final OutputStream out) throws IOException {
+        ReadableByteChannel rbc = Channels.newChannel(in);
         ParseResult pr = dp.parse(rbc, ff.getSize() * 8);
         if (pr.isError()) {
             getLogger().error("Failed to parse {}", new Object[]{ff});
