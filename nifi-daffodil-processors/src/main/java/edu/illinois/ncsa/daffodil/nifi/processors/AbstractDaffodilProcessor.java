@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -30,7 +31,9 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.nifi.annotation.lifecycle.OnScheduled;
 import org.apache.nifi.components.PropertyDescriptor;
+import org.apache.nifi.components.AllowableValue;
 import org.apache.nifi.logging.ComponentLog;
+import org.apache.nifi.flowfile.attributes.CoreAttributes;
 import org.apache.nifi.flowfile.FlowFile;
 import org.apache.nifi.processor.AbstractProcessor;
 import org.apache.nifi.processor.ProcessContext;
@@ -56,7 +59,15 @@ import edu.illinois.ncsa.daffodil.japi.WithDiagnostics;
 
 public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
 
-    abstract protected void processWithDaffodil(final DataProcessor dp, final FlowFile ff, final InputStream in, final OutputStream out) throws IOException;
+    abstract protected void processWithDaffodil(final DataProcessor dp, final FlowFile ff, final InputStream in, final OutputStream out, String infosetType) throws IOException;
+
+    /**
+     * Returns the mime type of the resulting output FlowFile. If the mime type
+     * cannot be determine, this should return null, and the mime.type
+     * attribute will be removed from the output FlowFile.
+     */
+    abstract protected String getOutputMimeType(String infosetType);
+    abstract protected boolean isUnparse();
 
     public static final PropertyDescriptor DFDL_SCHEMA_FILE = new PropertyDescriptor.Builder()
             .name("dfdl-schema-file")
@@ -66,6 +77,17 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
             .expressionLanguageSupported(true)
             .addValidator(StandardValidators.FILE_EXISTS_VALIDATOR)
             .build();
+
+    static final String XML_MIME_TYPE = "application/xml";
+    static final String JSON_MIME_TYPE = "application/json";
+
+    static final String XML_VALUE = "xml";
+    static final String JSON_VALUE = "json";
+    static final String ATTRIBUTE_VALUE = "use mime.type attribute";
+
+    static final AllowableValue INFOSET_TYPE_XML = new AllowableValue(XML_VALUE, XML_VALUE, "The FlowFile representation is XML");
+    static final AllowableValue INFOSET_TYPE_JSON = new AllowableValue(JSON_VALUE, JSON_VALUE, "The FlowFile representation is JSON");
+    static final AllowableValue INFOSET_TYPE_ATTRIBUTE = new AllowableValue(ATTRIBUTE_VALUE, ATTRIBUTE_VALUE, "The FlowFile representation is determined based on the mime.type attribute");
 
     public static final PropertyDescriptor CACHE_SIZE = new PropertyDescriptor.Builder()
             .name("cache-size")
@@ -85,6 +107,15 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
             .addValidator(StandardValidators.TIME_PERIOD_VALIDATOR)
             .build();
 
+    /**
+     * This is not static like the other PropertyDescriptors. This is because
+     * the allowable values differ based on whether this is parse or unparse
+     * (mime.type attribute is not allow for parse). So on init() we will
+     * create this property descriptor accordingly.
+     */
+    private PropertyDescriptor INFOSET_TYPE = null;
+
+
     public static final Relationship REL_SUCCESS = new Relationship.Builder()
             .name("success")
             .description("When a parse/unparse is successful, the resulting FlowFile is routed to this relationship")
@@ -97,8 +128,24 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
 
     @Override
     protected void init(final ProcessorInitializationContext context) {
+        List<AllowableValue> allowableInfosetTypeValues = new ArrayList(Arrays.asList(INFOSET_TYPE_XML, INFOSET_TYPE_JSON));
+        if (isUnparse()) {
+            // using the mime type for infoset type only applies to unparse
+            allowableInfosetTypeValues.add(INFOSET_TYPE_ATTRIBUTE);
+        }
+
+        INFOSET_TYPE = new PropertyDescriptor.Builder()
+            .name("infoset-type")
+            .displayName("Infoset Type")
+            .description("The format of the FlowFile to output (for parsing) or input (for unparsing).")
+            .required(true)
+            .defaultValue(INFOSET_TYPE_XML.getValue())
+            .allowableValues(allowableInfosetTypeValues.toArray(new AllowableValue[allowableInfosetTypeValues.size()]))
+            .build();
+
         final List<PropertyDescriptor> properties = new ArrayList<>();
         properties.add(DFDL_SCHEMA_FILE);
+        properties.add(INFOSET_TYPE);
         properties.add(CACHE_SIZE);
         properties.add(CACHE_TTL_AFTER_LAST_ACCESS);
         this.properties = Collections.unmodifiableList(properties);
@@ -186,18 +233,40 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
 
         final ComponentLog logger = getLogger();
         final StopWatch stopWatch = new StopWatch(true);
-        final String dfdlSchema = context.getProperty(DFDL_SCHEMA_FILE)
-            .evaluateAttributeExpressions(original)
-            .getValue();
+        final String dfdlSchema = context.getProperty(DFDL_SCHEMA_FILE).evaluateAttributeExpressions(original).getValue();
+        String infosetTypeValue = context.getProperty(INFOSET_TYPE).getValue();
+        final String infosetType;
+
+        if (infosetTypeValue.equals(ATTRIBUTE_VALUE)) {
+            if (!isUnparse()) { throw new AssertionError("infoset type 'attribute' should only occur with Daffodil unparse"); }
+
+            String inputMimeType = original.getAttribute(CoreAttributes.MIME_TYPE.key());
+            switch (inputMimeType == null ? "" : inputMimeType) {
+                case XML_MIME_TYPE: infosetType = XML_VALUE; break;
+                case JSON_MIME_TYPE: infosetType = JSON_VALUE; break;
+                default:
+                    logger.error("Infoset Type is 'attribute', but the mime.type attribute is not set or not recognized for {}.", new Object[]{original});
+                    session.transfer(original, REL_FAILURE);
+                    return;
+            }
+        } else {
+            infosetType = infosetTypeValue;
+        }
 
         try {
             FlowFile output = session.write(original, new StreamCallback() {
                 @Override
                 public void process(final InputStream in, final OutputStream out) throws IOException {
                     DataProcessor dp = getDataProcessor(dfdlSchema);
-                    processWithDaffodil(dp, original, in, out);
+                    processWithDaffodil(dp, original, in, out, infosetType);
                 }
             });
+            final String outputMimeType = getOutputMimeType(infosetType);
+            if (outputMimeType != null) {
+                output = session.putAttribute(output, CoreAttributes.MIME_TYPE.key(), outputMimeType);
+            } else {
+                output = session.removeAttribute(output, CoreAttributes.MIME_TYPE.key());
+            }
             session.transfer(output, REL_SUCCESS);
             session.getProvenanceReporter().modifyContent(output, stopWatch.getElapsed(TimeUnit.MILLISECONDS));
             logger.debug("Processed {}", new Object[]{original});

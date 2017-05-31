@@ -23,12 +23,14 @@ import java.nio.file.Paths;
 import java.util.Map;
 import java.util.HashMap;
 
+import org.apache.nifi.flowfile.attributes.CoreAttributes;
 import org.apache.nifi.util.MockFlowFile;
 import org.apache.nifi.util.TestRunner;
 import org.apache.nifi.util.TestRunners;
 
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 
 public class TestDaffodilProcessor {
@@ -62,6 +64,7 @@ public class TestDaffodilProcessor {
         final MockFlowFile infoset = testRunner.getFlowFilesForRelationship(DaffodilParse.REL_SUCCESS).get(0);
         final String expectedContent = new String(Files.readAllBytes(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv.xml")));
         infoset.assertContentEquals(expectedContent);
+        assertEquals(DaffodilParse.XML_MIME_TYPE, infoset.getAttribute(CoreAttributes.MIME_TYPE.key()));
     }
 
     @Test
@@ -81,12 +84,15 @@ public class TestDaffodilProcessor {
     public void testUnparseCSV() throws IOException {
         final TestRunner testRunner = TestRunners.newTestRunner(DaffodilUnparse.class);
         testRunner.setProperty(DaffodilUnparse.DFDL_SCHEMA_FILE, "src/test/resources/TestDaffodilProcessor/csv.dfdl.xsd");
-        testRunner.enqueue(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv.xml"));
+        final Map<String, String> attributes = new HashMap<>();
+        attributes.put(CoreAttributes.MIME_TYPE.key(), DaffodilUnparse.XML_MIME_TYPE);
+        testRunner.enqueue(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv.xml"), attributes);
         testRunner.run();
         testRunner.assertAllFlowFilesTransferred(DaffodilUnparse.REL_SUCCESS);
         final MockFlowFile infoset = testRunner.getFlowFilesForRelationship(DaffodilUnparse.REL_SUCCESS).get(0);
         final String expectedContent = new String(Files.readAllBytes(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv")));
         infoset.assertContentEquals(expectedContent);
+        assertEquals(null, infoset.getAttribute(CoreAttributes.MIME_TYPE.key()));
     }
 
     @Test
@@ -128,4 +134,105 @@ public class TestDaffodilProcessor {
         final String expectedContent = new String(Files.readAllBytes(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv.xml")));
         infoset.assertContentEquals(expectedContent);
     }
+
+    @Test
+    public void testParseCSVJson() throws IOException {
+        final TestRunner testRunner = TestRunners.newTestRunner(DaffodilParse.class);
+        testRunner.setProperty(DaffodilParse.DFDL_SCHEMA_FILE, "src/test/resources/TestDaffodilProcessor/csv.dfdl.xsd");
+        testRunner.setProperty("infoset-type", DaffodilParse.JSON_VALUE);
+        testRunner.enqueue(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv"));
+        testRunner.run();
+        testRunner.assertAllFlowFilesTransferred(DaffodilParse.REL_SUCCESS);
+        final MockFlowFile infoset = testRunner.getFlowFilesForRelationship(DaffodilParse.REL_SUCCESS).get(0);
+        final String expectedContent = new String(Files.readAllBytes(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv.json")));
+        infoset.assertContentEquals(expectedContent);
+        assertEquals(DaffodilParse.JSON_MIME_TYPE, infoset.getAttribute(CoreAttributes.MIME_TYPE.key()));
+    }
+
+    @Test
+    public void testUnparseCSVJson() throws IOException {
+        final TestRunner testRunner = TestRunners.newTestRunner(DaffodilUnparse.class);
+        testRunner.setProperty(DaffodilUnparse.DFDL_SCHEMA_FILE, "src/test/resources/TestDaffodilProcessor/csv.dfdl.xsd");
+        testRunner.setProperty("infoset-type", DaffodilUnparse.JSON_VALUE);
+        final Map<String, String> attributes = new HashMap<>();
+        attributes.put(CoreAttributes.MIME_TYPE.key(), DaffodilUnparse.JSON_MIME_TYPE);
+        testRunner.enqueue(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv.json"), attributes);
+        testRunner.run();
+        testRunner.assertAllFlowFilesTransferred(DaffodilUnparse.REL_SUCCESS);
+        final MockFlowFile infoset = testRunner.getFlowFilesForRelationship(DaffodilUnparse.REL_SUCCESS).get(0);
+        final String expectedContent = new String(Files.readAllBytes(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv")));
+        infoset.assertContentEquals(expectedContent);
+        assertEquals(null, infoset.getAttribute(CoreAttributes.MIME_TYPE.key()));
+    }
+
+    @Test
+    public void testParseCSVAttributeInvalid() throws IOException {
+        final TestRunner testRunner = TestRunners.newTestRunner(DaffodilParse.class);
+        testRunner.setProperty(DaffodilParse.DFDL_SCHEMA_FILE, "src/test/resources/TestDaffodilProcessor/csv.dfdl.xsd");
+        testRunner.setProperty("infoset-type", DaffodilParse.ATTRIBUTE_VALUE);
+        testRunner.assertNotValid();
+    }
+
+    @Test
+    public void testUnparseCSVAttributeJSON() throws IOException {
+        final TestRunner testRunner = TestRunners.newTestRunner(DaffodilUnparse.class);
+        testRunner.setProperty(DaffodilUnparse.DFDL_SCHEMA_FILE, "src/test/resources/TestDaffodilProcessor/csv.dfdl.xsd");
+        testRunner.setProperty("infoset-type", DaffodilUnparse.ATTRIBUTE_VALUE);
+        final Map<String, String> attributes = new HashMap<>();
+        attributes.put(CoreAttributes.MIME_TYPE.key(), DaffodilUnparse.JSON_MIME_TYPE);
+        testRunner.enqueue(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv.json"), attributes);
+        testRunner.run();
+        testRunner.assertAllFlowFilesTransferred(DaffodilUnparse.REL_SUCCESS);
+        final MockFlowFile infoset = testRunner.getFlowFilesForRelationship(DaffodilUnparse.REL_SUCCESS).get(0);
+        final String expectedContent = new String(Files.readAllBytes(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv")));
+        infoset.assertContentEquals(expectedContent);
+        assertEquals(null, infoset.getAttribute(CoreAttributes.MIME_TYPE.key()));
+    }
+
+    @Test
+    public void testUnparseCSVAttributeXML() throws IOException {
+        final TestRunner testRunner = TestRunners.newTestRunner(DaffodilUnparse.class);
+        testRunner.setProperty(DaffodilUnparse.DFDL_SCHEMA_FILE, "src/test/resources/TestDaffodilProcessor/csv.dfdl.xsd");
+        testRunner.setProperty("infoset-type", DaffodilUnparse.ATTRIBUTE_VALUE);
+        final Map<String, String> attributes = new HashMap<>();
+        attributes.put(CoreAttributes.MIME_TYPE.key(), DaffodilUnparse.XML_MIME_TYPE);
+        testRunner.enqueue(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv.xml"), attributes);
+        testRunner.run();
+        testRunner.assertAllFlowFilesTransferred(DaffodilUnparse.REL_SUCCESS);
+        final MockFlowFile infoset = testRunner.getFlowFilesForRelationship(DaffodilUnparse.REL_SUCCESS).get(0);
+        final String expectedContent = new String(Files.readAllBytes(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv")));
+        infoset.assertContentEquals(expectedContent);
+        assertEquals(null, infoset.getAttribute(CoreAttributes.MIME_TYPE.key()));
+    }
+
+    @Test
+    public void testUnparseCSVAttributeUndefined() throws IOException {
+        final TestRunner testRunner = TestRunners.newTestRunner(DaffodilUnparse.class);
+        testRunner.setProperty(DaffodilUnparse.DFDL_SCHEMA_FILE, "src/test/resources/TestDaffodilProcessor/csv.dfdl.xsd");
+        testRunner.setProperty("infoset-type", DaffodilUnparse.ATTRIBUTE_VALUE);
+        final Map<String, String> attributes = new HashMap<>();
+        testRunner.enqueue(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv.xml"), attributes);
+        testRunner.run();
+        testRunner.assertAllFlowFilesTransferred(DaffodilParse.REL_FAILURE);
+        final MockFlowFile original = testRunner.getFlowFilesForRelationship(DaffodilParse.REL_FAILURE).get(0);
+        final String expectedContent = new String(Files.readAllBytes(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv.xml")));
+        original.assertContentEquals(expectedContent);
+    }
+
+    @Test
+    public void testUnparseCSVAttributeUnknown() throws IOException {
+        final TestRunner testRunner = TestRunners.newTestRunner(DaffodilUnparse.class);
+        testRunner.setProperty(DaffodilUnparse.DFDL_SCHEMA_FILE, "src/test/resources/TestDaffodilProcessor/csv.dfdl.xsd");
+        testRunner.setProperty("infoset-type", DaffodilUnparse.ATTRIBUTE_VALUE);
+        final Map<String, String> attributes = new HashMap<>();
+        attributes.put(CoreAttributes.MIME_TYPE.key(), "application/unknown");
+        testRunner.enqueue(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv.xml"), attributes);
+        testRunner.run();
+        testRunner.assertAllFlowFilesTransferred(DaffodilParse.REL_FAILURE);
+        final MockFlowFile original = testRunner.getFlowFilesForRelationship(DaffodilParse.REL_FAILURE).get(0);
+        final String expectedContent = new String(Files.readAllBytes(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv.xml")));
+        original.assertContentEquals(expectedContent);
+        assertEquals("application/unknown", original.getAttribute(CoreAttributes.MIME_TYPE.key()));
+    }
+
 }

@@ -18,7 +18,9 @@ package edu.illinois.ncsa.daffodil.nifi.processors;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.Reader;
 import java.nio.channels.Channels;
 import java.nio.channels.WritableByteChannel;
 
@@ -27,39 +29,58 @@ import org.apache.nifi.annotation.behavior.InputRequirement;
 import org.apache.nifi.annotation.behavior.InputRequirement.Requirement;
 import org.apache.nifi.annotation.behavior.SideEffectFree;
 import org.apache.nifi.annotation.behavior.SupportsBatching;
+import org.apache.nifi.annotation.behavior.WritesAttribute;
 import org.apache.nifi.annotation.documentation.CapabilityDescription;
 import org.apache.nifi.annotation.documentation.Tags;
 import org.apache.nifi.flowfile.FlowFile;
 
-import org.jdom2.Document;
-import org.jdom2.JDOMException;
-import org.jdom2.input.SAXBuilder;
-
 import edu.illinois.ncsa.daffodil.japi.DataProcessor;
 import edu.illinois.ncsa.daffodil.japi.UnparseResult;
+import edu.illinois.ncsa.daffodil.japi.infoset.InfosetInputter;
+import edu.illinois.ncsa.daffodil.japi.infoset.JsonInfosetInputter;
+import edu.illinois.ncsa.daffodil.japi.infoset.XMLTextInfosetInputter;
 
 @EventDriven
 @SideEffectFree
 @SupportsBatching
 @InputRequirement(Requirement.INPUT_REQUIRED)
-@Tags({"xml", "daffodil", "dfdl", "schema", "xsd"})
-@CapabilityDescription("Use Daffodil and a user-specified DFDL schema to transform an XML representation of data back to the original data format.")
+@Tags({"xml", "json", "daffodil", "dfdl", "schema", "xsd"})
+@CapabilityDescription("Use Daffodil and a user-specified DFDL schema to transform an XML or JSON representation of data back to the original data format.")
+@WritesAttribute(attribute = "mime.type", description = "If the FlowFile is successfully unparsed, this attriute is removed, as the MIME Type is no longer known.")
 public class DaffodilUnparse extends AbstractDaffodilProcessor {
 
+    private InfosetInputter getInfosetInputter(String infosetType, Reader rdr) {
+        switch (infosetType) {
+            case XML_VALUE: return new XMLTextInfosetInputter(rdr);
+            case JSON_VALUE: return new JsonInfosetInputter(rdr);
+            default: throw new AssertionError("Unhandled infoset type: " + infosetType);
+        }
+    }
+
     @Override
-    protected void processWithDaffodil(final DataProcessor dp, final FlowFile ff, final InputStream in, final OutputStream out) throws IOException {
-        try {
-            SAXBuilder sb = new SAXBuilder();
-            Document doc = sb.build(in);
-            WritableByteChannel wbc = Channels.newChannel(out);
-            UnparseResult ur = dp.unparse(wbc, doc);
-            if (ur.isError()) {
-                getLogger().error("Failed to unparse {}", new Object[]{ff});
-                logDiagnostics(ur);
-                throw new DaffodilProcessingException("Failed to unparse");
-            }
-        } catch (JDOMException e) {
-            throw new IOException(e);
+    protected boolean isUnparse() { return true; }
+
+    /**
+     * The resulting output mime type of an unparse action cannot be known
+     * since it is entirely based on the DFDL schema. Since we do not know the
+     * mime type, return null. This will signifiy to the abstract daffodil
+     * processor that the mime.type attribute should be removed from the output
+     * FlowFile.
+     */
+    @Override
+    protected String getOutputMimeType(String infosetType) {
+        return null;
+    }
+
+    @Override
+    protected void processWithDaffodil(final DataProcessor dp, final FlowFile ff, final InputStream in, final OutputStream out, String infosetType) throws IOException {
+        InfosetInputter inputter = getInfosetInputter(infosetType, new InputStreamReader(in));
+        WritableByteChannel wbc = Channels.newChannel(out);
+        UnparseResult ur = dp.unparse(inputter, wbc);
+        if (ur.isError()) {
+            getLogger().error("Failed to unparse {}", new Object[]{ff});
+            logDiagnostics(ur);
+            throw new DaffodilProcessingException("Failed to unparse");
         }
     }
 

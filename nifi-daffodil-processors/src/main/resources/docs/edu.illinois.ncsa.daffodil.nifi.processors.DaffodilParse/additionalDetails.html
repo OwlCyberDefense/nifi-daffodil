@@ -24,8 +24,8 @@
 <body>
 <h2>Description</h2>
 <p>
-    This processor uses Daffodil and a user-specified DFDL schema to parse data into an XML representation,
-    called the DFDL infoset. Upon a successful parse of the incoming FlowFile, the resulting DFDL infoset is
+    This processor uses Daffodil and a user-specified DFDL schema to parse data into an XML or JSON representation,
+    called the DFDL infoset. Upon a successful parse of the incoming FlowFile, the resulting infoset is
     transferred to the <i>success</i> Relationship. Upon a failed parse, the incoming FlowFile is transferred
     to the <i>failure</i> Relationship.
 </p>
@@ -37,10 +37,10 @@
     is a language capable of describing many data formats, including textual and binary, commercial
     record-oriented, scientific and numeric, modern and legacy, and many industry standards. It leverages XML
     technology and concepts, using a subset of W3C XML schema type system and annotations to describe such
-    data. Daffodil uses this data description to "parse" data into an XML representation of the data. This
-    allows one to take advantage of the many XML technologies (e.g. XQuery, XPath, XSLT) to ingest, validate,
+    data. Daffodil uses this data description to "parse" data into an XML or JSON representation of the data. This
+    allows one to take advantage of the many XML and JSON technologies (e.g. XQuery, XPath, XSLT) to ingest, validate,
     and manipulate complex data formats. Daffodil can also use this data description to "unparse", or
-    serialize, the XML representation back to the original data format.
+    serialize, the XML or JSON representation back to the original data format.
 </p>
 <p>
     Publicly available DFDL schemas are available on the <a href="https://github.com/DFDLSchemas">DFDL Schemas github</a>.

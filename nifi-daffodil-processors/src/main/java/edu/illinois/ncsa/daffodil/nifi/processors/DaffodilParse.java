@@ -19,6 +19,8 @@ package edu.illinois.ncsa.daffodil.nifi.processors;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
@@ -27,37 +29,59 @@ import org.apache.nifi.annotation.behavior.InputRequirement;
 import org.apache.nifi.annotation.behavior.InputRequirement.Requirement;
 import org.apache.nifi.annotation.behavior.SideEffectFree;
 import org.apache.nifi.annotation.behavior.SupportsBatching;
+import org.apache.nifi.annotation.behavior.WritesAttribute;
 import org.apache.nifi.annotation.documentation.CapabilityDescription;
 import org.apache.nifi.annotation.documentation.Tags;
 import org.apache.nifi.flowfile.FlowFile;
 
-import org.jdom2.Document;
-import org.jdom2.output.XMLOutputter;
-
 import edu.illinois.ncsa.daffodil.japi.DataProcessor;
 import edu.illinois.ncsa.daffodil.japi.ParseResult;
+import edu.illinois.ncsa.daffodil.japi.infoset.InfosetOutputter;
+import edu.illinois.ncsa.daffodil.japi.infoset.JsonInfosetOutputter;
+import edu.illinois.ncsa.daffodil.japi.infoset.XMLTextInfosetOutputter;
 
 
 @EventDriven
 @SideEffectFree
 @SupportsBatching
 @InputRequirement(Requirement.INPUT_REQUIRED)
-@Tags({"xml", "daffodil", "dfdl", "schema", "xsd"})
-@CapabilityDescription("Use Daffodil and a user-specified DFDL schema to transform data to an XML representation.")
+@Tags({"xml", "json", "daffodil", "dfdl", "schema", "xsd"})
+@CapabilityDescription("Use Daffodil and a user-specified DFDL schema to transform data to an infoset, represented by either XML or JSON.")
+@WritesAttribute(attribute = "mime.type", description = "Sets the mime type to application/json or application/xml based on the infoset type.")
 public class DaffodilParse extends AbstractDaffodilProcessor {
 
+    private InfosetOutputter getInfosetOutputter(String infosetType, Writer wtr) {
+        switch (infosetType) {
+            case XML_VALUE: return new XMLTextInfosetOutputter(wtr, false);
+            case JSON_VALUE: return new JsonInfosetOutputter(wtr, false);
+            default: throw new AssertionError("Unhandled infoset type: " + infosetType);
+        }
+    }
+
     @Override
-    protected void processWithDaffodil(final DataProcessor dp, final FlowFile ff, final InputStream in, final OutputStream out) throws IOException {
+    protected boolean isUnparse() { return false; }
+
+    @Override
+    protected String getOutputMimeType(String infosetType) {
+        switch (infosetType) {
+            case XML_VALUE: return XML_MIME_TYPE;
+            case JSON_VALUE: return JSON_MIME_TYPE;
+            default: throw new AssertionError("Unhandled infoset type: " + infosetType);
+        }
+    }
+
+    @Override
+    protected void processWithDaffodil(final DataProcessor dp, final FlowFile ff, final InputStream in, final OutputStream out, String infosetType) throws IOException {
         ReadableByteChannel rbc = Channels.newChannel(in);
-        ParseResult pr = dp.parse(rbc, ff.getSize() * 8);
+        OutputStreamWriter osr = new OutputStreamWriter(out);
+        InfosetOutputter outputter = getInfosetOutputter(infosetType, osr);
+        ParseResult pr = dp.parse(rbc, outputter, ff.getSize() * 8);
         if (pr.isError()) {
             getLogger().error("Failed to parse {}", new Object[]{ff});
             logDiagnostics(pr);
             throw new DaffodilProcessingException("Failed to parse");
         }
-        Document doc = pr.result();
-        XMLOutputter xmlOut = new XMLOutputter();
-        xmlOut.output(doc, out);
+        osr.flush();
     }
 
 }
