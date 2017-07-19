@@ -34,6 +34,7 @@ import org.apache.nifi.annotation.documentation.CapabilityDescription;
 import org.apache.nifi.annotation.documentation.Tags;
 import org.apache.nifi.flowfile.FlowFile;
 
+import edu.illinois.ncsa.daffodil.japi.DataLocation;
 import edu.illinois.ncsa.daffodil.japi.DataProcessor;
 import edu.illinois.ncsa.daffodil.japi.ParseResult;
 import edu.illinois.ncsa.daffodil.japi.infoset.InfosetOutputter;
@@ -80,6 +81,13 @@ public class DaffodilParse extends AbstractDaffodilProcessor {
             getLogger().error("Failed to parse {}", new Object[]{ff});
             logDiagnostics(pr);
             throw new DaffodilProcessingException("Failed to parse");
+        }
+        DataLocation loc = pr.location();
+        long bitsRead = loc.bitPos1b() - 1;
+        long expectedBits = ff.getSize() * 8;
+        if (expectedBits != bitsRead) {
+            getLogger().error("Left over data. Consumed {} bit(s) with {} bit(s) remaining when parsing {}", new Object[]{bitsRead, expectedBits - bitsRead, ff});
+            throw new DaffodilProcessingException("Left over data found");
         }
         osr.flush();
     }

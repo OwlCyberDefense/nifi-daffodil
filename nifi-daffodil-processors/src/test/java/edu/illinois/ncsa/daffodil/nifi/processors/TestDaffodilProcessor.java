@@ -235,4 +235,28 @@ public class TestDaffodilProcessor {
         assertEquals("application/unknown", original.getAttribute(CoreAttributes.MIME_TYPE.key()));
     }
 
+    @Test
+    public void testParseLeftOverData() throws IOException {
+        final TestRunner testRunner = TestRunners.newTestRunner(DaffodilParse.class);
+        testRunner.setProperty(DaffodilParse.DFDL_SCHEMA_FILE, "src/test/resources/TestDaffodilProcessor/bitlength.dfdl.xsd");
+        testRunner.enqueue(Paths.get("src/test/resources/TestDaffodilProcessor/leftover.bin"));
+        testRunner.run();
+        testRunner.assertAllFlowFilesTransferred(DaffodilParse.REL_FAILURE);
+        final MockFlowFile original = testRunner.getFlowFilesForRelationship(DaffodilParse.REL_FAILURE).get(0);
+        final byte[] expectedContent = Files.readAllBytes(Paths.get("src/test/resources/TestDaffodilProcessor/leftover.bin"));
+        original.assertContentEquals(expectedContent);
+    }
+
+    @Test
+    public void testParseNoLeftOverData() throws IOException {
+        final TestRunner testRunner = TestRunners.newTestRunner(DaffodilParse.class);
+        testRunner.setProperty(DaffodilParse.DFDL_SCHEMA_FILE, "src/test/resources/TestDaffodilProcessor/bitlength.dfdl.xsd");
+        testRunner.enqueue(Paths.get("src/test/resources/TestDaffodilProcessor/noleftover.bin"));
+        testRunner.run();
+        testRunner.assertAllFlowFilesTransferred(DaffodilParse.REL_SUCCESS);
+        final MockFlowFile infoset = testRunner.getFlowFilesForRelationship(DaffodilParse.REL_SUCCESS).get(0);
+        final String expectedContent = new String(Files.readAllBytes(Paths.get("src/test/resources/TestDaffodilProcessor/noleftover.bin.xml")));
+        infoset.assertContentEquals(expectedContent);
+    }
+
 }
