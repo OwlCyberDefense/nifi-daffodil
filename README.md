@@ -10,7 +10,7 @@ data to/from an XML infoset. The two processor included are:
 
 * DaffodilParse: Reads a FlowFile and parses the data into an XML infoset
 * DaffodilUnparse: Reads a FlowFile, in the form of an XML infoset, and
-  unaprses the infoset to the original file format
+  unparses the infoset to the original file format
 
 ## Build Instructions
 

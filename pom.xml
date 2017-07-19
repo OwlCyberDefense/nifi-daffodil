@@ -24,7 +24,7 @@
 
     <groupId>edu.illinois.ncsa</groupId>
     <artifactId>nifi-daffodil</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>pom</packaging>
 
     <modules>
