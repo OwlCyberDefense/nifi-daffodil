@@ -259,4 +259,30 @@ public class TestDaffodilProcessor {
         infoset.assertContentEquals(expectedContent);
     }
 
+    @Test
+    public void testParseCSVValidationLimited() throws IOException {
+        final TestRunner testRunner = TestRunners.newTestRunner(DaffodilParse.class);
+        testRunner.setProperty(DaffodilParse.DFDL_SCHEMA_FILE, "src/test/resources/TestDaffodilProcessor/csv.dfdl.xsd");
+        testRunner.setProperty(DaffodilParse.VALIDATION_MODE, DaffodilParse.LIMITED_VALUE);
+        testRunner.enqueue(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv"));
+        testRunner.run();
+        testRunner.assertAllFlowFilesTransferred(DaffodilParse.REL_FAILURE);
+        final MockFlowFile infoset = testRunner.getFlowFilesForRelationship(DaffodilParse.REL_FAILURE).get(0);
+        final String expectedContent = new String(Files.readAllBytes(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv")));
+        infoset.assertContentEquals(expectedContent);
+    }
+
+    @Test
+    public void testParseCSVValidationFull() throws IOException {
+        final TestRunner testRunner = TestRunners.newTestRunner(DaffodilParse.class);
+        testRunner.setProperty(DaffodilParse.DFDL_SCHEMA_FILE, "src/test/resources/TestDaffodilProcessor/csv.dfdl.xsd");
+        testRunner.setProperty(DaffodilParse.VALIDATION_MODE, DaffodilParse.FULL_VALUE);
+        testRunner.enqueue(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv"));
+        testRunner.run();
+        testRunner.assertAllFlowFilesTransferred(DaffodilParse.REL_FAILURE);
+        final MockFlowFile infoset = testRunner.getFlowFilesForRelationship(DaffodilParse.REL_FAILURE).get(0);
+        final String expectedContent = new String(Files.readAllBytes(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv")));
+        infoset.assertContentEquals(expectedContent);
+    }
+
 }

@@ -20,7 +20,7 @@
   xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:ex="http://example.com"
   targetNamespace="http://example.com" elementFormDefault="unqualified">
 
-  <xs:include schemaLocation="xsd/built-in-formats.xsd" />
+  <xs:include schemaLocation="edu/illinois/ncsa/daffodil/xsd/built-in-formats.xsd" />
 
   <xs:annotation>
     <xs:appinfo source="http://www.ogf.org/dfdl/">
@@ -53,9 +53,15 @@
         <xs:element name="record" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence dfdl:separator=",">
-              <xs:element name="item" type="xs:string" maxOccurs="unbounded"
+              <xs:element name="item" maxOccurs="unbounded"
                 dfdl:occursCount="{ fn:count(../../header/title) }"
-                dfdl:occursCountKind="expression" />
+                dfdl:occursCountKind="expression">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
             </xs:sequence>
           </xs:complexType>
         </xs:element>

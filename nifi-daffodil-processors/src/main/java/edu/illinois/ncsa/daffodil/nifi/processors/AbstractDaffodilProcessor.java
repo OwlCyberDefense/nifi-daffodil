@@ -55,6 +55,8 @@ import edu.illinois.ncsa.daffodil.japi.DataProcessor;
 import edu.illinois.ncsa.daffodil.japi.Diagnostic;
 import edu.illinois.ncsa.daffodil.japi.ProcessorFactory;
 import edu.illinois.ncsa.daffodil.japi.WithDiagnostics;
+import edu.illinois.ncsa.daffodil.japi.ValidationMode;
+import edu.illinois.ncsa.daffodil.japi.InvalidUsageException;
 
 
 public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
@@ -107,6 +109,23 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
             .addValidator(StandardValidators.TIME_PERIOD_VALIDATOR)
             .build();
 
+    static final String OFF_VALUE = "off";
+    static final String LIMITED_VALUE = "limited";
+    static final String FULL_VALUE = "full";
+
+    static final AllowableValue VALIDATION_MODE_OFF = new AllowableValue(OFF_VALUE, OFF_VALUE, "Disable infoset validation");
+    static final AllowableValue VALIDATION_MODE_LIMITED= new AllowableValue(LIMITED_VALUE, LIMITED_VALUE, "Facet/restriction validation using Daffodil");
+    static final AllowableValue VALIDATION_MODE_FULL = new AllowableValue(FULL_VALUE, FULL_VALUE, "Full schema validation using Xerces");
+
+    public static final PropertyDescriptor VALIDATION_MODE = new PropertyDescriptor.Builder()
+            .name("validation-mode")
+            .displayName("Validation Mode")
+            .description("The type of validation to be performed on the infoset.")
+            .required(true)
+            .defaultValue(OFF_VALUE)
+            .allowableValues(VALIDATION_MODE_OFF, VALIDATION_MODE_LIMITED, VALIDATION_MODE_FULL)
+            .build();
+
     /**
      * This is not static like the other PropertyDescriptors. This is because
      * the allowable values differ based on whether this is parse or unparse
@@ -146,6 +165,7 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
         final List<PropertyDescriptor> properties = new ArrayList<>();
         properties.add(DFDL_SCHEMA_FILE);
         properties.add(INFOSET_TYPE);
+        properties.add(VALIDATION_MODE);
         properties.add(CACHE_SIZE);
         properties.add(CACHE_TTL_AFTER_LAST_ACCESS);
         this.properties = Collections.unmodifiableList(properties);
@@ -236,6 +256,14 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
         final String dfdlSchema = context.getProperty(DFDL_SCHEMA_FILE).evaluateAttributeExpressions(original).getValue();
         String infosetTypeValue = context.getProperty(INFOSET_TYPE).getValue();
         final String infosetType;
+        final ValidationMode validationMode;
+
+        switch (context.getProperty(VALIDATION_MODE).getValue()) {
+            case OFF_VALUE: validationMode = ValidationMode.Off; break;
+            case LIMITED_VALUE: validationMode = ValidationMode.Limited; break;
+            case FULL_VALUE: validationMode = ValidationMode.Full; break;
+            default: throw new AssertionError("validation mode was not one of 'off', 'limited', or 'full'");
+        }
 
         if (infosetTypeValue.equals(ATTRIBUTE_VALUE)) {
             if (!isUnparse()) { throw new AssertionError("infoset type 'attribute' should only occur with Daffodil unparse"); }
@@ -258,6 +286,11 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
                 @Override
                 public void process(final InputStream in, final OutputStream out) throws IOException {
                     DataProcessor dp = getDataProcessor(dfdlSchema);
+                    try {
+                        dp.setValidationMode(validationMode);
+                    } catch (InvalidUsageException e) {
+                        throw new IOException(e);
+                    }
                     processWithDaffodil(dp, original, in, out, infosetType);
                 }
             });
