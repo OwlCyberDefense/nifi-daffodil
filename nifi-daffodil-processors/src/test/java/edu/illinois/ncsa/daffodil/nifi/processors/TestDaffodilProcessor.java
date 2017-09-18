@@ -81,6 +81,33 @@ public class TestDaffodilProcessor {
     }
 
     @Test
+    public void testParseCSVPreCompiled() throws IOException {
+        final TestRunner testRunner = TestRunners.newTestRunner(DaffodilParse.class);
+        testRunner.setProperty(DaffodilParse.DFDL_SCHEMA_FILE, "src/test/resources/TestDaffodilProcessor/csv.dfdl.xsd.bin");
+        testRunner.setProperty(DaffodilParse.PRE_COMPILED_SCHEMA, "true");
+        testRunner.enqueue(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv"));
+        testRunner.run();
+        testRunner.assertAllFlowFilesTransferred(DaffodilParse.REL_SUCCESS);
+        final MockFlowFile infoset = testRunner.getFlowFilesForRelationship(DaffodilParse.REL_SUCCESS).get(0);
+        final String expectedContent = new String(Files.readAllBytes(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv.xml")));
+        infoset.assertContentEquals(expectedContent);
+        assertEquals(DaffodilParse.XML_MIME_TYPE, infoset.getAttribute(CoreAttributes.MIME_TYPE.key()));
+    }
+
+    @Test
+    public void testParseCSVPreCompiledFail() throws IOException {
+        final TestRunner testRunner = TestRunners.newTestRunner(DaffodilParse.class);
+        testRunner.setProperty(DaffodilParse.DFDL_SCHEMA_FILE, "src/test/resources/TestDaffodilProcessor/csv.dfdl.xsd");
+        testRunner.setProperty(DaffodilParse.PRE_COMPILED_SCHEMA, "true");
+        testRunner.enqueue(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv"));
+        testRunner.run();
+        testRunner.assertAllFlowFilesTransferred(DaffodilParse.REL_FAILURE);
+        final MockFlowFile infoset = testRunner.getFlowFilesForRelationship(DaffodilParse.REL_FAILURE).get(0);
+        final String expectedContent = new String(Files.readAllBytes(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv")));
+        infoset.assertContentEquals(expectedContent);
+    }
+
+    @Test
     public void testUnparseCSV() throws IOException {
         final TestRunner testRunner = TestRunners.newTestRunner(DaffodilUnparse.class);
         testRunner.setProperty(DaffodilUnparse.DFDL_SCHEMA_FILE, "src/test/resources/TestDaffodilProcessor/csv.dfdl.xsd");

@@ -57,6 +57,7 @@ import edu.illinois.ncsa.daffodil.japi.ProcessorFactory;
 import edu.illinois.ncsa.daffodil.japi.WithDiagnostics;
 import edu.illinois.ncsa.daffodil.japi.ValidationMode;
 import edu.illinois.ncsa.daffodil.japi.InvalidUsageException;
+import edu.illinois.ncsa.daffodil.japi.InvalidParserException;
 
 
 public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
@@ -78,6 +79,17 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
             .required(true)
             .expressionLanguageSupported(true)
             .addValidator(StandardValidators.FILE_EXISTS_VALIDATOR)
+            .build();
+
+    public static final PropertyDescriptor PRE_COMPILED_SCHEMA = new PropertyDescriptor.Builder()
+            .name("pre-compiled-schema")
+            .displayName("Pre-compiled Schema")
+            .description("Specify whether the DFDL Schema File is a pre-compiled schema that can be reloaded or if it is an XML schema that needs to be compiled. Set to true if it is pre-compiled.")
+            .required(true)
+            .defaultValue("false")
+            .allowableValues("true", "false")
+            .expressionLanguageSupported(true)
+            .addValidator(StandardValidators.BOOLEAN_VALIDATOR)
             .build();
 
     static final String XML_MIME_TYPE = "application/xml";
@@ -164,6 +176,7 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
 
         final List<PropertyDescriptor> properties = new ArrayList<>();
         properties.add(DFDL_SCHEMA_FILE);
+        properties.add(PRE_COMPILED_SCHEMA);
         properties.add(INFOSET_TYPE);
         properties.add(VALIDATION_MODE);
         properties.add(CACHE_SIZE);
@@ -178,7 +191,17 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
 
     private List<PropertyDescriptor> properties;
     private Set<Relationship> relationships;
-    private LoadingCache<String, DataProcessor> cache;
+    private LoadingCache<CacheKey, DataProcessor> cache;
+
+    class CacheKey {
+        public String dfdlSchema;
+        public Boolean preCompiled;
+
+        public CacheKey(String dfdlSchema, Boolean preCompiled) {
+            this.dfdlSchema = dfdlSchema;
+            this.preCompiled = preCompiled;
+        }
+    }
 
     @Override
     public Set<Relationship> getRelationships() {
@@ -190,33 +213,43 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
         return properties;
     }
 
-    private DataProcessor newDaffodilDataProcessor(String dfdlSchema) throws IOException {
+    private DataProcessor newDaffodilDataProcessor(String dfdlSchema, Boolean preCompiled) throws IOException {
         File f = new File(dfdlSchema);
         Compiler c = Daffodil.compiler();
-        ProcessorFactory pf = c.compileFile(f);
-        if (pf.isError()) {
-            getLogger().error("Failed to compile DFDL schema: " + dfdlSchema);
-            logDiagnostics(pf);
-            throw new DaffodilCompileException("Failed to compile DFDL schema: " + dfdlSchema);
-        }
-        DataProcessor dp = pf.onPath("/");
-        if (dp.isError()) {
-            getLogger().error("Failed to compile DFDL schema: " + dfdlSchema);
-            logDiagnostics(dp);
-            throw new DaffodilCompileException("Failed to compile DFDL schema: " + dfdlSchema);
+        DataProcessor dp;
+        if (preCompiled) {
+            try {
+                dp = c.reload(f);
+            } catch (InvalidParserException e) {
+                getLogger().error("Failed to reload pre-compiled DFDL schema: " + dfdlSchema + ". " + e.getMessage());
+                throw new DaffodilCompileException("Failed to reload pre-compiled DFDL schema: " + dfdlSchema + ". " + e.getMessage());
+            }
+        } else {
+            ProcessorFactory pf = c.compileFile(f);
+            if (pf.isError()) {
+                getLogger().error("Failed to compile DFDL schema: " + dfdlSchema);
+                logDiagnostics(pf);
+                throw new DaffodilCompileException("Failed to compile DFDL schema: " + dfdlSchema);
+            }
+            dp = pf.onPath("/");
+            if (dp.isError()) {
+                getLogger().error("Failed to compile DFDL schema: " + dfdlSchema);
+                logDiagnostics(dp);
+                throw new DaffodilCompileException("Failed to compile DFDL schema: " + dfdlSchema);
+            }
         }
         return dp;
     }
 
-    protected DataProcessor getDataProcessor(String dfdlSchema) throws IOException {
+    protected DataProcessor getDataProcessor(String dfdlSchema, Boolean preCompiled) throws IOException {
         if (cache != null) {
             try {
-                return cache.get(dfdlSchema);
+                return cache.get(new CacheKey(dfdlSchema, preCompiled));
             } catch (ExecutionException e) {
                 throw new IOException(e);
             }
         } else {
-            return newDaffodilDataProcessor(dfdlSchema);
+            return newDaffodilDataProcessor(dfdlSchema, preCompiled);
         }
     }
 
@@ -233,9 +266,9 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
             }
 
             cache = cacheBuilder.build(
-               new CacheLoader<String, DataProcessor>() {
-                   public DataProcessor load(String dfdlSchema) throws IOException {
-                       return newDaffodilDataProcessor(dfdlSchema);
+               new CacheLoader<CacheKey, DataProcessor>() {
+                   public DataProcessor load(CacheKey key) throws IOException {
+                       return newDaffodilDataProcessor(key.dfdlSchema, key.preCompiled);
                    }
                });
         } else {
@@ -254,6 +287,7 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
         final ComponentLog logger = getLogger();
         final StopWatch stopWatch = new StopWatch(true);
         final String dfdlSchema = context.getProperty(DFDL_SCHEMA_FILE).evaluateAttributeExpressions(original).getValue();
+        final Boolean preCompiled = context.getProperty(PRE_COMPILED_SCHEMA).evaluateAttributeExpressions(original).asBoolean();
         String infosetTypeValue = context.getProperty(INFOSET_TYPE).getValue();
         final String infosetType;
         final ValidationMode validationMode;
@@ -285,7 +319,7 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
             FlowFile output = session.write(original, new StreamCallback() {
                 @Override
                 public void process(final InputStream in, final OutputStream out) throws IOException {
-                    DataProcessor dp = getDataProcessor(dfdlSchema);
+                    DataProcessor dp = getDataProcessor(dfdlSchema, preCompiled);
                     try {
                         dp.setValidationMode(validationMode);
                     } catch (InvalidUsageException e) {
