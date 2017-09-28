@@ -16,6 +16,8 @@
 
 package edu.illinois.ncsa.daffodil.nifi.processors;
 
+import edu.illinois.ncsa.daffodil.nifi.processors.AbstractDaffodilProcessor.CacheKey;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -31,6 +33,8 @@ import org.apache.nifi.util.TestRunners;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 
 public class TestDaffodilProcessor {
@@ -310,6 +314,28 @@ public class TestDaffodilProcessor {
         final MockFlowFile infoset = testRunner.getFlowFilesForRelationship(DaffodilParse.REL_FAILURE).get(0);
         final String expectedContent = new String(Files.readAllBytes(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv")));
         infoset.assertContentEquals(expectedContent);
+    }
+
+    @Test
+    public void testCacheKeyEquality() {
+        CacheKey ck1 = new CacheKey("one", false);
+        CacheKey ck2 = new CacheKey("one", false);
+        CacheKey ck3 = new CacheKey("two", false);
+        CacheKey ck4 = new CacheKey("one", true);
+        CacheKey ck5 = new CacheKey("two", true);
+
+        assertTrue(ck1 != ck2);
+        assertTrue(ck1.equals(ck2));
+        assertTrue(ck1.hashCode() == ck2.hashCode());
+
+        assertFalse(ck1.equals(ck3));
+        assertFalse(ck1.hashCode() == ck3.hashCode());
+
+        assertFalse(ck1.equals(ck4));
+        assertFalse(ck1.hashCode() == ck4.hashCode());
+
+        assertFalse(ck1.equals(ck5));
+        assertFalse(ck1.hashCode() == ck5.hashCode());
     }
 
 }

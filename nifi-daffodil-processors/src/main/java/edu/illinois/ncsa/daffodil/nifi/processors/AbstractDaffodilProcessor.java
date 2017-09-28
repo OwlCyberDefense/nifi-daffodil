@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -193,13 +194,26 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
     private Set<Relationship> relationships;
     private LoadingCache<CacheKey, DataProcessor> cache;
 
-    class CacheKey {
+    static class CacheKey {
         public String dfdlSchema;
         public Boolean preCompiled;
 
         public CacheKey(String dfdlSchema, Boolean preCompiled) {
             this.dfdlSchema = dfdlSchema;
             this.preCompiled = preCompiled;
+        }
+
+        public int hashCode() {
+          return Objects.hash(dfdlSchema, preCompiled);
+        }
+
+        public boolean equals(Object obj) {
+          if (!(obj instanceof CacheKey)) return false;
+          if (obj == this) return true;
+
+          CacheKey that = (CacheKey)obj;
+          return Objects.equals(this.dfdlSchema, that.dfdlSchema) &&
+                 Objects.equals(this.preCompiled, that.preCompiled);
         }
     }
 
