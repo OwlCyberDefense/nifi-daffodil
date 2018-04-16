@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Tresys Technology, LLC
+ * Copyright 2018 Tresys Technology, LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,11 +34,11 @@ import org.apache.nifi.annotation.documentation.CapabilityDescription;
 import org.apache.nifi.annotation.documentation.Tags;
 import org.apache.nifi.flowfile.FlowFile;
 
-import edu.illinois.ncsa.daffodil.japi.DataProcessor;
-import edu.illinois.ncsa.daffodil.japi.UnparseResult;
-import edu.illinois.ncsa.daffodil.japi.infoset.InfosetInputter;
-import edu.illinois.ncsa.daffodil.japi.infoset.JsonInfosetInputter;
-import edu.illinois.ncsa.daffodil.japi.infoset.XMLTextInfosetInputter;
+import org.apache.daffodil.japi.DataProcessor;
+import org.apache.daffodil.japi.UnparseResult;
+import org.apache.daffodil.japi.infoset.InfosetInputter;
+import org.apache.daffodil.japi.infoset.JsonInfosetInputter;
+import org.apache.daffodil.japi.infoset.XMLTextInfosetInputter;
 
 @EventDriven
 @SideEffectFree

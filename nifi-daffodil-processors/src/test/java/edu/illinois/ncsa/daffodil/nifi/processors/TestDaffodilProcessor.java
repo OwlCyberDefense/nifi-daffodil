@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Tresys Technology, LLC
+ * Copyright 2018 Tresys Technology, LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,11 @@ package edu.illinois.ncsa.daffodil.nifi.processors;
 
 import edu.illinois.ncsa.daffodil.nifi.processors.AbstractDaffodilProcessor.CacheKey;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.channels.Channels;
+import java.nio.channels.WritableByteChannel;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -86,8 +90,22 @@ public class TestDaffodilProcessor {
 
     @Test
     public void testParseCSVPreCompiled() throws IOException {
+        File schema = new File("src/test/resources/TestDaffodilProcessor/csv.dfdl.xsd");
+        File savedSchema = File.createTempFile("nifi-daffodil-", null);
+        savedSchema.deleteOnExit();
+        FileOutputStream fos = new FileOutputStream(savedSchema);
+        WritableByteChannel output = Channels.newChannel(fos);
+
+        org.apache.daffodil.japi.Compiler c = org.apache.daffodil.japi.Daffodil.compiler();
+        org.apache.daffodil.japi.ProcessorFactory pf = c.compileFile(schema);
+        org.apache.daffodil.japi.DataProcessor dp = pf.onPath("/");
+        dp.save(output);
+
+        output.close();
+        fos.close();
+
         final TestRunner testRunner = TestRunners.newTestRunner(DaffodilParse.class);
-        testRunner.setProperty(DaffodilParse.DFDL_SCHEMA_FILE, "src/test/resources/TestDaffodilProcessor/csv.dfdl.xsd.bin");
+        testRunner.setProperty(DaffodilParse.DFDL_SCHEMA_FILE, savedSchema.getAbsolutePath());
         testRunner.setProperty(DaffodilParse.PRE_COMPILED_SCHEMA, "true");
         testRunner.enqueue(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv"));
         testRunner.run();

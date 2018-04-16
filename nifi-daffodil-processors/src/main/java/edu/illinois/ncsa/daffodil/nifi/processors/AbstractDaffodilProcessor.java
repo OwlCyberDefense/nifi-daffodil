@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Tresys Technology, LLC
+ * Copyright 2018 Tresys Technology, LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,15 +50,15 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 
-import edu.illinois.ncsa.daffodil.japi.Compiler;
-import edu.illinois.ncsa.daffodil.japi.Daffodil;
-import edu.illinois.ncsa.daffodil.japi.DataProcessor;
-import edu.illinois.ncsa.daffodil.japi.Diagnostic;
-import edu.illinois.ncsa.daffodil.japi.ProcessorFactory;
-import edu.illinois.ncsa.daffodil.japi.WithDiagnostics;
-import edu.illinois.ncsa.daffodil.japi.ValidationMode;
-import edu.illinois.ncsa.daffodil.japi.InvalidUsageException;
-import edu.illinois.ncsa.daffodil.japi.InvalidParserException;
+import org.apache.daffodil.japi.Compiler;
+import org.apache.daffodil.japi.Daffodil;
+import org.apache.daffodil.japi.DataProcessor;
+import org.apache.daffodil.japi.Diagnostic;
+import org.apache.daffodil.japi.ProcessorFactory;
+import org.apache.daffodil.japi.WithDiagnostics;
+import org.apache.daffodil.japi.ValidationMode;
+import org.apache.daffodil.japi.InvalidUsageException;
+import org.apache.daffodil.japi.InvalidParserException;
 
 
 public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
