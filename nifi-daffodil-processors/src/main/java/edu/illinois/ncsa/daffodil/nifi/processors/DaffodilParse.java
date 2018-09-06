@@ -37,6 +37,7 @@ import org.apache.nifi.flowfile.FlowFile;
 import org.apache.daffodil.japi.DataLocation;
 import org.apache.daffodil.japi.DataProcessor;
 import org.apache.daffodil.japi.ParseResult;
+import org.apache.daffodil.japi.io.InputSourceDataInputStream;
 import org.apache.daffodil.japi.infoset.InfosetOutputter;
 import org.apache.daffodil.japi.infoset.JsonInfosetOutputter;
 import org.apache.daffodil.japi.infoset.XMLTextInfosetOutputter;
@@ -73,10 +74,10 @@ public class DaffodilParse extends AbstractDaffodilProcessor {
 
     @Override
     protected void processWithDaffodil(final DataProcessor dp, final FlowFile ff, final InputStream in, final OutputStream out, String infosetType) throws IOException {
-        ReadableByteChannel rbc = Channels.newChannel(in);
+        InputSourceDataInputStream input = new InputSourceDataInputStream(in);
         OutputStreamWriter osr = new OutputStreamWriter(out);
         InfosetOutputter outputter = getInfosetOutputter(infosetType, osr);
-        ParseResult pr = dp.parse(rbc, outputter, ff.getSize() * 8);
+        ParseResult pr = dp.parse(input, outputter);
         if (pr.isError()) {
             getLogger().error("Failed to parse {}", new Object[]{ff});
             logDiagnostics(pr);

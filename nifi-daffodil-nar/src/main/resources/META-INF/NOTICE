@@ -2,13 +2,7 @@ nifi-daffodil-nar
 Copyright 2018 Tresys Technology
 
 
-******************
-Apache Software License v2
-******************
-
-The following binary components are provided under the Apache Software License v2
-
-Apache Daffodil (bundled-dependencies/daffodil-*-2.1.0.jar)
+Apache Daffodil (daffodil-*_2.12-2.2.0.jar)
   Apache Daffodil
   Copyright 2018 The Apache Software Foundation
 
@@ -20,7 +14,7 @@ Apache Daffodil (bundled-dependencies/daffodil-*-2.1.0.jar)
   - Tresys Technology (http://www.tresys.com/)
   - International Business Machines Corporation (http://www.ibm.com)
 
-Apache Xerces Java (bundled-dependencies/xerces.xercesImpl-2.10.0.jar)
+Apache Xerces Java (xercesImpl-2.12.0.jar)
   Apache Xerces Java
   Copyright 1999-2010 The Apache Software Foundation
 
@@ -34,7 +28,7 @@ Apache Xerces Java (bundled-dependencies/xerces.xercesImpl-2.10.0.jar)
       Apache Software Foundation that were originally developed at iClick, Inc.,
       software copyright (c) 1999.
 
-Apache XML Commons Resolver (bundled-dependencies/xml-resolver.xml-resolver-1.2.jar)
+Apache XML Commons Resolver (xml-resolver-1.2.jar)
     Apache XML Commons Resolver
     Copyright 2006 The Apache Software Foundation.
 
@@ -45,7 +39,7 @@ Apache XML Commons Resolver (bundled-dependencies/xml-resolver.xml-resolver-1.2.
     public domain by Arbortext on 10 Apr 2000. See:
     http://www.arbortext.com/customer_support/updates_and_technical_notes/catalogs/docs/README.htm
 
-Apache XML Commons XML APIs (bundled-dependencies/xml-apis.xml-apis-1.4.01.jar)
+Apache XML Commons XML APIs (xml-apis-1.4.01.jar)
    Apache XML Commons XML APIs
    Copyright 1999-2009 The Apache Software Foundation.
 
@@ -57,11 +51,11 @@ Apache XML Commons XML APIs (bundled-dependencies/xml-apis.xml-apis-1.4.01.jar)
      - software copyright (c) 1999, Sun Microsystems., http://www.sun.com.
      - software copyright (c) 2000 World Wide Web Consortium, http://www.w3.org
 
-Guava (bundled-dependencies/guava-18.0.jar)
+Guava (guava-18.0.jar)
   Guava
   Copyright 2015 The Guava Authors
 
-JDOM2 (bundled-dependencies/org.jdom.jdom2-2.0.6.jar)
+JDOM2 (jdom2-2.0.6.jar)
   Copyright (C) 2000-2012 Jason Hunter & Brett McLaughlin.
 
   All rights reserved.
@@ -69,11 +63,11 @@ JDOM2 (bundled-dependencies/org.jdom.jdom2-2.0.6.jar)
   This product includes software developed by the
   JDOM Project (http://www.jdom.org/).
 
-Jansi (bundled-dependencies/org.fusesource.jansi.jansi-1.14.jar)
+Jansi (jansi-1.17.1.jar)
   Copyright (C) 2009, Progress Software Corporation and/or its
   subsidiaries or affiliates.  All rights reserved.
 
-Jackson JSON processor (bundled-dependencies/com.fasterxml.jackson.core.jackson-core-2.8.8.jar)
+Jackson JSON processor (jackson-core-2.9.6.jar)
   # Jackson JSON processor
 
   Jackson is a high-performance, Free/Open Source JSON processing library.
@@ -95,11 +89,11 @@ Jackson JSON processor (bundled-dependencies/com.fasterxml.jackson.core.jackson-
   in some artifacts (usually source distributions); but is always available
   from the source code management (SCM) system project uses.
 
-NiFi Daffodil Processors (bundled-dependencies/nifi-daffodil-processors-1.1.jar)
+NiFi Daffodil Processors (nifi-daffodil-processors-1.1.jar)
   NiFi Daffodil Processors
   Copyright 2018 Tresys Technology, LLC
 
-Woodstox (bundled-dependencies/com.fasterxml.woodstox.woodstox-core-5.0.3.jar)
+Woodstox (woodstox-core-5.1.0.jar)
   This product currently only contains code developed by authors
   of specific components, as identified by the source code files.
 
