@@ -49,10 +49,10 @@ import org.apache.daffodil.japi.infoset.XMLTextInfosetInputter;
 @WritesAttribute(attribute = "mime.type", description = "If the FlowFile is successfully unparsed, this attriute is removed, as the MIME Type is no longer known.")
 public class DaffodilUnparse extends AbstractDaffodilProcessor {
 
-    private InfosetInputter getInfosetInputter(String infosetType, Reader rdr) {
+    private InfosetInputter getInfosetInputter(String infosetType, InputStream is) {
         switch (infosetType) {
-            case XML_VALUE: return new XMLTextInfosetInputter(rdr);
-            case JSON_VALUE: return new JsonInfosetInputter(rdr);
+            case XML_VALUE: return new XMLTextInfosetInputter(is);
+            case JSON_VALUE: return new JsonInfosetInputter(is);
             default: throw new AssertionError("Unhandled infoset type: " + infosetType);
         }
     }
@@ -74,7 +74,7 @@ public class DaffodilUnparse extends AbstractDaffodilProcessor {
 
     @Override
     protected void processWithDaffodil(final DataProcessor dp, final FlowFile ff, final InputStream in, final OutputStream out, String infosetType) throws IOException {
-        InfosetInputter inputter = getInfosetInputter(infosetType, new InputStreamReader(in));
+        InfosetInputter inputter = getInfosetInputter(infosetType, in);
         WritableByteChannel wbc = Channels.newChannel(out);
         UnparseResult ur = dp.unparse(inputter, wbc);
         if (ur.isError()) {

@@ -52,10 +52,10 @@ import org.apache.daffodil.japi.infoset.XMLTextInfosetOutputter;
 @WritesAttribute(attribute = "mime.type", description = "Sets the mime type to application/json or application/xml based on the infoset type.")
 public class DaffodilParse extends AbstractDaffodilProcessor {
 
-    private InfosetOutputter getInfosetOutputter(String infosetType, Writer wtr) {
+    private InfosetOutputter getInfosetOutputter(String infosetType, OutputStream os) {
         switch (infosetType) {
-            case XML_VALUE: return new XMLTextInfosetOutputter(wtr, false);
-            case JSON_VALUE: return new JsonInfosetOutputter(wtr, false);
+            case XML_VALUE: return new XMLTextInfosetOutputter(os, false);
+            case JSON_VALUE: return new JsonInfosetOutputter(os, false);
             default: throw new AssertionError("Unhandled infoset type: " + infosetType);
         }
     }
@@ -75,8 +75,7 @@ public class DaffodilParse extends AbstractDaffodilProcessor {
     @Override
     protected void processWithDaffodil(final DataProcessor dp, final FlowFile ff, final InputStream in, final OutputStream out, String infosetType) throws IOException {
         InputSourceDataInputStream input = new InputSourceDataInputStream(in);
-        OutputStreamWriter osr = new OutputStreamWriter(out);
-        InfosetOutputter outputter = getInfosetOutputter(infosetType, osr);
+        InfosetOutputter outputter = getInfosetOutputter(infosetType, out);
         ParseResult pr = dp.parse(input, outputter);
         if (pr.isError()) {
             getLogger().error("Failed to parse {}", new Object[]{ff});
@@ -90,7 +89,7 @@ public class DaffodilParse extends AbstractDaffodilProcessor {
             getLogger().error("Left over data. Consumed {} bit(s) with {} bit(s) remaining when parsing {}", new Object[]{bitsRead, expectedBits - bitsRead, ff});
             throw new DaffodilProcessingException("Left over data found");
         }
-        osr.flush();
+        out.flush();
     }
 
 }
