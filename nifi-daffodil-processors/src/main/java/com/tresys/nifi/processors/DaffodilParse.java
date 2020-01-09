@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package edu.illinois.ncsa.daffodil.nifi.processors;
+package com.tresys.nifi.processors;
 
 import java.io.IOException;
 import java.io.InputStream;

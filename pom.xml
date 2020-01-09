@@ -22,7 +22,7 @@
         <version>1.3.0</version>
     </parent>
 
-    <groupId>edu.illinois.ncsa.daffodil</groupId>
+    <groupId>com.tresys</groupId>
     <artifactId>nifi-daffodil</artifactId>
     <version>1.5</version>
     <packaging>pom</packaging>
@@ -31,5 +31,14 @@
         <module>nifi-daffodil-processors</module>
         <module>nifi-daffodil-nar</module>
     </modules>
+
+
+	<repositories>
+		<repository>
+		  <id>Apache-Staging</id>
+		  <name>Apache Staging</name>
+		  <url>https://repository.apache.org/content/repositories/orgapachedaffodil-1012</url>
+		</repository>
+	</repositories>
 
 </project>

@@ -12,5 +12,5 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-edu.illinois.ncsa.daffodil.nifi.processors.DaffodilParse
-edu.illinois.ncsa.daffodil.nifi.processors.DaffodilUnparse
+com.tresys.nifi.processors.DaffodilParse
+com.tresys.nifi.processors.DaffodilUnparse

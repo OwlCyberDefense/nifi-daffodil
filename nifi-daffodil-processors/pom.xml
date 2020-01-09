@@ -17,7 +17,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>edu.illinois.ncsa.daffodil</groupId>
+        <groupId>com.tresys</groupId>
         <artifactId>nifi-daffodil</artifactId>
         <version>1.5</version>
     </parent>
