@@ -140,7 +140,7 @@ public class TestDaffodilProcessor {
         testRunner.assertAllFlowFilesTransferred(DaffodilUnparse.REL_SUCCESS);
         final MockFlowFile infoset = testRunner.getFlowFilesForRelationship(DaffodilUnparse.REL_SUCCESS).get(0);
         final String expectedContent = new String(Files.readAllBytes(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv")));
-        infoset.assertContentEquals(expectedContent);
+        infoset.assertContentEquals(expectedContent.replace("\r\n", "\n"));
         assertEquals(null, infoset.getAttribute(CoreAttributes.MIME_TYPE.key()));
     }
 
@@ -210,7 +210,7 @@ public class TestDaffodilProcessor {
         testRunner.assertAllFlowFilesTransferred(DaffodilUnparse.REL_SUCCESS);
         final MockFlowFile infoset = testRunner.getFlowFilesForRelationship(DaffodilUnparse.REL_SUCCESS).get(0);
         final String expectedContent = new String(Files.readAllBytes(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv")));
-        infoset.assertContentEquals(expectedContent);
+        infoset.assertContentEquals(expectedContent.replace("\r\n", "\n"));
         assertEquals(null, infoset.getAttribute(CoreAttributes.MIME_TYPE.key()));
     }
 
@@ -234,7 +234,7 @@ public class TestDaffodilProcessor {
         testRunner.assertAllFlowFilesTransferred(DaffodilUnparse.REL_SUCCESS);
         final MockFlowFile infoset = testRunner.getFlowFilesForRelationship(DaffodilUnparse.REL_SUCCESS).get(0);
         final String expectedContent = new String(Files.readAllBytes(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv")));
-        infoset.assertContentEquals(expectedContent);
+        infoset.assertContentEquals(expectedContent.replace("\r\n", "\n"));
         assertEquals(null, infoset.getAttribute(CoreAttributes.MIME_TYPE.key()));
     }
 
@@ -250,7 +250,7 @@ public class TestDaffodilProcessor {
         testRunner.assertAllFlowFilesTransferred(DaffodilUnparse.REL_SUCCESS);
         final MockFlowFile infoset = testRunner.getFlowFilesForRelationship(DaffodilUnparse.REL_SUCCESS).get(0);
         final String expectedContent = new String(Files.readAllBytes(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv")));
-        infoset.assertContentEquals(expectedContent);
+        infoset.assertContentEquals(expectedContent.replace("\r\n", "\n"));
         assertEquals(null, infoset.getAttribute(CoreAttributes.MIME_TYPE.key()));
     }
 
