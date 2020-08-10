@@ -16,14 +16,13 @@
 
 package com.tresys.nifi.processors;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.Reader;
 import java.nio.channels.Channels;
 import java.nio.channels.WritableByteChannel;
 
+import com.tresys.nifi.util.DaffodilProcessingException;
+import com.tresys.nifi.util.DaffodilResources;
 import org.apache.nifi.annotation.behavior.EventDriven;
 import org.apache.nifi.annotation.behavior.InputRequirement;
 import org.apache.nifi.annotation.behavior.InputRequirement.Requirement;
@@ -46,14 +45,14 @@ import org.apache.daffodil.japi.infoset.XMLTextInfosetInputter;
 @InputRequirement(Requirement.INPUT_REQUIRED)
 @Tags({"xml", "json", "daffodil", "dfdl", "schema", "xsd"})
 @CapabilityDescription("Use Daffodil and a user-specified DFDL schema to transform an XML or JSON representation of data back to the original data format.")
-@WritesAttribute(attribute = "mime.type", description = "If the FlowFile is successfully unparsed, this attriute is removed, as the MIME Type is no longer known.")
+@WritesAttribute(attribute = "mime.type", description = "If the FlowFile is successfully unparsed, this attribute is removed, as the MIME Type is no longer known.")
 public class DaffodilUnparse extends AbstractDaffodilProcessor {
 
     private InfosetInputter getInfosetInputter(String infosetType, InputStream is) {
         switch (infosetType) {
             case XML_VALUE: return new XMLTextInfosetInputter(is);
             case JSON_VALUE: return new JsonInfosetInputter(is);
-            default: throw new AssertionError("Unhandled infoset type: " + infosetType);
+            default: throw new IllegalArgumentException("Unhandled infoset type: " + infosetType);
         }
     }
 
@@ -63,7 +62,7 @@ public class DaffodilUnparse extends AbstractDaffodilProcessor {
     /**
      * The resulting output mime type of an unparse action cannot be known
      * since it is entirely based on the DFDL schema. Since we do not know the
-     * mime type, return null. This will signifiy to the abstract daffodil
+     * mime type, return null. This will signify to the abstract daffodil
      * processor that the mime.type attribute should be removed from the output
      * FlowFile.
      */
@@ -73,16 +72,15 @@ public class DaffodilUnparse extends AbstractDaffodilProcessor {
     }
 
     @Override
-    protected void processWithDaffodil(final DataProcessor dp, final FlowFile ff, final InputStream in, final OutputStream out, String infosetType) throws IOException {
+    protected void processWithDaffodil(final DataProcessor dp, final FlowFile ff, final InputStream in,
+                                       final OutputStream out, String infosetType) throws DaffodilProcessingException {
         InfosetInputter inputter = getInfosetInputter(infosetType, in);
         WritableByteChannel wbc = Channels.newChannel(out);
         UnparseResult ur = dp.unparse(inputter, wbc);
         if (ur.isError()) {
             getLogger().error("Failed to unparse {}", new Object[]{ff});
-            logDiagnostics(ur);
+            DaffodilResources.logDiagnostics(getLogger(), ur);
             throw new DaffodilProcessingException("Failed to unparse");
         }
     }
-
 }
-

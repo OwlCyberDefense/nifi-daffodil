@@ -29,7 +29,7 @@
     </xs:appinfo> 
   </xs:annotation>
 
-  <!-- this schema simply 8 bits of data and treats it as a lenght. It then
+  <!-- this schema simply 8 bits of data and treats it as a length. It then
        reads that 'length' bits of data. This means that it is possible for
        this schema to not consume all the data if there is more than 8 + length
        bits, causing failure and sending the flow file to the failure

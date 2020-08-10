@@ -19,11 +19,9 @@ package com.tresys.nifi.processors;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
 
+import com.tresys.nifi.util.DaffodilProcessingException;
+import com.tresys.nifi.util.DaffodilResources;
 import org.apache.nifi.annotation.behavior.EventDriven;
 import org.apache.nifi.annotation.behavior.InputRequirement;
 import org.apache.nifi.annotation.behavior.InputRequirement.Requirement;
@@ -73,23 +71,26 @@ public class DaffodilParse extends AbstractDaffodilProcessor {
     }
 
     @Override
-    protected void processWithDaffodil(final DataProcessor dp, final FlowFile ff, final InputStream in, final OutputStream out, String infosetType) throws IOException {
+    protected void processWithDaffodil(final DataProcessor dp, final FlowFile ff, final InputStream in,
+                                       final OutputStream out, String infosetType) throws IOException {
         InputSourceDataInputStream input = new InputSourceDataInputStream(in);
         InfosetOutputter outputter = getInfosetOutputter(infosetType, out);
         ParseResult pr = dp.parse(input, outputter);
         if (pr.isError()) {
             getLogger().error("Failed to parse {}", new Object[]{ff});
-            logDiagnostics(pr);
+            DaffodilResources.logDiagnostics(getLogger(), pr);
             throw new DaffodilProcessingException("Failed to parse");
         }
         DataLocation loc = pr.location();
         long bitsRead = loc.bitPos1b() - 1;
         long expectedBits = ff.getSize() * 8;
         if (expectedBits != bitsRead) {
-            getLogger().error("Left over data. Consumed {} bit(s) with {} bit(s) remaining when parsing {}", new Object[]{bitsRead, expectedBits - bitsRead, ff});
+            getLogger().error(
+                "Left over data. Consumed {} bit(s) with {} bit(s) remaining when parsing {}",
+                new Object[]{bitsRead, expectedBits - bitsRead, ff}
+            );
             throw new DaffodilProcessingException("Left over data found");
         }
         out.flush();
     }
-
 }

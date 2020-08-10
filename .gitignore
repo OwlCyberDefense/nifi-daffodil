@@ -1,1 +1,3 @@
-target
+target/*
+nifi-daffodil-nar/target/
+nifi-daffodil-processors/target/
