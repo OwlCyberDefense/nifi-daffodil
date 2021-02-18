@@ -3,7 +3,7 @@
 ## Overview
 
 This repository contains the source for two NiFi processors which use
-[Apache Daffodil (incubating)](https://daffodil.apache.org),
+[Apache Daffodil](https://daffodil.apache.org),
 an open source implementation of the [Data Format Description Language
 (DFDL)](https://www.ogf.org/ogf/doku.php/standards/dfdl/dfdl) to parse/unparse
 data to/from an XML infoset. The two processor included are:
