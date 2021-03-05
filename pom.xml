@@ -21,7 +21,7 @@
     <parent>
         <groupId>org.apache.nifi</groupId>
         <artifactId>nifi-nar-bundles</artifactId>
-        <version>1.3.0</version>
+        <version>1.8.0</version>
     </parent>
 
     <groupId>com.tresys</groupId>
@@ -33,5 +33,17 @@
         <module>nifi-daffodil-processors</module>
         <module>nifi-daffodil-nar</module>
     </modules>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.22.2</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
 </project>

@@ -33,6 +33,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.nifi.annotation.lifecycle.OnScheduled;
 import org.apache.nifi.components.PropertyDescriptor;
 import org.apache.nifi.components.AllowableValue;
+import org.apache.nifi.expression.ExpressionLanguageScope;
 import org.apache.nifi.logging.ComponentLog;
 import org.apache.nifi.flowfile.attributes.CoreAttributes;
 import org.apache.nifi.flowfile.FlowFile;
@@ -78,7 +79,7 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
             .displayName("DFDL Schema File")
             .description("Full path to the DFDL schema file that is to be used for parsing/unparsing.")
             .required(true)
-            .expressionLanguageSupported(true)
+            .expressionLanguageSupported(ExpressionLanguageScope.FLOWFILE_ATTRIBUTES)
             .addValidator(StandardValidators.FILE_EXISTS_VALIDATOR)
             .build();
 
@@ -89,7 +90,7 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
             .required(true)
             .defaultValue("false")
             .allowableValues("true", "false")
-            .expressionLanguageSupported(true)
+            .expressionLanguageSupported(ExpressionLanguageScope.FLOWFILE_ATTRIBUTES)
             .addValidator(StandardValidators.BOOLEAN_VALIDATOR)
             .build();
 
