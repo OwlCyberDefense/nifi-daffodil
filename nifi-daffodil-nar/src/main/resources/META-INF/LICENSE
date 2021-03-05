@@ -209,7 +209,7 @@ subcomponents is subject to the terms and conditions of the following licenses.
 
   This product bundles compiled source from 'Passera', including the following
   files:
-    - passera/ directory in daffodil-lib-2.5.0.jar
+    - passera/ directory in daffodil-lib_2.12-3.0.0.jar
   These files are available under the BSD-2-Clause license:
 
     Copyright (c) 2011-2013, Nate Nystrom
@@ -236,51 +236,13 @@ subcomponents is subject to the terms and conditions of the following licenses.
     OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-  This product bundles 'Scala', including the following files:
-    - scala-parser-combinators_2.12-1.1.1.jar
-    - scala-xml_2.12-1.1.0.jar
-    - scala-library-2.12.6.jar
-    - org/apache/daffodil/util/UniquenessCache.class in daffodil-lib-2.5.0.jar
-  These files are available under the BSD-3-Clause licnese:
-
-    Copyright (c) 2002-  EPFL
-    Copyright (c) 2011-  Lightbend, Inc.
-
-    All rights reserved.
-
-    Redistribution and use in source and binary forms, with or without
-    modification, are permitted provided that the following conditions are met:
-
-    * Redistributions of source code must retain the above copyright notice,
-      this list of conditions and the following disclaimer.
-
-    * Redistributions in binary form must reproduce the above copyright notice,
-      this list of conditions and the following disclaimer in the documentation
-      and/or other materials provided with the distribution.
-
-    * Neither the name of the EPFL nor the names of its contributors may be
-      used to endorse or promote products derived from this software without
-      specific prior written permission.
-
-    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS”
-    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-    ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
-    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-    POSSIBILITY OF SUCH DAMAGE.
-
   This product bundles material copied or derived from W3C, including the
   following files:
-    - org/apache/daffodil/xsd/XMLSchema.dtd (https://www.w3.org/2001/XMLSchema.dtd) in daffodil-lib-2.5.0.jar
-    - org/apache/daffodil/xsd/XMLSchema.xsd (https://www.w3.org/2001/XMLSchema.xsd) in daffodil-lib-2.5.0.jar
-    - org/apache/daffodil/xsd/xml.xsd (https://www.w3.org/2001/xml.xsd) in daffodil-lib-2.5.0.jar
-    - org/apache/daffodil/xsd/datatypes.dtd (https://www.w3.org/2001/datatypes.dtd) in daffodil-lib-2.5.0.jar
-    - org/apache/daffodil/xsd/XMLSchema_for_DFDL.xsd (https://www.w3.org/2001/XMLSchema.dtd) in daffodil-lib-2.5.0.jar
+    - org/apache/daffodil/xsd/XMLSchema.dtd (https://www.w3.org/2001/XMLSchema.dtd) in daffodil-lib_2.12-3.0.0.jar
+    - org/apache/daffodil/xsd/XMLSchema.xsd (https://www.w3.org/2001/XMLSchema.xsd) in daffodil-lib_2.12-3.0.0.jar
+    - org/apache/daffodil/xsd/XMLSchema_for_DFDL.xsd (https://www.w3.org/2001/XMLSchema.dtd) in daffodil-lib_2.12-3.0.0.jar
+    - org/apache/daffodil/xsd/datatypes.dtd (https://www.w3.org/2001/datatypes.dtd) in daffodil-lib_2.12-3.0.0.jar
+    - org/apache/daffodil/xsd/xml.xsd (https://www.w3.org/2001/xml.xsd) in daffodil-lib_2.12-3.0.0.jar
   These files are available under the W3C Software and Document Licnese:
 
     By obtaining and/or copying this work, you (the licensee) agree that you have
@@ -320,14 +282,14 @@ subcomponents is subject to the terms and conditions of the following licenses.
     copyright holders.
 
   This product bundles 'ICU4J', including the following files:
-    - icu4j-62.1.jar
+    - icu4j-67.1.jar
   These files are available under the Unicode License. For details, see
-  https://ssl.icu-project.org/repos/icu/tags/release-62-1/icu4j/main/shared/licenses/LICENSE
+  https://github.com/unicode-org/icu/blob/release-67-1/icu4c/LICENSE
 
     COPYRIGHT AND PERMISSION NOTICE (ICU 58 and later)
 
-    Copyright © 1991-2018 Unicode, Inc. All rights reserved.
-    Distributed under the Terms of Use in http://www.unicode.org/copyright.html.
+    Copyright © 1991-2020 Unicode, Inc. All rights reserved.
+    Distributed under the Terms of Use in https://www.unicode.org/copyright.html.
 
     Permission is hereby granted, free of charge, to any person obtaining
     a copy of the Unicode data files and any associated documentation
@@ -832,33 +794,8 @@ subcomponents is subject to the terms and conditions of the following licenses.
     IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
     OF THE POSSIBILITY OF SUCH DAMAGE.
 
-  This product bundles 'Scallop', including the following files:
-    - scallop_2.12-3.1.3.jar
-  These files are available under under an MIT License. For details, see
-  https://github.com/scallop/scallop/blob/develop/license.txt
-
-    Copyright (C) 2012 Platon Pronko and Chris Hodapp
-
-    Permission is hereby granted, free of charge, to any person obtaining a copy of
-    this software and associated documentation files (the "Software"), to deal in
-    the Software without restriction, including without limitation the rights to
-    use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
-    of the Software, and to permit persons to whom the Software is furnished to do
-    so, subject to the following conditions:
-
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    UTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    SOFTWARE.
-
   This product product bundles 'Stax 2 API', including the following files:
-    - stax2-api-4.1.jar
+    - stax2-api-4.2.1.jar
   These files are available under the BSD-2-Clause license:
 
     Copyright 2010- FasterXML.com

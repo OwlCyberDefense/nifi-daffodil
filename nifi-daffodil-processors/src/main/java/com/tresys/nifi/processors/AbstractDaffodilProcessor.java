@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Tresys Technology, LLC
+ * Copyright 2021 Owl Cyber Defense
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -335,7 +335,7 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
                 public void process(final InputStream in, final OutputStream out) throws IOException {
                     DataProcessor dp = getDataProcessor(dfdlSchema, preCompiled);
                     try {
-                        dp.setValidationMode(validationMode);
+                        dp = dp.withValidationMode(validationMode);
                     } catch (InvalidUsageException e) {
                         throw new IOException(e);
                     }
