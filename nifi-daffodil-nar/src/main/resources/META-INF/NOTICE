@@ -1,11 +1,11 @@
 nifi-daffodil-nar
-Copyright 2020 Owl Cyber Defense
+Copyright 2021 Owl Cyber Defense
 
 The following NOTICE information applies to binary components distributed with this project:
 
-Apache Daffodil (daffodil-*_2.12-3.0.0.jar)
+Apache Daffodil (daffodil-<VERSION>.jar)
   Apache Daffodil
-  Copyright 2020 The Apache Software Foundation
+  Copyright 2021 The Apache Software Foundation
 
   This product includes software developed at
   The Apache Software Foundation (http://www.apache.org/).
@@ -15,16 +15,20 @@ Apache Daffodil (daffodil-*_2.12-3.0.0.jar)
   - Tresys Technology (http://www.tresys.com/)
   - International Business Machines Corporation (http://www.ibm.com)
 
-Apache Commons IO (commons-io-2.5.0.jar)
+Apache Commons IO (commons-io-<VERSION>.jar)
   Apache Commons IO
   Copyright 2002-2020 The Apache Software Foundation
 
   This product includes software developed at
   The Apache Software Foundation (https://www.apache.org/).
 
-Apache Xerces Java (xercesImpl-2.12.0.jar)
+Apache NiFi Utils (nifi-utils-<VERSION>.jar)
+  nifi-utils
+  Copyright 2017 Apache NiFi Project
+
+Apache Xerces Java (xercesImpl-<VERSION>.jar)
   Apache Xerces Java
-  Copyright 1999-2018 The Apache Software Foundation
+  Copyright 1999-2020 The Apache Software Foundation
 
   This product includes software developed at
   The Apache Software Foundation (http://www.apache.org/).
@@ -36,41 +40,34 @@ Apache Xerces Java (xercesImpl-2.12.0.jar)
       Apache Software Foundation that were originally developed at iClick, Inc.,
       software copyright (c) 1999.
 
-Apache NiFi Utils (nifi-utils-1.3.0.jar)
-  nifi-utils
-  Copyright 2017 Apache NiFi Project
+Apache XML Commons Resolver (xml-resolver-<VERSION>.jar)
+    Apache XML Commons Resolver
+    Copyright 2006 The Apache Software Foundation.
 
-  This product includes software developed at
-  The Apache Software Foundation (http://www.apache.org/).
+    This product includes software developed at
+    The Apache Software Foundation http://www.apache.org/
 
-Apache XML Commons Resolver (xml-resolver-1.2.jar)
-  Apache XML Commons Resolver
-  Copyright 2006 The Apache Software Foundation.
+    Portions of this code are derived from classes placed in the
+    public domain by Arbortext on 10 Apr 2000. See:
+    http://www.arbortext.com/customer_support/updates_and_technical_notes/catalogs/docs/README.htm
 
-  This product includes software developed at
-  The Apache Software Foundation http://www.apache.org/
+Apache XML Commons XML APIs (xml-apis-<VERSION>.jar)
+   Apache XML Commons XML APIs
+   Copyright 1999-2009 The Apache Software Foundation.
 
-  Portions of this code are derived from classes placed in the
-  public domain by Arbortext on 10 Apr 2000. See:
-  http://www.arbortext.com/customer_support/updates_and_technical_notes/catalogs/docs/README.htm
+   This product includes software developed at
+   The Apache Software Foundation (http://www.apache.org/).
 
-Apache XML Commons XML APIs (xml-apis-1.4.01.jar)
- Apache XML Commons XML APIs
- Copyright 1999-2009 The Apache Software Foundation.
+   Portions of this software were originally based on the following:
+     - software copyright (c) 1999, IBM Corporation., http://www.ibm.com.
+     - software copyright (c) 1999, Sun Microsystems., http://www.sun.com.
+     - software copyright (c) 2000 World Wide Web Consortium, http://www.w3.org
 
- This product includes software developed at
- The Apache Software Foundation (http://www.apache.org/).
-
- Portions of this software were originally based on the following:
-   - software copyright (c) 1999, IBM Corporation., http://www.ibm.com.
-   - software copyright (c) 1999, Sun Microsystems., http://www.sun.com.
-   - software copyright (c) 2000 World Wide Web Consortium, http://www.w3.org
-
-Guava (guava-18.0.jar)
+Guava (guava-<VERSION>.jar)
   Guava
   Copyright 2015 The Guava Authors
 
-JDOM2 (jdom2-2.0.6.jar)
+JDOM2 (jdom2-<VERSION>.jar)
   Copyright (C) 2000-2012 Jason Hunter & Brett McLaughlin.
 
   All rights reserved.
@@ -78,30 +75,30 @@ JDOM2 (jdom2-2.0.6.jar)
   This product includes software developed by the
   JDOM Project (http://www.jdom.org/).
 
-Jackson JSON processor (jackson-core-2.11.3.jar)
+Jackson JSON processor (jackson-core-<VERSION>.jar)
+  Copyright (c) 2007- Tatu Saloranta, tatu.saloranta@iki.fi
+  Copyright (c) 2008-2020 FasterXML. All rights reserved.
+
   # Jackson JSON processor
 
   Jackson is a high-performance, Free/Open Source JSON processing library.
   It was originally written by Tatu Saloranta (tatu.saloranta@iki.fi), and has
   been in development since 2007.
-  It is currently developed by a community of developers, as well as supported
-  commercially by FasterXML.com.
+  It is currently developed by a community of developers.
 
   ## Licensing
 
-  Jackson core and extension components may licensed under different licenses.
+  Jackson 2.x core and extension components are licensed under Apache License 2.0
   To find the details that apply to this artifact see the accompanying LICENSE file.
-  For more information, including possible other licensing options, contact
-  FasterXML.com (http://fasterxml.com).
 
   ## Credits
 
-  A list of contributors may be found from CREDITS file, which is included
+  A list of contributors may be found from CREDITS(-2.x) file, which is included
   in some artifacts (usually source distributions); but is always available
   from the source code management (SCM) system project uses.
 
-Scala (org.scala-lang.scala-library-2.12.11.jar)
-      (org/apache/daffodil/util/UniquenessCache.class in org.apache.daffodil.daffodil-lib-3.0.0.jar)
+Scala (scala-library-<VERSION>.jar)
+      (org/apache/daffodil/util/UniquenessCache.class in daffodil-lib-<VERSION>.jar)
   Scala
   Copyright (c) 2002-2020 EPFL
   Copyright (c) 2011-2020 Lightbend, Inc.
@@ -115,16 +112,16 @@ Scala (org.scala-lang.scala-library-2.12.11.jar)
   and can be found in:
     daffodil-lib/src/main/scala/org/apache/daffodil/util/UniquenessCache.scala
 
-Scala Parser Combinators (org.scala-lang.modules.scala-parser-combinators_2.12-1.1.2.jar)
+Scala Parser Combinators (scala-parser-combinators_<VERSION>.jar)
   Scala parser combinators
-  Copyright (c) 2002-2020 EPFL
-  Copyright (c) 2011-2020 Lightbend, Inc.
+  Copyright (c) 2002-2021 EPFL
+  Copyright (c) 2011-2021 Lightbend, Inc.
 
   Scala includes software developed at
   LAMP/EPFL (https://lamp.epfl.ch/) and
   Lightbend, Inc. (https://www.lightbend.com/).
 
-Scala XML (org.scala-lang.modules.scala-xml_2.12-1.3.0.jar)
+Scala XML (scala-xml_<VERSION>.jar)
   scala-xml
   Copyright (c) 2002-2020 EPFL
   Copyright (c) 2011-2020 Lightbend, Inc.

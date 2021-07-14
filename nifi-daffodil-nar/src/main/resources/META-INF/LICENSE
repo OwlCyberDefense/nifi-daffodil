@@ -209,7 +209,7 @@ subcomponents is subject to the terms and conditions of the following licenses.
 
   This product bundles compiled source from 'Passera', including the following
   files:
-    - passera/ directory in daffodil-lib_2.12-3.0.0.jar
+    - passera/ directory in daffodil-lib-<VERSION>.jar
   These files are available under the BSD-2-Clause license:
 
     Copyright (c) 2011-2013, Nate Nystrom
@@ -238,11 +238,11 @@ subcomponents is subject to the terms and conditions of the following licenses.
 
   This product bundles material copied or derived from W3C, including the
   following files:
-    - org/apache/daffodil/xsd/XMLSchema.dtd (https://www.w3.org/2001/XMLSchema.dtd) in daffodil-lib_2.12-3.0.0.jar
-    - org/apache/daffodil/xsd/XMLSchema.xsd (https://www.w3.org/2001/XMLSchema.xsd) in daffodil-lib_2.12-3.0.0.jar
-    - org/apache/daffodil/xsd/XMLSchema_for_DFDL.xsd (https://www.w3.org/2001/XMLSchema.dtd) in daffodil-lib_2.12-3.0.0.jar
-    - org/apache/daffodil/xsd/datatypes.dtd (https://www.w3.org/2001/datatypes.dtd) in daffodil-lib_2.12-3.0.0.jar
-    - org/apache/daffodil/xsd/xml.xsd (https://www.w3.org/2001/xml.xsd) in daffodil-lib_2.12-3.0.0.jar
+    - org/apache/daffodil/xsd/XMLSchema.dtd (https://www.w3.org/2001/XMLSchema.dtd) in daffodil-lib-<VERSION>.jar
+    - org/apache/daffodil/xsd/XMLSchema.xsd (https://www.w3.org/2001/XMLSchema.xsd) in daffodil-lib-<VERSION>.jar
+    - org/apache/daffodil/xsd/XMLSchema_for_DFDL.xsd (https://www.w3.org/2001/XMLSchema.dtd) in daffodil-lib-<VERSION>.jar
+    - org/apache/daffodil/xsd/datatypes.dtd (https://www.w3.org/2001/datatypes.dtd) in daffodil-lib-<VERSION>.jar
+    - org/apache/daffodil/xsd/xml.xsd (https://www.w3.org/2001/xml.xsd) in daffodil-lib-<VERSION>.jar
   These files are available under the W3C Software and Document Licnese:
 
     By obtaining and/or copying this work, you (the licensee) agree that you have
@@ -282,9 +282,9 @@ subcomponents is subject to the terms and conditions of the following licenses.
     copyright holders.
 
   This product bundles 'ICU4J', including the following files:
-    - icu4j-67.1.jar
+    - icu4j-<VERSION>.jar
   These files are available under the Unicode License. For details, see
-  https://github.com/unicode-org/icu/blob/release-67-1/icu4c/LICENSE
+  https://github.com/unicode-org/icu/blob/release-<VERSION>/icu4c/LICENSE
 
     COPYRIGHT AND PERMISSION NOTICE (ICU 58 and later)
 
@@ -572,9 +572,9 @@ subcomponents is subject to the terms and conditions of the following licenses.
      #  Copyright (c) 2013 International Business Machines Corporation
      #  and others. All Rights Reserved.
      #
-     # Project: http://code.google.com/p/lao-dictionary/
-     # Dictionary: http://lao-dictionary.googlecode.com/git/Lao-Dictionary.txt
-     # License: http://lao-dictionary.googlecode.com/git/Lao-Dictionary-LICENSE.txt
+     # Project: https://github.com/veer66/lao-dictionary
+     # Dictionary: https://github.com/veer66/lao-dictionary/blob/master/Lao-Dictionary.txt
+     # License: https://github.com/veer66/lao-dictionary/blob/master/Lao-Dictionary-LICENSE.txt
      #              (copied below)
      #
      #  This file is derived from the above dictionary, with slight
@@ -702,7 +702,7 @@ subcomponents is subject to the terms and conditions of the following licenses.
     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
   This product bundles 'JDOM2', including the following files:
-    - jdom2-2.0.6.jar
+    - jdom2-<VERSION>.jar
   These files are available under an Apache style License:
 
     Redistribution and use in source and binary forms, with or without
@@ -754,48 +754,8 @@ subcomponents is subject to the terms and conditions of the following licenses.
     Brett McLaughlin <brett_AT_jdom_DOT_org>.  For more information
     on the JDOM Project, please see <http://www.jdom.org/>. 
 
-  This product bundles 'JLine', including the following files:
-    - jline-2.14.6.jar
-  These files are available under a BSD-3-Clause license. For details, see
-  https://github.com/jline/jline2/blob/master/LICENSE.txt
-
-    Copyright (c) 2002-2016, the original author or authors.
-    All rights reserved.
-
-    http://www.opensource.org/licenses/bsd-license.php
-
-    Redistribution and use in source and binary forms, with or
-    without modification, are permitted provided that the following
-    conditions are met:
-
-    Redistributions of source code must retain the above copyright
-    notice, this list of conditions and the following disclaimer.
-
-    Redistributions in binary form must reproduce the above copyright
-    notice, this list of conditions and the following disclaimer
-    in the documentation and/or other materials provided with
-    the distribution.
-
-    Neither the name of JLine nor the names of its contributors
-    may be used to endorse or promote products derived from this
-    software without specific prior written permission.
-
-    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
-    BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
-    AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
-    EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
-    FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY,
-    OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-    PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-    DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
-    AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-    LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-    IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
-    OF THE POSSIBILITY OF SUCH DAMAGE.
-
-  This product product bundles 'Stax 2 API', including the following files:
-    - stax2-api-4.2.1.jar
+  This product bundles 'Stax 2 API', including the following files:
+    - stax2-api-<VERSION>.jar
   These files are available under the BSD-2-Clause license:
 
     Copyright 2010- FasterXML.com
@@ -820,3 +780,34 @@ subcomponents is subject to the terms and conditions of the following licenses.
     CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
     OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+  This product bundles libraries from 'os-lib', including the following files:
+    - geny_<VERSION>.jar
+    - os-lib_<VERSION>.jar
+  These files are available under the MIT license:
+
+    License
+    =======
+
+
+    The MIT License (MIT)
+
+    Copyright (c) 2019 Li Haoyi (haoyi.sg@gmail.com)
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in
+    all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+    FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+    DEALINGS IN THE SOFTWARE.
