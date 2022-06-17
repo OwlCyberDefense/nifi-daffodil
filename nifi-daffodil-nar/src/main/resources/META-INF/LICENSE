@@ -207,82 +207,8 @@ The NIFI DAFFODIL NAR project contains subcomponents with separate
 copyright notices and license terms. Your use of the source code for the these
 subcomponents is subject to the terms and conditions of the following licenses.
 
-  This product bundles compiled source from 'Passera', including the following
-  files:
-    - passera/ directory in daffodil-lib-<VERSION>.jar
-  These files are available under the BSD-2-Clause license:
-
-    Copyright (c) 2011-2013, Nate Nystrom
-    All rights reserved.
-
-    Redistribution and use in source and binary forms, with or without
-    modification, are permitted provided that the following conditions are met:
-
-    Redistributions of source code must retain the above copyright notice, this
-    list of conditions and the following disclaimer.
-
-    Redistributions in binary form must reproduce the above copyright notice, this
-    list of conditions and the following disclaimer in the documentation and/or
-    other materials provided with the distribution.
-
-    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-    ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-    DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-    FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-    DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-    SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-    CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-  This product bundles material copied or derived from W3C, including the
-  following files:
-    - org/apache/daffodil/xsd/XMLSchema.dtd (https://www.w3.org/2001/XMLSchema.dtd) in daffodil-lib-<VERSION>.jar
-    - org/apache/daffodil/xsd/XMLSchema.xsd (https://www.w3.org/2001/XMLSchema.xsd) in daffodil-lib-<VERSION>.jar
-    - org/apache/daffodil/xsd/XMLSchema_for_DFDL.xsd (https://www.w3.org/2001/XMLSchema.dtd) in daffodil-lib-<VERSION>.jar
-    - org/apache/daffodil/xsd/datatypes.dtd (https://www.w3.org/2001/datatypes.dtd) in daffodil-lib-<VERSION>.jar
-    - org/apache/daffodil/xsd/xml.xsd (https://www.w3.org/2001/xml.xsd) in daffodil-lib-<VERSION>.jar
-  These files are available under the W3C Software and Document Licnese:
-
-    By obtaining and/or copying this work, you (the licensee) agree that you have
-    read, understood, and will comply with the following terms and conditions.
-
-    Permission to copy, modify, and distribute this work, with or without
-    modification, for any purpose and without fee or royalty is hereby granted,
-    provided that you include the following on ALL copies of the work or portions
-    thereof, including modifications:
-
-    * The full text of this NOTICE in a location viewable to users of the
-      redistributed or derivative work.
-
-    * Any pre-existing intellectual property disclaimers, notices, or terms and
-      conditions. If none exist, the W3C Software and Document Short Notice should be
-      included.
-
-    * Notice of any changes or modifications, through a copyright statement on the
-      new code or document such as "This software or document includes material
-      copied from or derived from [title and URI of the W3C document]. Copyright ©
-      [YEAR] W3C® (MIT, ERCIM, Keio, Beihang)."
-
-    Disclaimers
-
-    THIS WORK IS PROVIDED "AS IS," AND COPYRIGHT HOLDERS MAKE NO
-    REPRESENTATIONS OR WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT
-    LIMITED TO, WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
-    PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENT WILL NOT INFRINGE ANY
-    THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS OR OTHER RIGHTS.
-
-    COPYRIGHT HOLDERS WILL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL OR
-    CONSEQUENTIAL DAMAGES ARISING OUT OF ANY USE OF THE SOFTWARE OR DOCUMENT.
-
-    The name and trademarks of copyright holders may NOT be used in advertising
-    or publicity pertaining to the work without specific, written prior
-    permission. Title to copyright in this work will at all times remain with
-    copyright holders.
-
   This product bundles 'ICU4J', including the following files:
-    - icu4j-<VERSION>.jar
+    - META-INF/bundled-dependencies/icu4j-<VERSION>.jar
   These files are available under the Unicode License. For details, see
   https://github.com/unicode-org/icu/blob/release-<VERSION>/icu4c/LICENSE
 
@@ -573,8 +499,8 @@ subcomponents is subject to the terms and conditions of the following licenses.
      #  and others. All Rights Reserved.
      #
      # Project: https://github.com/veer66/lao-dictionary
-     # Dictionary: https://github.com/veer66/lao-dictionary/blob/master/Lao-Dictionary.txt
-     # License: https://github.com/veer66/lao-dictionary/blob/master/Lao-Dictionary-LICENSE.txt
+     # Dictionary: https://github.com/veer66/lao-dictionary/blob/2c2344310636f548b09d854362ab2e2e666369e0/Lao-Dictionary.txt
+     # License: https://github.com/veer66/lao-dictionary/blob/2c2344310636f548b09d854362ab2e2e666369e0/Lao-Dictionary-LICENSE.txt
      #              (copied below)
      #
      #  This file is derived from the above dictionary, with slight
@@ -702,7 +628,7 @@ subcomponents is subject to the terms and conditions of the following licenses.
     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
   This product bundles 'JDOM2', including the following files:
-    - jdom2-<VERSION>.jar
+    - META-INF/bundled-dependencies/jdom2-<VERSION>.jar
   These files are available under an Apache style License:
 
     Redistribution and use in source and binary forms, with or without
@@ -754,8 +680,36 @@ subcomponents is subject to the terms and conditions of the following licenses.
     Brett McLaughlin <brett_AT_jdom_DOT_org>.  For more information
     on the JDOM Project, please see <http://www.jdom.org/>. 
 
+  This product bundles 'Passera' compiled source, including the following files:
+    - passera/ directory in META-INF/bundled-dependencies/daffodil-lib-<VERSION>.jar
+  These files are available under the BSD-2-Clause license:
+
+    Copyright (c) 2011-2013, Nate Nystrom
+    All rights reserved.
+
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions are met:
+
+    Redistributions of source code must retain the above copyright notice, this
+    list of conditions and the following disclaimer.
+
+    Redistributions in binary form must reproduce the above copyright notice, this
+    list of conditions and the following disclaimer in the documentation and/or
+    other materials provided with the distribution.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+    ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+    DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+    FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+    DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+    SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+    CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
   This product bundles 'Stax 2 API', including the following files:
-    - stax2-api-<VERSION>.jar
+    - META-INF/bundled-dependencies/stax2-api-<VERSION>.jar
   These files are available under the BSD-2-Clause license:
 
     Copyright 2010- FasterXML.com
@@ -781,9 +735,53 @@ subcomponents is subject to the terms and conditions of the following licenses.
     OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-  This product bundles libraries from 'os-lib', including the following files:
-    - geny_<VERSION>.jar
-    - os-lib_<VERSION>.jar
+  This product bundles 'W3C' copied or derived material, including the following files:
+    - org/apache/daffodil/xsd/XMLSchema.dtd (https://www.w3.org/2001/XMLSchema.dtd) in META-INF/bundled-dependencies/daffodil-lib-<VERSION>.jar
+    - org/apache/daffodil/xsd/XMLSchema.xsd (https://www.w3.org/2001/XMLSchema.xsd) in META-INF/bundled-dependencies/daffodil-lib-<VERSION>.jar
+    - org/apache/daffodil/xsd/XMLSchema_for_DFDL.xsd (https://www.w3.org/2001/XMLSchema.dtd) in META-INF/bundled-dependencies/daffodil-lib-<VERSION>.jar
+    - org/apache/daffodil/xsd/datatypes.dtd (https://www.w3.org/2001/datatypes.dtd) in META-INF/bundled-dependencies/daffodil-lib-<VERSION>.jar
+    - org/apache/daffodil/xsd/xml.xsd (https://www.w3.org/2001/xml.xsd) in META-INF/bundled-dependencies/daffodil-lib-<VERSION>.jar
+  These files are available under the W3C Software and Document License:
+
+    By obtaining and/or copying this work, you (the licensee) agree that you have
+    read, understood, and will comply with the following terms and conditions.
+
+    Permission to copy, modify, and distribute this work, with or without
+    modification, for any purpose and without fee or royalty is hereby granted,
+    provided that you include the following on ALL copies of the work or portions
+    thereof, including modifications:
+
+    * The full text of this NOTICE in a location viewable to users of the
+      redistributed or derivative work.
+
+    * Any pre-existing intellectual property disclaimers, notices, or terms and
+      conditions. If none exist, the W3C Software and Document Short Notice should be
+      included.
+
+    * Notice of any changes or modifications, through a copyright statement on the
+      new code or document such as "This software or document includes material
+      copied from or derived from [title and URI of the W3C document]. Copyright ©
+      [YEAR] W3C® (MIT, ERCIM, Keio, Beihang)."
+
+    Disclaimers
+
+    THIS WORK IS PROVIDED "AS IS," AND COPYRIGHT HOLDERS MAKE NO
+    REPRESENTATIONS OR WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT
+    LIMITED TO, WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
+    PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENT WILL NOT INFRINGE ANY
+    THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS OR OTHER RIGHTS.
+
+    COPYRIGHT HOLDERS WILL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL OR
+    CONSEQUENTIAL DAMAGES ARISING OUT OF ANY USE OF THE SOFTWARE OR DOCUMENT.
+
+    The name and trademarks of copyright holders may NOT be used in advertising
+    or publicity pertaining to the work without specific, written prior
+    permission. Title to copyright in this work will at all times remain with
+    copyright holders.
+
+  This product bundles 'os-lib', including the following files:
+    - META-INF/bundled-dependencies/geny_<VERSION>.jar
+    - META-INF/bundled-dependencies/os-lib_<VERSION>.jar
   These files are available under the MIT license:
 
     License
