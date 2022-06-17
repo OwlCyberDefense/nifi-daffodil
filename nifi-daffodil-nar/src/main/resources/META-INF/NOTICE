@@ -3,7 +3,7 @@ Copyright 2021 Owl Cyber Defense
 
 The following NOTICE information applies to binary components distributed with this project:
 
-Apache Daffodil (daffodil-<VERSION>.jar)
+Apache Daffodil (META-INF/bundled-dependencies/daffodil-<VERSION>.jar)
   Apache Daffodil
   Copyright 2021 The Apache Software Foundation
 
@@ -15,20 +15,49 @@ Apache Daffodil (daffodil-<VERSION>.jar)
   - Tresys Technology (http://www.tresys.com/)
   - International Business Machines Corporation (http://www.ibm.com)
 
-Apache Commons IO (commons-io-<VERSION>.jar)
+Apache Commons IO (META-INF/bundled-dependencies/commons-io-<VERSION>.jar)
   Apache Commons IO
-  Copyright 2002-2020 The Apache Software Foundation
+  Copyright 2002-2021 The Apache Software Foundation
 
   This product includes software developed at
   The Apache Software Foundation (https://www.apache.org/).
 
-Apache NiFi Utils (nifi-utils-<VERSION>.jar)
+Apache Log4j (META-INF/bundled-dependencies/log4j-api-<VERSION>.jar)
+  Apache Log4j
+  Copyright 1999-2019 Apache Software Foundation
+
+  This product includes software developed at
+  The Apache Software Foundation (http://www.apache.org/).
+
+  ResolverUtil.java
+  Copyright 2005-2006 Tim Fennell
+
+  Dumbster SMTP test server
+  Copyright 2004 Jason Paul Kitchen
+
+  TypeUtil.java
+  Copyright 2002-2012 Ramnivas Laddad, Juergen Hoeller, Chris Beams
+
+  picocli (http://picocli.info)
+  Copyright 2017 Remko Popma
+
+Apache Log4j Scala API (META-INF/bundled-dependencies/log4j-api-scala_<VERSION>.jar)
+  Copyright 2016-2018 Apache Software Foundation
+
+  This product includes software developed at
+  The Apache Software Foundation (http://www.apache.org/).
+
+  AsciidocPlugin.scala
+  Copyright (c) 2008, 2009, 2010, 2011 Josh Suereth, Steven Blundy, Josh Cough,
+  Mark Harrah, Stuart Roebuck, Tony Sloane, Vesa Vilhonen, Jason Zaugg
+
+Apache NiFi Utils (META-INF/bundled-dependencies/nifi-utils-<VERSION>.jar)
   nifi-utils
   Copyright 2017 Apache NiFi Project
 
-Apache Xerces Java (xercesImpl-<VERSION>.jar)
+Apache Xerces Java (META-INF/bundled-dependencies/xercesImpl-<VERSION>.jar)
   Apache Xerces Java
-  Copyright 1999-2020 The Apache Software Foundation
+  Copyright 1999-2022 The Apache Software Foundation
 
   This product includes software developed at
   The Apache Software Foundation (http://www.apache.org/).
@@ -40,34 +69,34 @@ Apache Xerces Java (xercesImpl-<VERSION>.jar)
       Apache Software Foundation that were originally developed at iClick, Inc.,
       software copyright (c) 1999.
 
-Apache XML Commons Resolver (xml-resolver-<VERSION>.jar)
-    Apache XML Commons Resolver
-    Copyright 2006 The Apache Software Foundation.
+Apache XML Commons Resolver (META-INF/bundled-dependencies/xml-resolver-<VERSION>.jar)
+  Apache XML Commons Resolver
+  Copyright 2006 The Apache Software Foundation.
 
-    This product includes software developed at
-    The Apache Software Foundation http://www.apache.org/
+  This product includes software developed at
+  The Apache Software Foundation http://www.apache.org/
 
-    Portions of this code are derived from classes placed in the
-    public domain by Arbortext on 10 Apr 2000. See:
-    http://www.arbortext.com/customer_support/updates_and_technical_notes/catalogs/docs/README.htm
+  Portions of this code are derived from classes placed in the
+  public domain by Arbortext on 10 Apr 2000. See:
+  http://www.arbortext.com/customer_support/updates_and_technical_notes/catalogs/docs/README.htm
 
-Apache XML Commons XML APIs (xml-apis-<VERSION>.jar)
-   Apache XML Commons XML APIs
-   Copyright 1999-2009 The Apache Software Foundation.
+Apache XML Commons XML APIs (META-INF/bundled-dependencies/xml-apis-<VERSION>.jar)
+  Apache XML Commons XML APIs
+  Copyright 1999-2009 The Apache Software Foundation.
 
-   This product includes software developed at
-   The Apache Software Foundation (http://www.apache.org/).
+  This product includes software developed at
+  The Apache Software Foundation (http://www.apache.org/).
 
-   Portions of this software were originally based on the following:
-     - software copyright (c) 1999, IBM Corporation., http://www.ibm.com.
-     - software copyright (c) 1999, Sun Microsystems., http://www.sun.com.
-     - software copyright (c) 2000 World Wide Web Consortium, http://www.w3.org
+  Portions of this software were originally based on the following:
+    - software copyright (c) 1999, IBM Corporation., http://www.ibm.com.
+    - software copyright (c) 1999, Sun Microsystems., http://www.sun.com.
+    - software copyright (c) 2000 World Wide Web Consortium, http://www.w3.org
 
-Guava (guava-<VERSION>.jar)
+Guava (META-INF/bundled-dependencies/guava-<VERSION>.jar)
   Guava
   Copyright 2015 The Guava Authors
 
-JDOM2 (jdom2-<VERSION>.jar)
+JDOM2 (META-INF/bundled-dependencies/jdom2-<VERSION>.jar)
   Copyright (C) 2000-2012 Jason Hunter & Brett McLaughlin.
 
   All rights reserved.
@@ -75,7 +104,7 @@ JDOM2 (jdom2-<VERSION>.jar)
   This product includes software developed by the
   JDOM Project (http://www.jdom.org/).
 
-Jackson JSON processor (jackson-core-<VERSION>.jar)
+Jackson JSON processor (META-INF/bundled-dependencies/jackson-core-<VERSION>.jar)
   Copyright (c) 2007- Tatu Saloranta, tatu.saloranta@iki.fi
   Copyright (c) 2008-2020 FasterXML. All rights reserved.
 
@@ -97,8 +126,8 @@ Jackson JSON processor (jackson-core-<VERSION>.jar)
   in some artifacts (usually source distributions); but is always available
   from the source code management (SCM) system project uses.
 
-Scala (scala-library-<VERSION>.jar)
-      (org/apache/daffodil/util/UniquenessCache.class in daffodil-lib-<VERSION>.jar)
+Scala (META-INF/bundled-dependencies/scala-library-<VERSION>.jar)
+      (org/apache/daffodil/util/UniquenessCache.class in META-INF/bundled-dependencies/daffodil-lib-<VERSION>.jar)
   Scala
   Copyright (c) 2002-2020 EPFL
   Copyright (c) 2011-2020 Lightbend, Inc.
@@ -112,7 +141,7 @@ Scala (scala-library-<VERSION>.jar)
   and can be found in:
     daffodil-lib/src/main/scala/org/apache/daffodil/util/UniquenessCache.scala
 
-Scala Parser Combinators (scala-parser-combinators_<VERSION>.jar)
+Scala Parser Combinators (META-INF/bundled-dependencies/scala-parser-combinators_<VERSION>.jar)
   Scala parser combinators
   Copyright (c) 2002-2021 EPFL
   Copyright (c) 2011-2021 Lightbend, Inc.
@@ -121,7 +150,7 @@ Scala Parser Combinators (scala-parser-combinators_<VERSION>.jar)
   LAMP/EPFL (https://lamp.epfl.ch/) and
   Lightbend, Inc. (https://www.lightbend.com/).
 
-Scala XML (scala-xml_<VERSION>.jar)
+Scala XML (META-INF/bundled-dependencies/scala-xml_<VERSION>.jar)
   scala-xml
   Copyright (c) 2002-2020 EPFL
   Copyright (c) 2011-2020 Lightbend, Inc.
