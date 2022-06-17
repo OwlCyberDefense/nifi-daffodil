@@ -14,25 +14,25 @@
  * limitations under the License.
  */
 
-package com.tresys.nifi.processors;
+package com.owlcyberdefense.nifi.processors;
 
 import java.io.IOException;
 
-public class DaffodilProcessingException extends IOException {
+public class DaffodilCompileException extends IOException {
 
-    public DaffodilProcessingException() {
+    public DaffodilCompileException() {
         super();
     }
 
-    public DaffodilProcessingException(String message) {
+    public DaffodilCompileException(String message) {
         super(message);
     }
 
-    public DaffodilProcessingException(String message, Throwable cause) {
+    public DaffodilCompileException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public DaffodilProcessingException(Throwable cause) {
+    public DaffodilCompileException(Throwable cause) {
         super(cause);
     }
 }

@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.tresys.nifi.processors;
+package com.owlcyberdefense.nifi.processors;
 
-import com.tresys.nifi.processors.AbstractDaffodilProcessor.CacheKey;
+import com.owlcyberdefense.nifi.processors.AbstractDaffodilProcessor.CacheKey;
 
 import java.io.File;
 import java.io.FileOutputStream;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.tresys.nifi.processors;
+package com.owlcyberdefense.nifi.processors;
 
 import java.io.IOException;
 import java.io.InputStream;

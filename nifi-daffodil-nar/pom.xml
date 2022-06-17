@@ -19,7 +19,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.tresys</groupId>
+        <groupId>com.owlcyberdefense</groupId>
         <artifactId>nifi-daffodil</artifactId>
         <version>1.8</version>
     </parent>
@@ -34,7 +34,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.tresys</groupId>
+            <groupId>com.owlcyberdefense</groupId>
             <artifactId>nifi-daffodil-processors</artifactId>
             <version>1.8</version>
         </dependency>
