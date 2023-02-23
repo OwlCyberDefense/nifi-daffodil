@@ -207,14 +207,27 @@ The NIFI DAFFODIL NAR project contains subcomponents with separate
 copyright notices and license terms. Your use of the source code for the these
 subcomponents is subject to the terms and conditions of the following licenses.
 
-  This product bundles 'ICU4J', including the following files:
-    - META-INF/bundled-dependencies/icu4j-<VERSION>.jar
+- com.ibm.icu.icu4j-<VERSION>.jar
+  This product bundles 'ICU4J' from the above files.
   These files are available under the Unicode License. For details, see
   https://github.com/unicode-org/icu/blob/release-<VERSION>/icu4c/LICENSE
 
-    COPYRIGHT AND PERMISSION NOTICE (ICU 58 and later)
+    UNICODE, INC. LICENSE AGREEMENT - DATA FILES AND SOFTWARE
 
-    Copyright © 1991-2020 Unicode, Inc. All rights reserved.
+    See Terms of Use <https://www.unicode.org/copyright.html>
+    for definitions of Unicode Inc.’s Data Files and Software.
+
+    NOTICE TO USER: Carefully read the following legal agreement.
+    BY DOWNLOADING, INSTALLING, COPYING OR OTHERWISE USING UNICODE INC.'S
+    DATA FILES ("DATA FILES"), AND/OR SOFTWARE ("SOFTWARE"),
+    YOU UNEQUIVOCALLY ACCEPT, AND AGREE TO BE BOUND BY, ALL OF THE
+    TERMS AND CONDITIONS OF THIS AGREEMENT.
+    IF YOU DO NOT AGREE, DO NOT DOWNLOAD, INSTALL, COPY, DISTRIBUTE OR USE
+    THE DATA FILES OR SOFTWARE.
+
+    COPYRIGHT AND PERMISSION NOTICE
+
+    Copyright © 1991-2022 Unicode, Inc. All rights reserved.
     Distributed under the Terms of Use in https://www.unicode.org/copyright.html.
 
     Permission is hereby granted, free of charge, to any person obtaining
@@ -246,7 +259,7 @@ subcomponents is subject to the terms and conditions of the following licenses.
     use or other dealings in these Data Files or Software without prior
     written authorization of the copyright holder.
 
-    ---------------------
+    ----------------------------------------------------------------------
 
     Third-Party Software Licenses
 
@@ -254,7 +267,9 @@ subcomponents is subject to the terms and conditions of the following licenses.
     terms for licensed third-party software components included within ICU
     libraries.
 
-    1. ICU License - ICU 1.8.1 to ICU 57.1
+    ----------------------------------------------------------------------
+
+    ICU License - ICU 1.8.1 to ICU 57.1
 
     COPYRIGHT AND PERMISSION NOTICE
 
@@ -289,7 +304,9 @@ subcomponents is subject to the terms and conditions of the following licenses.
     All trademarks and registered trademarks mentioned herein are the
     property of their respective owners.
 
-    2. Chinese/Japanese Word Break Dictionary Data (cjdict.txt)
+    ----------------------------------------------------------------------
+
+    Chinese/Japanese Word Break Dictionary Data (cjdict.txt)
 
      #     The Google Chrome software developed by Google is licensed under
      # the BSD license. Other software included in this distribution is
@@ -493,33 +510,33 @@ subcomponents is subject to the terms and conditions of the following licenses.
      #
      #  ---------------COPYING.ipadic-----END----------------------------------
 
-    3. Lao Word Break Dictionary Data (laodict.txt)
+    ----------------------------------------------------------------------
 
-     #  Copyright (c) 2013 International Business Machines Corporation
-     #  and others. All Rights Reserved.
+    Lao Word Break Dictionary Data (laodict.txt)
+
+     # Copyright (C) 2016 and later: Unicode, Inc. and others.
+     # License & terms of use: http://www.unicode.org/copyright.html
+     # Copyright (c) 2015 International Business Machines Corporation
+     # and others. All Rights Reserved.
      #
-     # Project: https://github.com/veer66/lao-dictionary
-     # Dictionary: https://github.com/veer66/lao-dictionary/blob/2c2344310636f548b09d854362ab2e2e666369e0/Lao-Dictionary.txt
-     # License: https://github.com/veer66/lao-dictionary/blob/2c2344310636f548b09d854362ab2e2e666369e0/Lao-Dictionary-LICENSE.txt
-     #              (copied below)
+     # Project: https://github.com/rober42539/lao-dictionary
+     # Dictionary: https://github.com/rober42539/lao-dictionary/laodict.txt
+     # License: https://github.com/rober42539/lao-dictionary/LICENSE.txt
+     #          (copied below)
      #
-     #  This file is derived from the above dictionary, with slight
-     #  modifications.
+     #	This file is derived from the above dictionary version of Nov 22, 2020
      #  ----------------------------------------------------------------------
      #  Copyright (C) 2013 Brian Eugene Wilson, Robert Martin Campbell.
      #  All rights reserved.
      #
      #  Redistribution and use in source and binary forms, with or without
-     #  modification,
-     #  are permitted provided that the following conditions are met:
+     #  modification, are permitted provided that the following conditions are met:
      #
-     #
-     # Redistributions of source code must retain the above copyright notice, this
-     #  list of conditions and the following disclaimer. Redistributions in
-     #  binary form must reproduce the above copyright notice, this list of
-     #  conditions and the following disclaimer in the documentation and/or
-     #  other materials provided with the distribution.
-     #
+     #  Redistributions of source code must retain the above copyright notice, this
+     #  list of conditions and the following disclaimer. Redistributions in binary
+     #  form must reproduce the above copyright notice, this list of conditions and
+     #  the following disclaimer in the documentation and/or other materials
+     #  provided with the distribution.
      #
      # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
      # "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -535,7 +552,9 @@ subcomponents is subject to the terms and conditions of the following licenses.
      # OF THE POSSIBILITY OF SUCH DAMAGE.
      #  --------------------------------------------------------------------------
 
-    4. Burmese Word Break Dictionary Data (burmesedict.txt)
+    ----------------------------------------------------------------------
+
+    Burmese Word Break Dictionary Data (burmesedict.txt)
 
      #  Copyright (c) 2014 International Business Machines Corporation
      #  and others. All Rights Reserved.
@@ -575,7 +594,9 @@ subcomponents is subject to the terms and conditions of the following licenses.
      #  SUCH DAMAGE.
      #  --------------------------------------------------------------------------
 
-    5. Time Zone Database
+    ----------------------------------------------------------------------
+
+    Time Zone Database
 
       ICU uses the public domain data and code derived from Time Zone
     Database for its time zone support. The ownership of the TZ database
@@ -598,22 +619,24 @@ subcomponents is subject to the terms and conditions of the following licenses.
      #    making a contribution to the database or code waives all rights to
      #    future claims in that contribution or in the TZ Database.
 
-    6. Google double-conversion
+    ----------------------------------------------------------------------
+
+    Google double-conversion
 
     Copyright 2006-2011, the V8 project authors. All rights reserved.
     Redistribution and use in source and binary forms, with or without
     modification, are permitted provided that the following conditions are
     met:
 
-      * Redistributions of source code must retain the above copyright
-        notice, this list of conditions and the following disclaimer.
-      * Redistributions in binary form must reproduce the above
-        copyright notice, this list of conditions and the following
-        disclaimer in the documentation and/or other materials provided
-        with the distribution.
-      * Neither the name of Google Inc. nor the names of its
-        contributors may be used to endorse or promote products derived
-        from this software without specific prior written permission.
+        * Redistributions of source code must retain the above copyright
+          notice, this list of conditions and the following disclaimer.
+        * Redistributions in binary form must reproduce the above
+          copyright notice, this list of conditions and the following
+          disclaimer in the documentation and/or other materials provided
+          with the distribution.
+        * Neither the name of Google Inc. nor the names of its
+          contributors may be used to endorse or promote products derived
+          from this software without specific prior written permission.
 
     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
     "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -627,9 +650,106 @@ subcomponents is subject to the terms and conditions of the following licenses.
     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-  This product bundles 'JDOM2', including the following files:
-    - META-INF/bundled-dependencies/jdom2-<VERSION>.jar
-  These files are available under an Apache style License:
+- com.lihaoyi.geny_<VERSION>.jar
+- com.lihaoyi.os-lib_<VERSION>.jar
+  This product bundles 'os-lib' from the above files.
+  These files are available under the MIT license:
+
+    License
+    =======
+
+
+    The MIT License (MIT)
+
+    Copyright (c) 2019 Li Haoyi (haoyi.sg@gmail.com)
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in
+    all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+    FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+    DEALINGS IN THE SOFTWARE.
+
+- org.apache.daffodil.daffodil-lib-<VERSION>.jar with:
+  org/apache/daffodil/xsd/XMLSchema.dtd (https://www.w3.org/2001/XMLSchema.dtd)
+  org/apache/daffodil/xsd/XMLSchema.xsd (https://www.w3.org/2001/XMLSchema.xsd)
+  org/apache/daffodil/xsd/XMLSchema_for_DFDL.xsd (https://www.w3.org/2001/XMLSchema.dtd)
+  org/apache/daffodil/xsd/datatypes.dtd (https://www.w3.org/2001/datatypes.dtd)
+  org/apache/daffodil/xsd/xml.xsd (https://www.w3.org/2001/xml.xsd)
+
+- org.apache.daffodil.daffodil-lib-<VERSION>.jar with:
+  passera/ directory
+  This product bundles 'Passera' compiled source from the above files.
+  These files are available under the BSD-2-Clause license:
+
+    Copyright (c) 2011-2013, Nate Nystrom
+    All rights reserved.
+
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions are met:
+
+    Redistributions of source code must retain the above copyright notice, this
+    list of conditions and the following disclaimer.
+
+    Redistributions in binary form must reproduce the above copyright notice, this
+    list of conditions and the following disclaimer in the documentation and/or
+    other materials provided with the distribution.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+    ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+    DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+    FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+    DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+    SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+    CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+- org.codehaus.woodstox.stax2-api-<VERSION>.jar
+  This product bundles 'Stax 2 API' from the above files.
+  These files are available under the BSD-2-Clause license:
+
+    Copyright 2010- FasterXML.com
+
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions are met:
+
+    1. Redistributions of source code must retain the above copyright notice, this
+       list of conditions and the following disclaimer.
+
+    2. Redistributions in binary form must reproduce the above copyright notice,
+       this list of conditions and the following disclaimer in the documentation
+       and/or other materials provided with the distribution.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+    ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+    DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+    FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+    DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+    SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+    CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+- org.jdom.jdom2-<VERSION>.jar
+  This product bundles 'JDOM2' from the above files.
+  These files are available under an Apache style license:
+
+    Copyright (C) 2000-2012 Jason Hunter & Brett McLaughlin.
+    All rights reserved.
 
     Redistribution and use in source and binary forms, with or without
     modification, are permitted provided that the following conditions
@@ -679,133 +799,3 @@ subcomponents is subject to the terms and conditions of the following licenses.
     created by Jason Hunter <jhunter_AT_jdom_DOT_org> and
     Brett McLaughlin <brett_AT_jdom_DOT_org>.  For more information
     on the JDOM Project, please see <http://www.jdom.org/>. 
-
-  This product bundles 'Passera' compiled source, including the following files:
-    - passera/ directory in META-INF/bundled-dependencies/daffodil-lib-<VERSION>.jar
-  These files are available under the BSD-2-Clause license:
-
-    Copyright (c) 2011-2013, Nate Nystrom
-    All rights reserved.
-
-    Redistribution and use in source and binary forms, with or without
-    modification, are permitted provided that the following conditions are met:
-
-    Redistributions of source code must retain the above copyright notice, this
-    list of conditions and the following disclaimer.
-
-    Redistributions in binary form must reproduce the above copyright notice, this
-    list of conditions and the following disclaimer in the documentation and/or
-    other materials provided with the distribution.
-
-    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-    ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-    DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-    FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-    DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-    SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-    CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-  This product bundles 'Stax 2 API', including the following files:
-    - META-INF/bundled-dependencies/stax2-api-<VERSION>.jar
-  These files are available under the BSD-2-Clause license:
-
-    Copyright 2010- FasterXML.com
-
-    Redistribution and use in source and binary forms, with or without
-    modification, are permitted provided that the following conditions are met:
-
-    1. Redistributions of source code must retain the above copyright notice, this
-       list of conditions and the following disclaimer.
-
-    2. Redistributions in binary form must reproduce the above copyright notice,
-       this list of conditions and the following disclaimer in the documentation
-       and/or other materials provided with the distribution.
-
-    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-    ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-    DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-    FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-    DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-    SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-    CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-    OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-  This product bundles 'W3C' copied or derived material, including the following files:
-    - org/apache/daffodil/xsd/XMLSchema.dtd (https://www.w3.org/2001/XMLSchema.dtd) in META-INF/bundled-dependencies/daffodil-lib-<VERSION>.jar
-    - org/apache/daffodil/xsd/XMLSchema.xsd (https://www.w3.org/2001/XMLSchema.xsd) in META-INF/bundled-dependencies/daffodil-lib-<VERSION>.jar
-    - org/apache/daffodil/xsd/XMLSchema_for_DFDL.xsd (https://www.w3.org/2001/XMLSchema.dtd) in META-INF/bundled-dependencies/daffodil-lib-<VERSION>.jar
-    - org/apache/daffodil/xsd/datatypes.dtd (https://www.w3.org/2001/datatypes.dtd) in META-INF/bundled-dependencies/daffodil-lib-<VERSION>.jar
-    - org/apache/daffodil/xsd/xml.xsd (https://www.w3.org/2001/xml.xsd) in META-INF/bundled-dependencies/daffodil-lib-<VERSION>.jar
-  These files are available under the W3C Software and Document License:
-
-    By obtaining and/or copying this work, you (the licensee) agree that you have
-    read, understood, and will comply with the following terms and conditions.
-
-    Permission to copy, modify, and distribute this work, with or without
-    modification, for any purpose and without fee or royalty is hereby granted,
-    provided that you include the following on ALL copies of the work or portions
-    thereof, including modifications:
-
-    * The full text of this NOTICE in a location viewable to users of the
-      redistributed or derivative work.
-
-    * Any pre-existing intellectual property disclaimers, notices, or terms and
-      conditions. If none exist, the W3C Software and Document Short Notice should be
-      included.
-
-    * Notice of any changes or modifications, through a copyright statement on the
-      new code or document such as "This software or document includes material
-      copied from or derived from [title and URI of the W3C document]. Copyright ©
-      [YEAR] W3C® (MIT, ERCIM, Keio, Beihang)."
-
-    Disclaimers
-
-    THIS WORK IS PROVIDED "AS IS," AND COPYRIGHT HOLDERS MAKE NO
-    REPRESENTATIONS OR WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT
-    LIMITED TO, WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR
-    PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENT WILL NOT INFRINGE ANY
-    THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS OR OTHER RIGHTS.
-
-    COPYRIGHT HOLDERS WILL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL OR
-    CONSEQUENTIAL DAMAGES ARISING OUT OF ANY USE OF THE SOFTWARE OR DOCUMENT.
-
-    The name and trademarks of copyright holders may NOT be used in advertising
-    or publicity pertaining to the work without specific, written prior
-    permission. Title to copyright in this work will at all times remain with
-    copyright holders.
-
-  This product bundles 'os-lib', including the following files:
-    - META-INF/bundled-dependencies/geny_<VERSION>.jar
-    - META-INF/bundled-dependencies/os-lib_<VERSION>.jar
-  These files are available under the MIT license:
-
-    License
-    =======
-
-
-    The MIT License (MIT)
-
-    Copyright (c) 2019 Li Haoyi (haoyi.sg@gmail.com)
-
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
-
-    The above copyright notice and this permission notice shall be included in
-    all copies or substantial portions of the Software.
-
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-    FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-    DEALINGS IN THE SOFTWARE.
