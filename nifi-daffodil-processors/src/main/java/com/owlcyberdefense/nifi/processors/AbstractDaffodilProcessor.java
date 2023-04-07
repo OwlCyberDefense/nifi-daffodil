@@ -80,7 +80,7 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
             .description("Full path to the DFDL schema file that is to be used for parsing/unparsing.")
             .required(true)
             .expressionLanguageSupported(ExpressionLanguageScope.FLOWFILE_ATTRIBUTES)
-            .addValidator(StandardValidators.FILE_EXISTS_VALIDATOR)
+            .addValidator(StandardValidators.NON_EMPTY_VALIDATOR)
             .build();
 
     public static final PropertyDescriptor PRE_COMPILED_SCHEMA = new PropertyDescriptor.Builder()

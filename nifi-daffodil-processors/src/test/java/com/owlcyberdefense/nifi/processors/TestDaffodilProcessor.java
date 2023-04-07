@@ -47,7 +47,13 @@ public class TestDaffodilProcessor {
     public void testDFDLSchemaNotFound() throws IOException {
         final TestRunner testRunner = TestRunners.newTestRunner(DaffodilParse.class);
         testRunner.setProperty(DaffodilParse.DFDL_SCHEMA_FILE, "/does/not/exist.dfdl.xsd");
-        testRunner.assertNotValid();
+        testRunner.assertValid();
+        testRunner.enqueue(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv"));
+        testRunner.run();
+        testRunner.assertAllFlowFilesTransferred(DaffodilParse.REL_FAILURE);
+        final MockFlowFile original = testRunner.getFlowFilesForRelationship(DaffodilParse.REL_FAILURE).get(0);
+        final String expectedContent = new String(Files.readAllBytes(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv")));
+        original.assertContentEquals(expectedContent);
     }
 
     @Test
