@@ -16,7 +16,7 @@
 
 package com.owlcyberdefense.nifi.processors;
 
-import com.owlcyberdefense.nifi.processors.AbstractDaffodilProcessor.CacheKey;
+import com.owlcyberdefense.nifi.processors.AbstractDaffodilProcessor.CompilationParams;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -33,6 +33,8 @@ import org.apache.nifi.flowfile.attributes.CoreAttributes;
 import org.apache.nifi.util.MockFlowFile;
 import org.apache.nifi.util.TestRunner;
 import org.apache.nifi.util.TestRunners;
+
+import org.apache.daffodil.japi.ValidationMode;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -341,14 +343,14 @@ public class TestDaffodilProcessor {
     }
 
     @Test
-    public void testCacheKeyEquality() {
-        CacheKey ck1 = new CacheKey("one", false);
-        CacheKey ck2 = new CacheKey("one", false);
-        CacheKey ck3 = new CacheKey("two", false);
-        CacheKey ck4 = new CacheKey("one", true);
-        CacheKey ck5 = new CacheKey("two", true);
+    public void testCompilationParamsEquality() {
+        CompilationParams ck1 = new CompilationParams("one", false, ValidationMode.Off);
+        CompilationParams ck2 = new CompilationParams("one", false, ValidationMode.Off);
+        CompilationParams ck3 = new CompilationParams("two", false, ValidationMode.Off);
+        CompilationParams ck4 = new CompilationParams("one", true, ValidationMode.Off);
+        CompilationParams ck5 = new CompilationParams("two", true, ValidationMode.Off);
+        CompilationParams ck6 = new CompilationParams("one", false, ValidationMode.Limited);
 
-        assertTrue(ck1 != ck2);
         assertTrue(ck1.equals(ck2));
         assertTrue(ck1.hashCode() == ck2.hashCode());
 
@@ -360,6 +362,9 @@ public class TestDaffodilProcessor {
 
         assertFalse(ck1.equals(ck5));
         assertFalse(ck1.hashCode() == ck5.hashCode());
+
+        assertFalse(ck1.equals(ck6));
+        assertFalse(ck1.hashCode() == ck6.hashCode());
     }
 
 }

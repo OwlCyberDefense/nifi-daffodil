@@ -79,7 +79,7 @@ public class DaffodilParse extends AbstractDaffodilProcessor {
         ParseResult pr = dp.parse(input, outputter);
         if (pr.isError()) {
             getLogger().error("Failed to parse {}", new Object[]{ff});
-            logDiagnostics(pr);
+            logDiagnostics(getLogger(), pr);
             throw new DaffodilProcessingException("Failed to parse");
         }
         DataLocation loc = pr.location();

@@ -79,7 +79,7 @@ public class DaffodilUnparse extends AbstractDaffodilProcessor {
         UnparseResult ur = dp.unparse(inputter, wbc);
         if (ur.isError()) {
             getLogger().error("Failed to unparse {}", new Object[]{ff});
-            logDiagnostics(ur);
+            logDiagnostics(getLogger(), ur);
             throw new DaffodilProcessingException("Failed to unparse");
         }
     }
