@@ -22,35 +22,6 @@ Apache Commons IO (META-INF/bundled-dependencies/commons-io-<VERSION>.jar)
   This product includes software developed at
   The Apache Software Foundation (https://www.apache.org/).
 
-Apache Log4j (META-INF/bundled-dependencies/log4j-api-<VERSION>.jar)
-  Apache Log4j
-  Copyright 1999-2019 Apache Software Foundation
-
-  This product includes software developed at
-  The Apache Software Foundation (http://www.apache.org/).
-
-  ResolverUtil.java
-  Copyright 2005-2006 Tim Fennell
-
-  Dumbster SMTP test server
-  Copyright 2004 Jason Paul Kitchen
-
-  TypeUtil.java
-  Copyright 2002-2012 Ramnivas Laddad, Juergen Hoeller, Chris Beams
-
-  picocli (http://picocli.info)
-  Copyright 2017 Remko Popma
-
-Apache Log4j Scala API (META-INF/bundled-dependencies/log4j-api-scala_<VERSION>.jar)
-  Copyright 2016-2018 Apache Software Foundation
-
-  This product includes software developed at
-  The Apache Software Foundation (http://www.apache.org/).
-
-  AsciidocPlugin.scala
-  Copyright (c) 2008, 2009, 2010, 2011 Josh Suereth, Steven Blundy, Josh Cough,
-  Mark Harrah, Stuart Roebuck, Tony Sloane, Vesa Vilhonen, Jason Zaugg
-
 Apache NiFi Utils (META-INF/bundled-dependencies/nifi-utils-<VERSION>.jar)
   nifi-utils
   Copyright 2017 Apache NiFi Project
@@ -129,8 +100,8 @@ Jackson JSON processor (META-INF/bundled-dependencies/jackson-core-<VERSION>.jar
 Scala (META-INF/bundled-dependencies/scala-library-<VERSION>.jar)
       (org/apache/daffodil/util/UniquenessCache.class in META-INF/bundled-dependencies/daffodil-lib-<VERSION>.jar)
   Scala
-  Copyright (c) 2002-2020 EPFL
-  Copyright (c) 2011-2020 Lightbend, Inc.
+  Copyright (c) 2002-2023 EPFL
+  Copyright (c) 2011-2023 Lightbend, Inc.
 
   Scala includes software developed at
   LAMP/EPFL (https://lamp.epfl.ch/) and
