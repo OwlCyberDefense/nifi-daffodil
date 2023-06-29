@@ -307,9 +307,9 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
         final Integer cacheSize = context.getProperty(CACHE_SIZE).asInteger();
         final Long cacheTTL = context.getProperty(CACHE_TTL_AFTER_LAST_ACCESS).asTimePeriod(TimeUnit.SECONDS);
 
-        if (cacheSize > 0) {
+        if (cacheSize != null && cacheSize > 0) {
             CacheBuilder cacheBuilder = CacheBuilder.newBuilder().maximumSize(cacheSize);
-            if (cacheTTL > 0) {
+            if (cacheTTL != null && cacheTTL > 0) {
                 cacheBuilder = cacheBuilder.expireAfterAccess(cacheTTL, TimeUnit.SECONDS);
             }
 
