@@ -33,6 +33,7 @@ import org.apache.nifi.annotation.behavior.WritesAttribute;
 import org.apache.nifi.annotation.documentation.CapabilityDescription;
 import org.apache.nifi.annotation.documentation.Tags;
 import org.apache.nifi.flowfile.FlowFile;
+import org.apache.nifi.annotation.behavior.RequiresInstanceClassLoading;
 
 import org.apache.daffodil.japi.DataLocation;
 import org.apache.daffodil.japi.DataProcessor;
@@ -50,6 +51,7 @@ import org.apache.daffodil.japi.infoset.XMLTextInfosetOutputter;
 @Tags({"xml", "json", "daffodil", "dfdl", "schema", "xsd"})
 @CapabilityDescription("Use Daffodil and a user-specified DFDL schema to transform data to an infoset, represented by either XML or JSON.")
 @WritesAttribute(attribute = "mime.type", description = "Sets the mime type to application/json or application/xml based on the infoset type.")
+@RequiresInstanceClassLoading
 public class DaffodilParse extends AbstractDaffodilProcessor {
 
     private InfosetOutputter getInfosetOutputter(String infosetType, OutputStream os) {

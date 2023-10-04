@@ -20,6 +20,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -31,20 +35,22 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.nifi.annotation.lifecycle.OnScheduled;
-import org.apache.nifi.components.PropertyDescriptor;
 import org.apache.nifi.components.AllowableValue;
+import org.apache.nifi.components.PropertyDescriptor;
+import org.apache.nifi.components.resource.ResourceCardinality;
+import org.apache.nifi.components.resource.ResourceType;
 import org.apache.nifi.expression.ExpressionLanguageScope;
-import org.apache.nifi.logging.ComponentLog;
-import org.apache.nifi.flowfile.attributes.CoreAttributes;
 import org.apache.nifi.flowfile.FlowFile;
+import org.apache.nifi.flowfile.attributes.CoreAttributes;
+import org.apache.nifi.logging.ComponentLog;
 import org.apache.nifi.processor.AbstractProcessor;
 import org.apache.nifi.processor.ProcessContext;
 import org.apache.nifi.processor.ProcessSession;
 import org.apache.nifi.processor.ProcessorInitializationContext;
 import org.apache.nifi.processor.Relationship;
-import org.apache.nifi.processor.util.StandardValidators;
 import org.apache.nifi.processor.exception.ProcessException;
 import org.apache.nifi.processor.io.StreamCallback;
+import org.apache.nifi.processor.util.StandardValidators;
 import org.apache.nifi.util.StopWatch;
 
 import com.google.common.cache.CacheBuilder;
@@ -77,7 +83,7 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
     public static final PropertyDescriptor DFDL_SCHEMA_FILE = new PropertyDescriptor.Builder()
             .name("dfdl-schema-file")
             .displayName("DFDL Schema File")
-            .description("Full path to the DFDL schema file that is to be used for parsing/unparsing.")
+            .description("Path to the DFDL schema file or resource (see 'Plugins and Schemas') used for parsing/unparsing.")
             .required(true)
             .expressionLanguageSupported(ExpressionLanguageScope.FLOWFILE_ATTRIBUTES)
             .addValidator(StandardValidators.NON_EMPTY_VALIDATOR)
@@ -86,12 +92,21 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
     public static final PropertyDescriptor PRE_COMPILED_SCHEMA = new PropertyDescriptor.Builder()
             .name("pre-compiled-schema")
             .displayName("Pre-compiled Schema")
-            .description("Specify whether the DFDL Schema File is a pre-compiled schema that can be reloaded or if it is an XML schema that needs to be compiled. Set to true if it is pre-compiled.")
+            .description("Specify whether the 'DFDL Schema File' property is a pre-compiled parser that can be reloaded or if it is a DFDL schema that needs to be compiled. Set to true if it is pre-compiled.")
             .required(true)
             .defaultValue("false")
             .allowableValues("true", "false")
             .expressionLanguageSupported(ExpressionLanguageScope.FLOWFILE_ATTRIBUTES)
             .addValidator(StandardValidators.BOOLEAN_VALIDATOR)
+            .build();
+
+    public static final PropertyDescriptor PLUGINS_AND_SCHEMAS = new PropertyDescriptor.Builder()
+            .name("plugins-and-schemas")
+            .displayName("Plugins and Schemas")
+            .description("Comma-separated list of paths to directories, files, and jars to find Daffodil plugins or the 'Daffodil Schema File'")
+            .required(false)
+            .identifiesExternalResource(ResourceCardinality.MULTIPLE, ResourceType.FILE, ResourceType.DIRECTORY)
+            .dynamicallyModifiesClasspath(true)
             .build();
 
     static final String XML_MIME_TYPE = "application/xml";
@@ -183,6 +198,7 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
         properties.add(VALIDATION_MODE);
         properties.add(CACHE_SIZE);
         properties.add(CACHE_TTL_AFTER_LAST_ACCESS);
+        properties.add(PLUGINS_AND_SCHEMAS);
         this.properties = Collections.unmodifiableList(properties);
 
         final Set<Relationship> relationships = new HashSet<>();
@@ -246,28 +262,60 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
          * be done for every flow file, which could have performance implications.
          */
         DataProcessor newDataProcessor(ComponentLog logger) throws IOException {
+
+            // Try to find the schema to compile or reload. If dfdlSchema is a file that exists,
+            // we just use that. If dfdlSchema is not a file, try to find it on the classpath,
+            // most likely in a jar or file found in the 'Plugins and Schemas' property. If the
+            // schema is in a jar, this should be an absolute resource path (i.e. has a leading
+            // slash). If the schema is not in a jar, then it should just be the file name
+            // without a preceding slash. The latter works because of NiFis InstanceClassLoader,
+            // which makes non-jar files available via getResource by just the file name.
+            URL schemaURL = null;
             File f = new File(this.dfdlSchema);
+            if (f.isFile()) {
+                schemaURL = f.toURI().toURL();
+            } else {
+                // it is important to use getClassLoader.getResource() here. If we just do
+                // getClass.getResource() then Java will prepend the classes package to
+                // dfdlSchema values that are not absolute, which breaks the ability for the
+                // InstanceClassLoader to find non-jar resources
+                schemaURL = getClass().getClassLoader().getResource(this.dfdlSchema);
+            }
+
+            if (schemaURL == null) {
+                logger.error("Failed to find 'DFDL Schema File' property as a file or from 'Plugins and Schemas': " + this.dfdlSchema);
+                throw new DaffodilCompileException("Failed to find 'DFDL Schema File' property as a file or in 'Plugins and Schemas': " + this.dfdlSchema);
+            }
+
             Compiler c = Daffodil.compiler();
             DataProcessor dp;
             if (this.preCompiled) {
                 try {
-                    dp = c.reload(f);
+                    InputStream is = schemaURL.openStream();
+                    ReadableByteChannel rbc = Channels.newChannel(is);
+                    dp = c.reload(rbc);
+                    rbc.close();
+                    is.close();
                 } catch (InvalidParserException e) {
                     logger.error("Failed to reload pre-compiled DFDL schema: " + this.dfdlSchema + ". " + e.getMessage());
                     throw new DaffodilCompileException("Failed to reload pre-compiled DFDL schema: " + this.dfdlSchema + ". " + e.getMessage());
                 }
             } else {
-                ProcessorFactory pf = c.compileFile(f);
-                if (pf.isError()) {
-                    logger.error("Failed to compile DFDL schema: " + this.dfdlSchema);
-                    AbstractDaffodilProcessor.logDiagnostics(logger, pf);
-                    throw new DaffodilCompileException("Failed to compile DFDL schema: " + this.dfdlSchema);
-                }
-                dp = pf.onPath("/");
-                if (dp.isError()) {
-                    logger.error("Failed to compile DFDL schema: " + this.dfdlSchema);
-                    AbstractDaffodilProcessor.logDiagnostics(logger, dp);
-                    throw new DaffodilCompileException("Failed to compile DFDL schema: " + this.dfdlSchema);
+                try {
+                    ProcessorFactory pf = c.compileSource(schemaURL.toURI());
+                    if (pf.isError()) {
+                        logger.error("Failed to compile DFDL schema: " + this.dfdlSchema);
+                        AbstractDaffodilProcessor.logDiagnostics(logger, pf);
+                        throw new DaffodilCompileException("Failed to compile DFDL schema: " + this.dfdlSchema);
+                    }
+                    dp = pf.onPath("/");
+                    if (dp.isError()) {
+                        logger.error("Failed to compile DFDL schema: " + this.dfdlSchema);
+                        AbstractDaffodilProcessor.logDiagnostics(logger, dp);
+                        throw new DaffodilCompileException("Failed to compile DFDL schema: " + this.dfdlSchema);
+                    }
+                } catch (URISyntaxException e) {
+                    throw new AssertionError("invalid URI should no be possible: " + e);
                 }
             }
             try {
