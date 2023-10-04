@@ -47,6 +47,61 @@
 <p>
     Publicly available DFDL schemas are available on the <a href="https://github.com/DFDLSchemas">DFDL Schemas github</a>.
 </p>
+<h2>Plugins and Schemas</h2>
+<p>
+    <p>
+    The <tt>Plugins and Schemas</tt> property is a comma separated list of paths to files and/or directories that the
+    processor can use to find Daffodil plugins and schemas.
+    </p>
+    <dl>
+        <dt>Plugins</dt>
+        <dd>
+            <p>
+            Some DFDL schemas may require the use of plugins, such as layers, user defined functions, or custom
+            character encodings. To make these available to NiFi Daffodil processors, these plugins can be compiled to
+            jars, and paths to the jars or parent directory may be added to the <tt>Plugins and Schemas</tt> property. For
+            example, if all Daffodil plugins are in the <tt>/usr/share/nifi-daffodil/plugins/</tt> directory, you might
+            set the property to the following:
+            </p>
+
+            <pre>
+            Plugins and Schemas: /usr/share/nifi-daffodil/plugins/</pre>
+        </dd>
+        <dt>Schemas</dt>
+        <dd>
+            <p>
+            The <tt>DFDL Schema File</tt> property is used to define the path to a schema to be compiled, or a saved
+            parser to reload if <tt>Pre-compiled schema</tt> is true. However, in some cases it may be more convenient
+            to provide the schema as a path inside a jar, or as just a filename instead of a full path. The <tt>Plugins
+            and Schemas</tt> property can be used for this purpose.
+            </p>
+
+            <p>
+            If a schema (or saved parser) is defined in a jar, then add the jar to the <tt>Plugins and Schemas</tt>
+            property (either as a path to the directory containing the jar or a path to the jar itself), and set the
+            <tt>DFDL Schema File</tt> property to the <i>absolute path</i> to the schema <i>inside</i> the jar. For
+            example, if a jar at <tt>/usr/share/nifi-daffodil/schemas/dfdl-foo.jar</tt> contains a DFDL schema file
+            called <tt>com/example/foo.dfdl.xsd</tt>, you might configure the following:
+            </p>
+
+            <pre>
+            DFDL Schema File: /com/example/foo.dfdl.xsd
+            Plugins and Schemas: /usr/share/nifi-daffodil/schemas/</pre>
+
+            <p>
+            If a schema (or saved parser) is not in a jar, then add the file to the <tt>Plugins and Schemas</tt>
+            property (either as a path to the directory containing the file or a path to the file itself) and set the
+            <tt>DFDL Schema File</tt> property to just the file name. For example, if a saved parser is at
+            <tt>/usr/share/nifi-daffodil/saved-parsers/foo.bin</tt>, you might configure the following:
+            </p>
+
+            <pre>
+            DFDL Schema File: foo.bin
+            Plugins and Schemas: /usr/share/nifi-daffodil/saved-parsers/
+            Pre-compiled Schema: true</pre>
+        </dd>
+    </dl>
+</p>
 <h2>Compiled DFDL Schema Cache</h2>
 <p>
     Before a FlowFile can be parsed or unparsed, Daffodil first compiles the DFDL schema to an internal data
@@ -69,7 +124,6 @@
         </dd>
     </dl>
 </p>
-
 
 </body>
 </html>

@@ -33,6 +33,7 @@ import org.apache.nifi.annotation.behavior.WritesAttribute;
 import org.apache.nifi.annotation.documentation.CapabilityDescription;
 import org.apache.nifi.annotation.documentation.Tags;
 import org.apache.nifi.flowfile.FlowFile;
+import org.apache.nifi.annotation.behavior.RequiresInstanceClassLoading;
 
 import org.apache.daffodil.japi.DataProcessor;
 import org.apache.daffodil.japi.UnparseResult;
@@ -47,6 +48,7 @@ import org.apache.daffodil.japi.infoset.XMLTextInfosetInputter;
 @Tags({"xml", "json", "daffodil", "dfdl", "schema", "xsd"})
 @CapabilityDescription("Use Daffodil and a user-specified DFDL schema to transform an XML or JSON representation of data back to the original data format.")
 @WritesAttribute(attribute = "mime.type", description = "If the FlowFile is successfully unparsed, this attriute is removed, as the MIME Type is no longer known.")
+@RequiresInstanceClassLoading
 public class DaffodilUnparse extends AbstractDaffodilProcessor {
 
     private InfosetInputter getInfosetInputter(String infosetType, InputStream is) {
