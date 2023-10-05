@@ -24,8 +24,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java_version: [ '8', '11', '17']
-        os: [ 'ubuntu-latest', 'windows-latest' ]
+        java_version: [ 8, 11, 17 ]
+        os: [ ubuntu-latest, windows-latest ]
+        include:
+          - is_release_job: false
+          - is_release_job: true
+            java_version: 8
+            os: ubuntu-lastest
     steps:
 
       ############################################################
@@ -60,7 +65,7 @@ jobs:
       - name: Release Info
         id: release_info
         run: |
-          if [[ '${{ github.ref }}' == refs/tags/v* ]] && [[ '${{ matrix.java_version }}' == '8.x' ]] && [[ '${{ matrix.os }}' == 'ubuntu-latest' ]]
+          if [[ '${{ github.ref }}' == refs/tags/v* ]] && [[ '${{ matrix.is_release_job }}' == 'true' ]]
           then
             echo ::set-output name=is_release::true
             echo ::set-output name=tag::$(echo ${{ github.ref }} | cut -dv -f2)
