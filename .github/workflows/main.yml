@@ -30,7 +30,7 @@ jobs:
           - is_release_job: false
           - is_release_job: true
             java_version: 8
-            os: ubuntu-lastest
+            os: ubuntu-latest
     steps:
 
       ############################################################
@@ -67,10 +67,10 @@ jobs:
         run: |
           if [[ '${{ github.ref }}' == refs/tags/v* ]] && [[ '${{ matrix.is_release_job }}' == 'true' ]]
           then
-            echo ::set-output name=is_release::true
-            echo ::set-output name=tag::$(echo ${{ github.ref }} | cut -dv -f2)
+            echo is_release=true >> $GITHUB_OUTPUT
+            echo tag=$(echo ${{ github.ref }} | cut -dv -f2) >> $GITHUB_OUTPUT
           else
-            echo ::set-output name=is_release::false
+            echo is_release=false >> $GITHUB_OUTPUT
           fi
         shell: bash
 
