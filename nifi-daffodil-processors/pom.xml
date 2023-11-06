@@ -25,7 +25,7 @@
     <parent>
         <groupId>com.owlcyberdefense</groupId>
         <artifactId>nifi-daffodil</artifactId>
-        <version>1.13</version>
+        <version>1.14</version>
     </parent>
 
     <artifactId>nifi-daffodil-processors</artifactId>
