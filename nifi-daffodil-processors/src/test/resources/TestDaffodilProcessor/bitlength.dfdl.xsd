@@ -24,7 +24,7 @@
   <xs:annotation>
     <xs:appinfo source="http://www.ogf.org/dfdl/">
       <dfdl:format ref="ex:GeneralFormat" representation="binary" lengthUnits="bits" alignmentUnits="bits"
-        lengthKind="implicit" separator="" />
+        lengthKind="implicit" separator="" byteOrder="{ $dfdl:byteOrder }" />
     </xs:appinfo> 
   </xs:annotation>
 

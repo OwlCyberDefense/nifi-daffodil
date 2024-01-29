@@ -19,7 +19,7 @@
 <head>
     <meta charset="utf-8" />
     <title>DaffodilUnparse</title>
-    <link rel="stylesheet" href="../../css/component-usage.css" type="text/css" />
+    <link rel="stylesheet" href="/nifi-docs/css/component-usage.css" type="text/css" />
 </head>
 
 <body>
@@ -39,7 +39,7 @@
     is a language capable of describing many data formats, including textual and binary, commercial
     record-oriented, scientific and numeric, modern and legacy, and many industry standards. It leverages XML
     technology and concepts, using a subset of W3C XML schema type system and annotations to describe such
-    data. Daffodil uses this data description to "parse" data into an XML representation of the data. This
+    data. Daffodil uses this data description to "parse" data into an XML or JSON representation of the data. This
     allows one to take advantage of the many XML and JSON technologies (e.g. XQuery, XPath, XSLT) to ingest, validate,
     and manipulate complex data formats. Daffodil can also use this data description to "unparse", or
     serialize, the XML or JSON representation back to the original data format.
@@ -47,61 +47,77 @@
 <p>
     Publicly available DFDL schemas are available on the <a href="https://github.com/DFDLSchemas">DFDL Schemas github</a>.
 </p>
+<h2>External Variables</h2>
+<p>
+    DFDL external variables are supported using NiFi's dynamic properties.
+</p>
+<p>
+    To set an external variable, click the <code>"+"</code> sign in the top right of the processor's
+    properties tab to add a new dynamic property. The name of the property should be the same as the name of the
+    variable. Additionally, if the variable name alone is ambiguous, you can provide a namespace prefix and a
+    colon (e.g. <code>ns:variableName</code>) or a full namespace URI surrounded by curly braces (e.g.
+    <code>{http://example.com/namespace}variableName</code>).
+</p>
+<p>
+    The value of the dynamic property is used for the value of the variable, and can be a simple value or a NiFi
+    expression to be evaluated for each flow file. In either case, if the value is the empty string, the variable is
+    ignored for that flowfile and is not provided to Daffodil. This is useful in cases where a NiFi expression
+    determines a variable is not valid for the 'DFDL Schema File' being used, or to temporarily disable a variable
+    without completely removing it.
+</p>
+
 <h2>Plugins and Schemas</h2>
 <p>
-    <p>
     The <tt>Plugins and Schemas</tt> property is a comma separated list of paths to files and/or directories that the
     processor can use to find Daffodil plugins and schemas.
-    </p>
-    <dl>
-        <dt>Plugins</dt>
-        <dd>
-            <p>
-            Some DFDL schemas may require the use of plugins, such as layers, user defined functions, or custom
-            character encodings. To make these available to NiFi Daffodil processors, these plugins can be compiled to
-            jars, and paths to the jars or parent directory may be added to the <tt>Plugins and Schemas</tt> property. For
-            example, if all Daffodil plugins are in the <tt>/usr/share/nifi-daffodil/plugins/</tt> directory, you might
-            set the property to the following:
-            </p>
-
-            <pre>
-            Plugins and Schemas: /usr/share/nifi-daffodil/plugins/</pre>
-        </dd>
-        <dt>Schemas</dt>
-        <dd>
-            <p>
-            The <tt>DFDL Schema File</tt> property is used to define the path to a schema to be compiled, or a saved
-            parser to reload if <tt>Pre-compiled schema</tt> is true. However, in some cases it may be more convenient
-            to provide the schema as a path inside a jar, or as just a filename instead of a full path. The <tt>Plugins
-            and Schemas</tt> property can be used for this purpose.
-            </p>
-
-            <p>
-            If a schema (or saved parser) is defined in a jar, then add the jar to the <tt>Plugins and Schemas</tt>
-            property (either as a path to the directory containing the jar or a path to the jar itself), and set the
-            <tt>DFDL Schema File</tt> property to the <i>absolute path</i> to the schema <i>inside</i> the jar. For
-            example, if a jar at <tt>/usr/share/nifi-daffodil/schemas/dfdl-foo.jar</tt> contains a DFDL schema file
-            called <tt>com/example/foo.dfdl.xsd</tt>, you might configure the following:
-            </p>
-
-            <pre>
-            DFDL Schema File: /com/example/foo.dfdl.xsd
-            Plugins and Schemas: /usr/share/nifi-daffodil/schemas/</pre>
-
-            <p>
-            If a schema (or saved parser) is not in a jar, then add the file to the <tt>Plugins and Schemas</tt>
-            property (either as a path to the directory containing the file or a path to the file itself) and set the
-            <tt>DFDL Schema File</tt> property to just the file name. For example, if a saved parser is at
-            <tt>/usr/share/nifi-daffodil/saved-parsers/foo.bin</tt>, you might configure the following:
-            </p>
-
-            <pre>
-            DFDL Schema File: foo.bin
-            Plugins and Schemas: /usr/share/nifi-daffodil/saved-parsers/
-            Pre-compiled Schema: true</pre>
-        </dd>
-    </dl>
 </p>
+
+<h3>Plugins</h3>
+<p>
+    Some DFDL schemas may require the use of plugins, such as layers, user defined functions, or custom character
+    encodings. To make these available to NiFi Daffodil processors, these plugins can be compiled to jars, and paths to
+    individual jars or to a parent directory containing one or more jars may be added to the <tt>Plugins and
+    Schemas</tt> property. For example, if all Daffodil plugins are in the <tt>/usr/share/nifi-daffodil/plugins/</tt>
+    directory, you might set the property to the following:
+</p>
+<code><pre>
+Plugins and Schemas: /usr/share/nifi-daffodil/plugins/
+</pre></code>
+
+<h3>Schemas</h3>
+<p>
+    The <tt>DFDL Schema File</tt> property is used to define the path to a schema to be compiled, or a saved
+    parser to reload if <tt>Pre-compiled schema</tt> is true. However, in some cases it may be more convenient
+    to provide the schema as a path inside a jar, or as just a filename instead of a full path. The <tt>Plugins
+    and Schemas</tt> property can be used for this purpose.
+</p>
+<p>
+    If a schema (or saved parser) is defined in a jar, then add the jar to the <tt>Plugins and Schemas</tt>
+    property (either as a path to the directory containing the jar or a path to the jar itself), and set the
+    <tt>DFDL Schema File</tt> property to the <i>absolute path</i> to the schema <i>inside</i> the jar. For
+    example, if a jar at <tt>/usr/share/nifi-daffodil/schemas/dfdl-foo.jar</tt> contains a DFDL schema file
+    called <tt>com/example/foo.dfdl.xsd</tt>, you might configure the following:
+</p>
+<code><pre>
+DFDL Schema File: /com/example/foo.dfdl.xsd
+Plugins and Schemas: /usr/share/nifi-daffodil/schemas/
+</pre></code>
+<p>
+    In the above example, notice how the DFDL Schema File path begins with a '/', which denotes that the file is to be
+    found at that location inside a jar file.
+</p>
+<p>
+    If a schema (or saved parser) is not in a jar, then add the file to the <tt>Plugins and Schemas</tt>
+    property (either as a path to the directory containing the file or a path to the file itself) and set the
+    <tt>DFDL Schema File</tt> property to just the file name. For example, if a saved parser is at
+    <tt>/usr/share/nifi-daffodil/saved-parsers/foo.bin</tt>, you might configure the following:
+</p>
+<code><pre>
+DFDL Schema File: foo.bin
+Plugins and Schemas: /usr/share/nifi-daffodil/saved-parsers/
+Pre-compiled Schema: true
+</pre></code>
+
 <h2>Compiled DFDL Schema Cache</h2>
 <p>
     Before a FlowFile can be parsed or unparsed, Daffodil first compiles the DFDL schema to an internal data
@@ -111,16 +127,27 @@
     <dl>
         <dt>Cache Size</dt>
         <dd>
+            <p>
             Defines the maximum number of DFDL schemas that can be compiled and saved for rapid reuse from the
             cache. To avoid compilation, it is recommended that this value be larger than the expected number
             of possible DFDL schemas. Setting this value to 0 disables the cache, though this is not
-            recommended.
+            recommended. The default value is 50.
+            </p>
         </dd>
         <dt>Cache TTL after last access</dt>
         <dd>
-            Defines the cache time-to-live, or how long to keep an unused compiled DFDL schemas in the cache. To avoid
-            compilation, it is recommended that this should be larger than the amount of time it is expected
-            for a DFDL schema to be unused.
+            <p>
+            Cached compiled DFDL schemas that go unused for a specified amount of time are removed from the cache to
+            save memory. This time is defind by the <tt>Cache TTL after last access</tt> property, with the format of
+            <tt>&lt;duration&gt; &lt;time_unit&gt;</tt>, where <tt>&lt;duration&gt;</tt> is a non-negative integer and
+            <tt>&lt;time_unit&gt;</tt> is a supported unit of time, such as nanos, millis, secs, mins, hrs, days. If set
+            to zero (e.g. "0 seconds"), cached compiled DFDL schemas are never removed from the cache. The default value
+            is 30 minutes.
+            </p>
+            <p>
+            For example, if a schema is used occasionally (once a day perhaps), then set this to <tt>24 hours</tt> to
+            avoid recompiling it each time it is used.
+            </p>
         </dd>
     </dl>
 </p>
