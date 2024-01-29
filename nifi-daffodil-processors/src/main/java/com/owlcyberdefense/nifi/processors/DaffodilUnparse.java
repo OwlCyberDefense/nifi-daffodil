@@ -25,6 +25,7 @@ import java.nio.channels.Channels;
 import java.nio.channels.WritableByteChannel;
 
 import org.apache.nifi.annotation.behavior.EventDriven;
+import org.apache.nifi.annotation.behavior.DynamicProperty;
 import org.apache.nifi.annotation.behavior.InputRequirement;
 import org.apache.nifi.annotation.behavior.InputRequirement.Requirement;
 import org.apache.nifi.annotation.behavior.SideEffectFree;
@@ -32,6 +33,7 @@ import org.apache.nifi.annotation.behavior.SupportsBatching;
 import org.apache.nifi.annotation.behavior.WritesAttribute;
 import org.apache.nifi.annotation.documentation.CapabilityDescription;
 import org.apache.nifi.annotation.documentation.Tags;
+import org.apache.nifi.expression.ExpressionLanguageScope;
 import org.apache.nifi.flowfile.FlowFile;
 import org.apache.nifi.annotation.behavior.RequiresInstanceClassLoading;
 
@@ -48,6 +50,12 @@ import org.apache.daffodil.japi.infoset.XMLTextInfosetInputter;
 @Tags({"xml", "json", "daffodil", "dfdl", "schema", "xsd"})
 @CapabilityDescription("Use Daffodil and a user-specified DFDL schema to transform an XML or JSON representation of data back to the original data format.")
 @WritesAttribute(attribute = "mime.type", description = "If the FlowFile is successfully unparsed, this attriute is removed, as the MIME Type is no longer known.")
+@DynamicProperty(
+    name = "Name of external variable defined in a DFDL schema",
+    value = "Value to set for the DFDL external variable. May be an expression. The DFDL variable is not set if the value expression evaluates to an empty string.",
+    description = "Defines an external variable to be used when parsing",
+    expressionLanguageScope = ExpressionLanguageScope.FLOWFILE_ATTRIBUTES
+)
 @RequiresInstanceClassLoading
 public class DaffodilUnparse extends AbstractDaffodilProcessor {
 

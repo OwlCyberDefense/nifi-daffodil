@@ -18,7 +18,7 @@ package com.owlcyberdefense.nifi.processors;
 
 import java.io.IOException;
 
-public class DaffodilCompileException extends IOException {
+public class DaffodilCompileException extends Exception {
 
     public DaffodilCompileException() {
         super();
