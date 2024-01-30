@@ -129,7 +129,7 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
     public static final PropertyDescriptor CACHE_SIZE = new PropertyDescriptor.Builder()
             .name("cache-size")
             .displayName("Cache Size")
-            .description("Maximum number of compiled DFDL schemas to cache. Zero disables the cache.")
+            .description("Maximum number of compiled DFDL schemas to cache. Zero disables the cache. Restart the processor to manually empty the cache and recompile/reload schemas as needed.")
             .required(true)
             .defaultValue("50")
             .addValidator(StandardValidators.NON_NEGATIVE_INTEGER_VALIDATOR)
@@ -138,9 +138,9 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
     public static final PropertyDescriptor CACHE_TTL_AFTER_LAST_ACCESS = new PropertyDescriptor.Builder()
             .name("cache-ttl-after-last-access")
             .displayName("Cache TTL After Last Access")
-            .description("The cache TTL (time-to-live) or how long to keep compiled DFDL schemas in the cache after last access.")
+            .description("Defines how long keep unused compiled DFDL schemas in the cache before removing them to free memory. Defaults to '0 seconds' which means to never remove cached schemas. Restart the processor to manually empty the cache and recompile/reload schemas as needed.")
             .required(true)
-            .defaultValue("30 mins")
+            .defaultValue("0 seconds")
             .addValidator(StandardValidators.TIME_PERIOD_VALIDATOR)
             .build();
 
