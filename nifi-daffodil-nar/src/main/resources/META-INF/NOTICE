@@ -1,11 +1,11 @@
 nifi-daffodil-nar
-Copyright 2021 Owl Cyber Defense
+Copyright 2024 Owl Cyber Defense
 
 The following NOTICE information applies to binary components distributed with this project:
 
 Apache Daffodil (META-INF/bundled-dependencies/daffodil-<VERSION>.jar)
   Apache Daffodil
-  Copyright 2021 The Apache Software Foundation
+  Copyright 2024 The Apache Software Foundation
 
   This product includes software developed at
   The Apache Software Foundation (http://www.apache.org/).
@@ -100,8 +100,8 @@ Jackson JSON processor (META-INF/bundled-dependencies/jackson-core-<VERSION>.jar
 Scala (META-INF/bundled-dependencies/scala-library-<VERSION>.jar)
       (org/apache/daffodil/util/UniquenessCache.class in META-INF/bundled-dependencies/daffodil-lib-<VERSION>.jar)
   Scala
-  Copyright (c) 2002-2023 EPFL
-  Copyright (c) 2011-2023 Lightbend, Inc.
+  Copyright (c) 2002-2024 EPFL
+  Copyright (c) 2011-2024 Lightbend, Inc.
 
   Scala includes software developed at
   LAMP/EPFL (https://lamp.epfl.ch/) and
@@ -114,8 +114,8 @@ Scala (META-INF/bundled-dependencies/scala-library-<VERSION>.jar)
 
 Scala Parser Combinators (META-INF/bundled-dependencies/scala-parser-combinators_<VERSION>.jar)
   Scala parser combinators
-  Copyright (c) 2002-2021 EPFL
-  Copyright (c) 2011-2021 Lightbend, Inc.
+  Copyright (c) 2002-2024 EPFL
+  Copyright (c) 2011-2024 Lightbend, Inc.
 
   Scala includes software developed at
   LAMP/EPFL (https://lamp.epfl.ch/) and
