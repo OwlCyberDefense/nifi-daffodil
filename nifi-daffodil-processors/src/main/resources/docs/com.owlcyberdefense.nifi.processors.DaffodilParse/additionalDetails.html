@@ -137,7 +137,7 @@ Pre-compiled Schema: true
         <dd>
             <p>
             Cached compiled DFDL schemas that go unused for a specified amount of time are removed from the cache to
-            save memory. This time is defind by the <tt>Cache TTL after last access</tt> property, with the format of
+            save memory. This time is defined by the <tt>Cache TTL after last access</tt> property, with the format of
             <tt>&lt;duration&gt; &lt;time_unit&gt;</tt>, where <tt>&lt;duration&gt;</tt> is a non-negative integer and
             <tt>&lt;time_unit&gt;</tt> is a supported unit of time, such as nanos, millis, secs, mins, hrs, days. The
             default is "0 seconds", which means compiled DFDL schemas are never removed from the cache.
@@ -151,6 +151,24 @@ Pre-compiled Schema: true
 </p>
 <p>
 Restart the processor to manually empty the cache and recompile/reload schemas as needed.
+</p>
+
+<h2>Infoset Types</h2>
+<p>
+This processor supports parsing to XML and JSON infosets as specified by the <tt>Infoset Type</tt>
+property, which can be either <tt>xml</tt> or <tt>json</tt>. If the parse is successful, the
+<tt>mime.type</tt> attribute is set to <tt>application/xml</tt> or <tt>application/json</tt>
+accordingly.
+</p>
+
+<h2>Validation Mode</h2>
+<p>
+The DaffodilParse processor can optionally enable validation of the infoset. A value of
+<tt>limited</tt> uses Daffodil's built-in validation mechanism. A value of <tt>full</tt> enables XSD
+validation using Apache Xerces. A value of <tt>off</tt> disables validation.
+</p>
+<p>If validation is enabled (either <tt>limited</tt> or <tt>full</tt>) and any validation errors are
+found, the FlowFile is transferred to the <i>failure</i> relationship.
 </p>
 
 </body>

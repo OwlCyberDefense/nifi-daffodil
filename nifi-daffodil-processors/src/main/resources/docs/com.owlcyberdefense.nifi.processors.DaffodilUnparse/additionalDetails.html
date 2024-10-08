@@ -138,7 +138,7 @@ Pre-compiled Schema: true
         <dd>
             <p>
             Cached compiled DFDL schemas that go unused for a specified amount of time are removed from the cache to
-            save memory. This time is defind by the <tt>Cache TTL after last access</tt> property, with the format of
+            save memory. This time is defined by the <tt>Cache TTL after last access</tt> property, with the format of
             <tt>&lt;duration&gt; &lt;time_unit&gt;</tt>, where <tt>&lt;duration&gt;</tt> is a non-negative integer and
             <tt>&lt;time_unit&gt;</tt> is a supported unit of time, such as nanos, millis, secs, mins, hrs, days. The
             default is "0 seconds", which means compiled DFDL schemas are never removed from the cache.
@@ -152,6 +152,20 @@ Pre-compiled Schema: true
 </p>
 <p>
 Restart the processor to manually empty the cache and recompile/reload schemas as needed.
+</p>
+
+<h2>Infoset Types</h2>
+<p>
+This processor supports unparsing XML and JSON infosets as specified by the <tt>Infoset Type</tt>
+property. Alternatively, the property can be set so that the processor uses the <tt>mime.type</tt>
+attribute. In this case, an attribute value of <tt>application/xml</tt> or <tt>application/json</tt>
+will cause the processor to expect an XML or JSON infoset respectively. Note that the DaffodilParse
+processor sets the <tt>mime.type</tt> attribute based its <tt>Infoset Type</tt> property.
+</p>
+
+<h2>Validation Mode</h2>
+<p>
+The DaffodilUnparse processor ignores the validation mode setting. Future versions may enable this.
 </p>
 
 </body>

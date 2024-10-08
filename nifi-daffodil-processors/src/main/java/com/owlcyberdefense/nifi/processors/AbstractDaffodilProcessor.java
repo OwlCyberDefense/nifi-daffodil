@@ -38,7 +38,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.nifi.annotation.lifecycle.OnScheduled;
-import org.apache.nifi.components.AllowableValue;
 import org.apache.nifi.components.PropertyDescriptor;
 import org.apache.nifi.components.PropertyValue;
 import org.apache.nifi.components.resource.ResourceCardinality;
@@ -118,13 +117,9 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
     static final String XML_MIME_TYPE = "application/xml";
     static final String JSON_MIME_TYPE = "application/json";
 
-    static final String XML_VALUE = "xml";
-    static final String JSON_VALUE = "json";
-    static final String ATTRIBUTE_VALUE = "use mime.type attribute";
-
-    static final AllowableValue INFOSET_TYPE_XML = new AllowableValue(XML_VALUE, XML_VALUE, "The FlowFile representation is XML");
-    static final AllowableValue INFOSET_TYPE_JSON = new AllowableValue(JSON_VALUE, JSON_VALUE, "The FlowFile representation is JSON");
-    static final AllowableValue INFOSET_TYPE_ATTRIBUTE = new AllowableValue(ATTRIBUTE_VALUE, ATTRIBUTE_VALUE, "The FlowFile representation is determined based on the mime.type attribute");
+    static final String INFOSET_TYPE_XML = "xml";
+    static final String INFOSET_TYPE_JSON = "json";
+    static final String INFOSET_TYPE_ATTRIBUTE = "use mime.type attribute";
 
     public static final PropertyDescriptor CACHE_SIZE = new PropertyDescriptor.Builder()
             .name("cache-size")
@@ -144,20 +139,16 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
             .addValidator(StandardValidators.TIME_PERIOD_VALIDATOR)
             .build();
 
-    static final String OFF_VALUE = "off";
-    static final String LIMITED_VALUE = "limited";
-    static final String FULL_VALUE = "full";
-
-    static final AllowableValue VALIDATION_MODE_OFF = new AllowableValue(OFF_VALUE, OFF_VALUE, "Disable infoset validation");
-    static final AllowableValue VALIDATION_MODE_LIMITED= new AllowableValue(LIMITED_VALUE, LIMITED_VALUE, "Facet/restriction validation using Daffodil");
-    static final AllowableValue VALIDATION_MODE_FULL = new AllowableValue(FULL_VALUE, FULL_VALUE, "Full schema validation using Xerces");
+    static final String VALIDATION_MODE_OFF = "off";
+    static final String VALIDATION_MODE_LIMITED = "limited";
+    static final String VALIDATION_MODE_FULL = "full";
 
     public static final PropertyDescriptor VALIDATION_MODE = new PropertyDescriptor.Builder()
             .name("validation-mode")
             .displayName("Validation Mode")
             .description("The type of validation to be performed on the infoset.")
             .required(true)
-            .defaultValue(OFF_VALUE)
+            .defaultValue(VALIDATION_MODE_OFF)
             .allowableValues(VALIDATION_MODE_OFF, VALIDATION_MODE_LIMITED, VALIDATION_MODE_FULL)
             .build();
 
@@ -182,7 +173,7 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
 
     @Override
     protected void init(final ProcessorInitializationContext context) {
-        List<AllowableValue> allowableInfosetTypeValues = new ArrayList(Arrays.asList(INFOSET_TYPE_XML, INFOSET_TYPE_JSON));
+        Set<String> allowableInfosetTypeValues = new HashSet(Arrays.asList(INFOSET_TYPE_XML, INFOSET_TYPE_JSON));
         if (isUnparse()) {
             // using the mime type for infoset type only applies to unparse
             allowableInfosetTypeValues.add(INFOSET_TYPE_ATTRIBUTE);
@@ -193,8 +184,8 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
             .displayName("Infoset Type")
             .description("The format of the FlowFile to output (for parsing) or input (for unparsing).")
             .required(true)
-            .defaultValue(INFOSET_TYPE_XML.getValue())
-            .allowableValues(allowableInfosetTypeValues.toArray(new AllowableValue[allowableInfosetTypeValues.size()]))
+            .defaultValue(INFOSET_TYPE_XML)
+            .allowableValues(allowableInfosetTypeValues)
             .build();
 
         final List<PropertyDescriptor> properties = new ArrayList<>();
@@ -417,21 +408,21 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
         final ValidationMode validationMode;
 
         switch (context.getProperty(VALIDATION_MODE).getValue()) {
-            case OFF_VALUE: validationMode = ValidationMode.Off; break;
-            case LIMITED_VALUE: validationMode = ValidationMode.Limited; break;
-            case FULL_VALUE: validationMode = ValidationMode.Full; break;
+            case VALIDATION_MODE_OFF: validationMode = ValidationMode.Off; break;
+            case VALIDATION_MODE_LIMITED: validationMode = ValidationMode.Limited; break;
+            case VALIDATION_MODE_FULL: validationMode = ValidationMode.Full; break;
             default: throw new AssertionError("validation mode was not one of 'off', 'limited', or 'full'");
         }
 
         CompilationParams params = new CompilationParams(dfdlSchema, preCompiled, validationMode);
 
-        if (infosetTypeValue.equals(ATTRIBUTE_VALUE)) {
+        if (infosetTypeValue.equals(INFOSET_TYPE_ATTRIBUTE)) {
             if (!isUnparse()) { throw new AssertionError("infoset type 'attribute' should only occur with Daffodil unparse"); }
 
             String inputMimeType = original.getAttribute(CoreAttributes.MIME_TYPE.key());
             switch (inputMimeType == null ? "" : inputMimeType) {
-                case XML_MIME_TYPE: infosetType = XML_VALUE; break;
-                case JSON_MIME_TYPE: infosetType = JSON_VALUE; break;
+                case XML_MIME_TYPE: infosetType = INFOSET_TYPE_XML; break;
+                case JSON_MIME_TYPE: infosetType = INFOSET_TYPE_JSON; break;
                 default:
                     logger.error("Infoset Type is 'attribute', but the mime.type attribute is not set or not recognized for {}.", new Object[]{original});
                     session.transfer(original, REL_FAILURE);
