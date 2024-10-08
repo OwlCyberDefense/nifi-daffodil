@@ -24,7 +24,6 @@ import java.io.Writer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
-import org.apache.nifi.annotation.behavior.EventDriven;
 import org.apache.nifi.annotation.behavior.DynamicProperty;
 import org.apache.nifi.annotation.behavior.InputRequirement;
 import org.apache.nifi.annotation.behavior.InputRequirement.Requirement;
@@ -46,7 +45,6 @@ import org.apache.daffodil.japi.infoset.JsonInfosetOutputter;
 import org.apache.daffodil.japi.infoset.XMLTextInfosetOutputter;
 
 
-@EventDriven
 @SideEffectFree
 @SupportsBatching
 @InputRequirement(Requirement.INPUT_REQUIRED)
@@ -64,8 +62,8 @@ public class DaffodilParse extends AbstractDaffodilProcessor {
 
     private InfosetOutputter getInfosetOutputter(String infosetType, OutputStream os) {
         switch (infosetType) {
-            case XML_VALUE: return new XMLTextInfosetOutputter(os, false);
-            case JSON_VALUE: return new JsonInfosetOutputter(os, false);
+            case INFOSET_TYPE_XML: return new XMLTextInfosetOutputter(os, false);
+            case INFOSET_TYPE_JSON: return new JsonInfosetOutputter(os, false);
             default: throw new AssertionError("Unhandled infoset type: " + infosetType);
         }
     }
@@ -76,8 +74,8 @@ public class DaffodilParse extends AbstractDaffodilProcessor {
     @Override
     protected String getOutputMimeType(String infosetType) {
         switch (infosetType) {
-            case XML_VALUE: return XML_MIME_TYPE;
-            case JSON_VALUE: return JSON_MIME_TYPE;
+            case INFOSET_TYPE_XML: return XML_MIME_TYPE;
+            case INFOSET_TYPE_JSON: return JSON_MIME_TYPE;
             default: throw new AssertionError("Unhandled infoset type: " + infosetType);
         }
     }

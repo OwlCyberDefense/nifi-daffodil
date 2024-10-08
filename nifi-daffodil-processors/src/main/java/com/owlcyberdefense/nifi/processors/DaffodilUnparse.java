@@ -24,7 +24,6 @@ import java.io.Reader;
 import java.nio.channels.Channels;
 import java.nio.channels.WritableByteChannel;
 
-import org.apache.nifi.annotation.behavior.EventDriven;
 import org.apache.nifi.annotation.behavior.DynamicProperty;
 import org.apache.nifi.annotation.behavior.InputRequirement;
 import org.apache.nifi.annotation.behavior.InputRequirement.Requirement;
@@ -43,7 +42,6 @@ import org.apache.daffodil.japi.infoset.InfosetInputter;
 import org.apache.daffodil.japi.infoset.JsonInfosetInputter;
 import org.apache.daffodil.japi.infoset.XMLTextInfosetInputter;
 
-@EventDriven
 @SideEffectFree
 @SupportsBatching
 @InputRequirement(Requirement.INPUT_REQUIRED)
@@ -61,8 +59,8 @@ public class DaffodilUnparse extends AbstractDaffodilProcessor {
 
     private InfosetInputter getInfosetInputter(String infosetType, InputStream is) {
         switch (infosetType) {
-            case XML_VALUE: return new XMLTextInfosetInputter(is);
-            case JSON_VALUE: return new JsonInfosetInputter(is);
+            case INFOSET_TYPE_XML: return new XMLTextInfosetInputter(is);
+            case INFOSET_TYPE_JSON: return new JsonInfosetInputter(is);
             default: throw new AssertionError("Unhandled infoset type: " + infosetType);
         }
     }

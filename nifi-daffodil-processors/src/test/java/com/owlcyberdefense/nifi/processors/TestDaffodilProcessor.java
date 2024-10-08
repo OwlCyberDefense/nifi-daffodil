@@ -197,7 +197,7 @@ public class TestDaffodilProcessor {
     public void testParseCSVJson() throws IOException {
         final TestRunner testRunner = TestRunners.newTestRunner(DaffodilParse.class);
         testRunner.setProperty(DaffodilParse.DFDL_SCHEMA_FILE, "src/test/resources/TestDaffodilProcessor/csv.dfdl.xsd");
-        testRunner.setProperty("infoset-type", DaffodilParse.JSON_VALUE);
+        testRunner.setProperty("infoset-type", DaffodilParse.INFOSET_TYPE_JSON);
         testRunner.enqueue(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv"));
         testRunner.run();
         testRunner.assertAllFlowFilesTransferred(DaffodilParse.REL_SUCCESS);
@@ -211,7 +211,7 @@ public class TestDaffodilProcessor {
     public void testUnparseCSVJson() throws IOException {
         final TestRunner testRunner = TestRunners.newTestRunner(DaffodilUnparse.class);
         testRunner.setProperty(DaffodilUnparse.DFDL_SCHEMA_FILE, "src/test/resources/TestDaffodilProcessor/csv.dfdl.xsd");
-        testRunner.setProperty("infoset-type", DaffodilUnparse.JSON_VALUE);
+        testRunner.setProperty("infoset-type", DaffodilUnparse.INFOSET_TYPE_JSON);
         final Map<String, String> attributes = new HashMap<>();
         attributes.put(CoreAttributes.MIME_TYPE.key(), DaffodilUnparse.JSON_MIME_TYPE);
         testRunner.enqueue(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv.json"), attributes);
@@ -227,7 +227,7 @@ public class TestDaffodilProcessor {
     public void testParseCSVAttributeInvalid() throws IOException {
         final TestRunner testRunner = TestRunners.newTestRunner(DaffodilParse.class);
         testRunner.setProperty(DaffodilParse.DFDL_SCHEMA_FILE, "src/test/resources/TestDaffodilProcessor/csv.dfdl.xsd");
-        testRunner.setProperty("infoset-type", DaffodilParse.ATTRIBUTE_VALUE);
+        testRunner.setProperty("infoset-type", DaffodilParse.INFOSET_TYPE_ATTRIBUTE);
         testRunner.assertNotValid();
     }
 
@@ -235,7 +235,7 @@ public class TestDaffodilProcessor {
     public void testUnparseCSVAttributeJSON() throws IOException {
         final TestRunner testRunner = TestRunners.newTestRunner(DaffodilUnparse.class);
         testRunner.setProperty(DaffodilUnparse.DFDL_SCHEMA_FILE, "src/test/resources/TestDaffodilProcessor/csv.dfdl.xsd");
-        testRunner.setProperty("infoset-type", DaffodilUnparse.ATTRIBUTE_VALUE);
+        testRunner.setProperty("infoset-type", DaffodilUnparse.INFOSET_TYPE_ATTRIBUTE);
         final Map<String, String> attributes = new HashMap<>();
         attributes.put(CoreAttributes.MIME_TYPE.key(), DaffodilUnparse.JSON_MIME_TYPE);
         testRunner.enqueue(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv.json"), attributes);
@@ -251,7 +251,7 @@ public class TestDaffodilProcessor {
     public void testUnparseCSVAttributeXML() throws IOException {
         final TestRunner testRunner = TestRunners.newTestRunner(DaffodilUnparse.class);
         testRunner.setProperty(DaffodilUnparse.DFDL_SCHEMA_FILE, "src/test/resources/TestDaffodilProcessor/csv.dfdl.xsd");
-        testRunner.setProperty("infoset-type", DaffodilUnparse.ATTRIBUTE_VALUE);
+        testRunner.setProperty("infoset-type", DaffodilUnparse.INFOSET_TYPE_ATTRIBUTE);
         final Map<String, String> attributes = new HashMap<>();
         attributes.put(CoreAttributes.MIME_TYPE.key(), DaffodilUnparse.XML_MIME_TYPE);
         testRunner.enqueue(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv.xml"), attributes);
@@ -267,7 +267,7 @@ public class TestDaffodilProcessor {
     public void testUnparseCSVAttributeUndefined() throws IOException {
         final TestRunner testRunner = TestRunners.newTestRunner(DaffodilUnparse.class);
         testRunner.setProperty(DaffodilUnparse.DFDL_SCHEMA_FILE, "src/test/resources/TestDaffodilProcessor/csv.dfdl.xsd");
-        testRunner.setProperty("infoset-type", DaffodilUnparse.ATTRIBUTE_VALUE);
+        testRunner.setProperty("infoset-type", DaffodilUnparse.INFOSET_TYPE_ATTRIBUTE);
         final Map<String, String> attributes = new HashMap<>();
         testRunner.enqueue(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv.xml"), attributes);
         testRunner.run();
@@ -281,7 +281,7 @@ public class TestDaffodilProcessor {
     public void testUnparseCSVAttributeUnknown() throws IOException {
         final TestRunner testRunner = TestRunners.newTestRunner(DaffodilUnparse.class);
         testRunner.setProperty(DaffodilUnparse.DFDL_SCHEMA_FILE, "src/test/resources/TestDaffodilProcessor/csv.dfdl.xsd");
-        testRunner.setProperty("infoset-type", DaffodilUnparse.ATTRIBUTE_VALUE);
+        testRunner.setProperty("infoset-type", DaffodilUnparse.INFOSET_TYPE_ATTRIBUTE);
         final Map<String, String> attributes = new HashMap<>();
         attributes.put(CoreAttributes.MIME_TYPE.key(), "application/unknown");
         testRunner.enqueue(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv.xml"), attributes);
@@ -321,7 +321,7 @@ public class TestDaffodilProcessor {
     public void testParseCSVValidationLimited() throws IOException {
         final TestRunner testRunner = TestRunners.newTestRunner(DaffodilParse.class);
         testRunner.setProperty(DaffodilParse.DFDL_SCHEMA_FILE, "src/test/resources/TestDaffodilProcessor/csv.dfdl.xsd");
-        testRunner.setProperty(DaffodilParse.VALIDATION_MODE, DaffodilParse.LIMITED_VALUE);
+        testRunner.setProperty(DaffodilParse.VALIDATION_MODE, DaffodilParse.VALIDATION_MODE_LIMITED);
         testRunner.enqueue(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv"));
         testRunner.run();
         testRunner.assertAllFlowFilesTransferred(DaffodilParse.REL_FAILURE);
@@ -334,7 +334,7 @@ public class TestDaffodilProcessor {
     public void testParseCSVValidationFull() throws IOException {
         final TestRunner testRunner = TestRunners.newTestRunner(DaffodilParse.class);
         testRunner.setProperty(DaffodilParse.DFDL_SCHEMA_FILE, "src/test/resources/TestDaffodilProcessor/csv.dfdl.xsd");
-        testRunner.setProperty(DaffodilParse.VALIDATION_MODE, DaffodilParse.FULL_VALUE);
+        testRunner.setProperty(DaffodilParse.VALIDATION_MODE, DaffodilParse.VALIDATION_MODE_FULL);
         testRunner.enqueue(Paths.get("src/test/resources/TestDaffodilProcessor/tokens.csv"));
         testRunner.run();
         testRunner.assertAllFlowFilesTransferred(DaffodilParse.REL_FAILURE);
