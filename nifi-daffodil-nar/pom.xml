@@ -21,11 +21,11 @@
     <parent>
         <groupId>com.owlcyberdefense</groupId>
         <artifactId>nifi-daffodil</artifactId>
-        <version>1.18</version>
+        <version>1.19</version>
     </parent>
 
     <artifactId>nifi-daffodil-nar</artifactId>
-    <version>1.18</version>
+    <version>1.19</version>
     <packaging>nar</packaging>
     <properties>
         <maven.javadoc.skip>true</maven.javadoc.skip>
@@ -36,7 +36,7 @@
         <dependency>
             <groupId>com.owlcyberdefense</groupId>
             <artifactId>nifi-daffodil-processors</artifactId>
-            <version>1.18</version>
+            <version>1.19</version>
         </dependency>
     </dependencies>
 
