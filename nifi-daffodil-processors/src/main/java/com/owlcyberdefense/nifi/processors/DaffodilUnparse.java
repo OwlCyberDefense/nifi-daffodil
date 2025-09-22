@@ -36,11 +36,10 @@ import org.apache.nifi.expression.ExpressionLanguageScope;
 import org.apache.nifi.flowfile.FlowFile;
 import org.apache.nifi.annotation.behavior.RequiresInstanceClassLoading;
 
-import org.apache.daffodil.japi.DataProcessor;
-import org.apache.daffodil.japi.UnparseResult;
-import org.apache.daffodil.japi.infoset.InfosetInputter;
-import org.apache.daffodil.japi.infoset.JsonInfosetInputter;
-import org.apache.daffodil.japi.infoset.XMLTextInfosetInputter;
+import org.apache.daffodil.api.Daffodil;
+import org.apache.daffodil.api.DataProcessor;
+import org.apache.daffodil.api.UnparseResult;
+import org.apache.daffodil.api.infoset.InfosetInputter;
 
 @SideEffectFree
 @SupportsBatching
@@ -59,8 +58,8 @@ public class DaffodilUnparse extends AbstractDaffodilProcessor {
 
     private InfosetInputter getInfosetInputter(String infosetType, InputStream is) {
         switch (infosetType) {
-            case INFOSET_TYPE_XML: return new XMLTextInfosetInputter(is);
-            case INFOSET_TYPE_JSON: return new JsonInfosetInputter(is);
+            case INFOSET_TYPE_XML: return Daffodil.newXMLTextInfosetInputter(is);
+            case INFOSET_TYPE_JSON: return Daffodil.newJsonInfosetInputter(is);
             default: throw new AssertionError("Unhandled infoset type: " + infosetType);
         }
     }

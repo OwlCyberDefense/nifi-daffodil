@@ -36,13 +36,12 @@ import org.apache.nifi.expression.ExpressionLanguageScope;
 import org.apache.nifi.flowfile.FlowFile;
 import org.apache.nifi.annotation.behavior.RequiresInstanceClassLoading;
 
-import org.apache.daffodil.japi.DataLocation;
-import org.apache.daffodil.japi.DataProcessor;
-import org.apache.daffodil.japi.ParseResult;
-import org.apache.daffodil.japi.io.InputSourceDataInputStream;
-import org.apache.daffodil.japi.infoset.InfosetOutputter;
-import org.apache.daffodil.japi.infoset.JsonInfosetOutputter;
-import org.apache.daffodil.japi.infoset.XMLTextInfosetOutputter;
+import org.apache.daffodil.api.Daffodil;
+import org.apache.daffodil.api.DataLocation;
+import org.apache.daffodil.api.DataProcessor;
+import org.apache.daffodil.api.ParseResult;
+import org.apache.daffodil.api.InputSourceDataInputStream;
+import org.apache.daffodil.api.infoset.InfosetOutputter;
 
 
 @SideEffectFree
@@ -62,8 +61,8 @@ public class DaffodilParse extends AbstractDaffodilProcessor {
 
     private InfosetOutputter getInfosetOutputter(String infosetType, OutputStream os) {
         switch (infosetType) {
-            case INFOSET_TYPE_XML: return new XMLTextInfosetOutputter(os, false);
-            case INFOSET_TYPE_JSON: return new JsonInfosetOutputter(os, false);
+            case INFOSET_TYPE_XML: return Daffodil.newXMLTextInfosetOutputter(os, false);
+            case INFOSET_TYPE_JSON: return Daffodil.newJsonInfosetOutputter(os, false);
             default: throw new AssertionError("Unhandled infoset type: " + infosetType);
         }
     }
@@ -82,7 +81,7 @@ public class DaffodilParse extends AbstractDaffodilProcessor {
 
     @Override
     protected void processWithDaffodil(final DataProcessor dp, final FlowFile ff, final InputStream in, final OutputStream out, String infosetType) throws IOException {
-        InputSourceDataInputStream input = new InputSourceDataInputStream(in);
+        InputSourceDataInputStream input = Daffodil.newInputSourceDataInputStream(in);
         InfosetOutputter outputter = getInfosetOutputter(infosetType, out);
         ParseResult pr = dp.parse(input, outputter);
         if (pr.isError()) {

@@ -61,16 +61,16 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 
-import org.apache.daffodil.japi.Compiler;
-import org.apache.daffodil.japi.Daffodil;
-import org.apache.daffodil.japi.DataProcessor;
-import org.apache.daffodil.japi.Diagnostic;
-import org.apache.daffodil.japi.ExternalVariableException;
-import org.apache.daffodil.japi.ProcessorFactory;
-import org.apache.daffodil.japi.WithDiagnostics;
-import org.apache.daffodil.japi.ValidationMode;
-import org.apache.daffodil.japi.InvalidUsageException;
-import org.apache.daffodil.japi.InvalidParserException;
+import org.apache.daffodil.api.Compiler;
+import org.apache.daffodil.api.Daffodil;
+import org.apache.daffodil.api.DataProcessor;
+import org.apache.daffodil.api.Diagnostic;
+import org.apache.daffodil.api.ProcessorFactory;
+import org.apache.daffodil.api.WithDiagnostics;
+import org.apache.daffodil.api.exceptions.ExternalVariableException;
+import org.apache.daffodil.api.exceptions.InvalidParserException;
+import org.apache.daffodil.api.validation.ValidatorInitializationException;
+import org.apache.daffodil.api.validation.ValidatorNotRegisteredException;
 
 
 public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
@@ -220,12 +220,12 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
     static class CompilationParams {
         public String dfdlSchema;
         public Boolean preCompiled;
-        public ValidationMode validationMode;
+        public String validationMode;
 
         public CompilationParams(
             String dfdlSchema,
             Boolean preCompiled,
-            ValidationMode validationMode) {
+            String validationMode) {
 
             this.dfdlSchema = dfdlSchema;
             this.preCompiled = preCompiled;
@@ -315,16 +315,19 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
                         AbstractDaffodilProcessor.logDiagnostics(logger, dp);
                         throw new DaffodilCompileException("Failed to compile DFDL schema: " + this.dfdlSchema);
                     }
-                } catch (IOException e) {
-                    throw new DaffodilCompileException("Failed to compile DFDL schema: " + this.dfdlSchema, e);
                 } catch (URISyntaxException e) {
                     throw new AssertionError("invalid URI should no be possible: " + e);
                 }
             }
             try {
-                dp = dp.withValidationMode(this.validationMode);
-            } catch (InvalidUsageException e) {
-                throw new AssertionError("invalid usage of Daffodil API: " + e);
+                dp = dp.withValidation(this.validationMode, new File(this.dfdlSchema).toURI().toURL());
+            } catch (MalformedURLException e) {
+                throw new AssertionError("could not convert schema to valid URL: " + e);
+            } catch (ValidatorNotRegisteredException e) {
+                throw new AssertionError("validator does not exist: " + e);
+            } catch (ValidatorInitializationException e) {
+                logger.error("Failed to initialize validator: " + this.dfdlSchema + ". " + e.getMessage());
+                throw new DaffodilCompileException("Failed to initialize validator: " + this.dfdlSchema + ". " + e.getMessage());
             }
             return dp;
         }
@@ -405,12 +408,12 @@ public abstract class AbstractDaffodilProcessor extends AbstractProcessor {
         final Boolean preCompiled = context.getProperty(PRE_COMPILED_SCHEMA).evaluateAttributeExpressions(original).asBoolean();
         String infosetTypeValue = context.getProperty(INFOSET_TYPE).getValue();
         final String infosetType;
-        final ValidationMode validationMode;
+        final String validationMode;
 
         switch (context.getProperty(VALIDATION_MODE).getValue()) {
-            case VALIDATION_MODE_OFF: validationMode = ValidationMode.Off; break;
-            case VALIDATION_MODE_LIMITED: validationMode = ValidationMode.Limited; break;
-            case VALIDATION_MODE_FULL: validationMode = ValidationMode.Full; break;
+            case VALIDATION_MODE_OFF: validationMode = "off"; break;
+            case VALIDATION_MODE_LIMITED: validationMode = "daffodil"; break;
+            case VALIDATION_MODE_FULL: validationMode = "xerces"; break;
             default: throw new AssertionError("validation mode was not one of 'off', 'limited', or 'full'");
         }
 

@@ -49,8 +49,8 @@
         </dependency>
         <dependency>
             <groupId>org.apache.daffodil</groupId>
-            <artifactId>daffodil-japi_2.13</artifactId>
-            <version>3.11.0</version>
+            <artifactId>daffodil-core_3</artifactId>
+            <version>4.0.0</version>
         </dependency>
 
         <dependency>

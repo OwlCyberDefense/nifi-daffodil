@@ -35,8 +35,6 @@ import org.apache.nifi.util.MockFlowFile;
 import org.apache.nifi.util.TestRunner;
 import org.apache.nifi.util.TestRunners;
 
-import org.apache.daffodil.japi.ValidationMode;
-
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
@@ -105,9 +103,9 @@ public class TestDaffodilProcessor {
         FileOutputStream fos = new FileOutputStream(savedSchema);
         WritableByteChannel output = Channels.newChannel(fos);
 
-        org.apache.daffodil.japi.Compiler c = org.apache.daffodil.japi.Daffodil.compiler();
-        org.apache.daffodil.japi.ProcessorFactory pf = c.compileFile(schema);
-        org.apache.daffodil.japi.DataProcessor dp = pf.onPath("/");
+        org.apache.daffodil.api.Compiler c = org.apache.daffodil.api.Daffodil.compiler();
+        org.apache.daffodil.api.ProcessorFactory pf = c.compileFile(schema);
+        org.apache.daffodil.api.DataProcessor dp = pf.onPath("/");
         dp.save(output);
 
         output.close();
@@ -345,12 +343,12 @@ public class TestDaffodilProcessor {
 
     @Test
     public void testCompilationParamsEquality() {
-        CompilationParams ck1 = new CompilationParams("one", false, ValidationMode.Off);
-        CompilationParams ck2 = new CompilationParams("one", false, ValidationMode.Off);
-        CompilationParams ck3 = new CompilationParams("two", false, ValidationMode.Off);
-        CompilationParams ck4 = new CompilationParams("one", true, ValidationMode.Off);
-        CompilationParams ck5 = new CompilationParams("two", true, ValidationMode.Off);
-        CompilationParams ck6 = new CompilationParams("one", false, ValidationMode.Limited);
+        CompilationParams ck1 = new CompilationParams("one", false, "off");
+        CompilationParams ck2 = new CompilationParams("one", false, "off");
+        CompilationParams ck3 = new CompilationParams("two", false, "off");
+        CompilationParams ck4 = new CompilationParams("one", true, "off");
+        CompilationParams ck5 = new CompilationParams("two", true, "off");
+        CompilationParams ck6 = new CompilationParams("one", false, "limited");
 
         assertTrue(ck1.equals(ck2));
         assertTrue(ck1.hashCode() == ck2.hashCode());
