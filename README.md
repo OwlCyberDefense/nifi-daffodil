@@ -41,6 +41,7 @@ they are compatible with are listed below.
 
 |NiFi Daffodil version |Daffodil Version |
 |----------------------|-----------------|
+|1.23                  |4.1.0            |
 |1.22                  |4.0.0            |
 |1.21                  |3.11.0           |
 |1.20                  |3.10.0           |
